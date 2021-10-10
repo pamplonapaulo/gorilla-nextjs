@@ -1,0 +1,21 @@
+{
+  "name": "Gorilla Pack Website & Ecommerce",
+  "short_name": "Gorilla Pack Store",
+  "icons": [
+    {
+      "src": "/img/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icon-350.png",
+      "type": "image/png",
+      "sizes": "350x350"
+    }
+  ],
+  "background_color": "#FACB37",
+  "description": "Snacks de banana desidratada. Entregas para toda cidade de Niterói.",
+  "display": "fullscreen",
+  "start_url": "/",
+  "theme_color": "#FACB37"
+}
