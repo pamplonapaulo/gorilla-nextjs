@@ -1,6 +1,9 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
+import { ApolloProvider } from '@apollo/client'
+import { client } from 'lib/apollo/client'
+
 import { MenuProvider } from 'contexts'
 
 import styled from 'styled-components'
@@ -22,15 +25,17 @@ function App({ Component, pageProps }: AppProps) {
         />
       </Head>
       <GlobalStyles />
-      <MenuProvider>
-        <ContainerOuter>
-          <Header />
-          <ContainerInner>
-            <Component {...pageProps} />
-          </ContainerInner>
-          <Footer />
-        </ContainerOuter>
-      </MenuProvider>
+      <ApolloProvider client={client}>
+        <MenuProvider>
+          <ContainerOuter>
+            <Header />
+            <ContainerInner>
+              <Component {...pageProps} />
+            </ContainerInner>
+            <Footer />
+          </ContainerOuter>
+        </MenuProvider>
+      </ApolloProvider>
     </>
   )
 }
