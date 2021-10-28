@@ -71,17 +71,15 @@ const Snacks = () => {
         <T>{'Selecione os snacks do seu pack'}</T>
         <Wrapper>
           {data.products.map((p: Product) => {
-            console.log('customPack state:')
-            console.log(customPack)
-
             return (
               <Item key={p.id}>
                 <H>{p.Name}</H>
                 <ImgComp
-                  src={getImageUrl(
+                  src={'https://via.placeholder.com/363x500.png/'}
+                  alt={getImageUrl(
                     '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
                   )}
-                  alt={p.Name}
+                  // alt={p.Name}
                 />
                 <H>{'R$' + p.BaseValue}</H>
                 <BtnsWrapper>

@@ -24,8 +24,9 @@ const PackPanel = ({ pack }: Props) => (
         {pack.map((s: Snack) => (
           <S.Snack key={s.id}>
             <S.Icon
-              src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
-              alt={'teste'}
+              src={'https://via.placeholder.com/113x156.png/'}
+              alt={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
+              // alt={'teste'}
             />
             <S.Quantity>
               <span>{'x'}</span>

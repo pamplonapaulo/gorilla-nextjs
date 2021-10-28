@@ -30,10 +30,11 @@ const Packs = () => {
               <S.H>{p.Name}</S.H>
               <S.ImgWrap>
                 <S.ImgComp
-                  src={getImageUrl(
+                  src={'https://via.placeholder.com/500.png/'}
+                  alt={getImageUrl(
                     '/uploads/' + p.Image['hash'] + p.Image['ext']
                   )}
-                  alt={p.Name}
+                  // alt={p.Name}
                 />
               </S.ImgWrap>
               <S.H>R$ {getPackPrice(p)} / mês</S.H>
@@ -50,7 +51,8 @@ const Packs = () => {
             <S.H>{''}</S.H>
             <S.ImgWrap>
               <S.ImgComp
-                src={getImageUrl('/uploads/custom_a407b5b52e.png')}
+                src={'https://via.placeholder.com/500.png/'}
+                // src={getImageUrl('/uploads/custom_a407b5b52e.png')}
                 alt={'custom'}
               />
             </S.ImgWrap>
