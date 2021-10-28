@@ -1,39 +1,66 @@
+import NextNProgress from 'nextjs-progressbar'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import { ApolloProvider } from '@apollo/client'
 import { client } from 'lib/apollo/client'
 
-import { MenuProvider } from 'contexts'
+import {
+  MenuProvider,
+  UserProvider,
+  OverlayProvider,
+  BagOverlayProvider,
+  BagProvider,
+} from 'contexts'
 
 import styled from 'styled-components'
 import GlobalStyles from 'styles/global'
 
 import Header from 'components/Header'
+import LoginOverlay from 'components/LoginOverlay'
+import BagOverlay from 'components/BagOverlay'
+import VideoBg from 'components/VideoBG'
 import Footer from 'components/Footer'
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>Gorilla Pack | O snack irado de Niterói</title>
-        <link rel="shortcut icon" href="/img/icon-380.png" />
-        <link rel="apple-touch-icon" href="/img/icon-380.png" />
-        <meta
-          name="description"
-          content="Gorilla Pack, O seu e-commerce favorito de bananas desidratadas"
-        />
-      </Head>
-      <GlobalStyles />
       <ApolloProvider client={client}>
+        <Head>
+          <title>Gorilla Pack | Snacks irados de Niterói</title>
+          <link rel="shortcut icon" href="/img/icon-380.png" />
+          <link rel="apple-touch-icon" href="/img/icon-380.png" />
+          <meta
+            name="description"
+            content="Gorilla Pack, O seu e-commerce favorito de bananas desidratadas"
+          />
+        </Head>
+        <GlobalStyles />
+        <NextNProgress
+          color="#FACB37"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={3}
+        />
         <MenuProvider>
-          <ContainerOuter>
-            <Header />
-            <ContainerInner>
-              <Component {...pageProps} />
-            </ContainerInner>
-            <Footer />
-          </ContainerOuter>
+          <UserProvider>
+            <BagProvider>
+              <OverlayProvider>
+                <BagOverlayProvider>
+                  <ContainerOuter>
+                    <Header />
+                    <ContainerInner>
+                      <LoginOverlay />
+                      <BagOverlay />
+                      <VideoBg />
+                      <Component {...pageProps} />
+                    </ContainerInner>
+                    <Footer />
+                  </ContainerOuter>
+                </BagOverlayProvider>
+              </OverlayProvider>
+            </BagProvider>
+          </UserProvider>
         </MenuProvider>
       </ApolloProvider>
     </>
@@ -61,6 +88,7 @@ const ContainerOuter = styled.div`
 `
 
 const ContainerInner = styled.main`
+  /* background: #ef8321; */
   background: 'transparent';
   height: 100%;
   -ms-overflow-style: none;

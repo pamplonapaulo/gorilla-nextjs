@@ -1,11 +1,9 @@
 import * as S from './styles'
-import VideoBg from 'components/VideoBG'
 import Logo from 'components/Logo'
 import MadeInNikiti from 'components/MadeIn'
 
 const Home = () => (
   <>
-    <VideoBg />
     <S.Container>
       <Logo />
       <MadeInNikiti />

@@ -1,3 +1,28 @@
+// export type Data = {
+//   jwt: string
+//   user: User
+// }
+
+// export type User = {
+//   blocked: null | boolean
+//   confirmed: boolean
+//   created_at: string
+//   email: string
+//   id: number
+//   provider: string
+//   role: Role
+//   updated_at: string
+//   '[[Prototype]]': Object
+//   username: string
+// }
+
+// export type Role = {
+//   description: string
+//   id: number
+//   name: string
+//   type: string
+// }
+
 export type ProductNameProps = {
   Name: string
   Price: number
@@ -5,32 +30,43 @@ export type ProductNameProps = {
   Url: string
 }
 
-export type ProductsCollection = {
-  products: Product[]
-}
-
-export type Snack = {
+export type Pack = {
   id: string
   Name: string
-  Price: number
+  Item: PackItem[]
+  Description: string
   Image: Image
 }
 
-export type Image = {
-  ext: string
-  hash: string
+export type PackItem = {
+  Quantity: number
+  id: string
+  product: Product
+}
+
+export type ProductsCollection = {
+  products: Product[]
 }
 
 export type Product = {
   id: string
   Name: string
-  Price: number
+  BaseValue: number
   Weight: number
+  WeightUnit: string
   Description: string
-  InStock: number
-  Active: boolean
+  HasStockController: boolean
+  AmountInStock: number
+  IsActive: boolean
   NutritionFacts: NutritionFacts
-  Image: Image
+  Image1: Image
+  Image2: null | Image
+}
+
+export type Image = {
+  url: string
+  ext: string
+  hash: string
 }
 
 export type NutritionFacts = {

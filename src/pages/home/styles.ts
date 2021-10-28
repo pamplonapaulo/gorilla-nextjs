@@ -20,7 +20,6 @@ export const Container = styled.div`
   }
 
   @media only screen and (min-width: 1024px) {
-    position: absolute;
     top: 0;
   }
 `

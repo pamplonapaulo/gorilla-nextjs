@@ -5,8 +5,8 @@ const GET_PRODUCTS = gql`
     products {
       id
       Name
-      Price
-      Image {
+      BaseValue
+      Image1 {
         ext
         hash
       }
