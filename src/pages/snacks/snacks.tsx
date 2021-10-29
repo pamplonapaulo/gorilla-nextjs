@@ -67,73 +67,71 @@ const Snacks = () => {
 
   return (
     <>
-      <Container>
-        <T>{'Selecione os snacks do seu pack'}</T>
-        <Wrapper>
-          {data.products.map((p: Product) => {
-            return (
-              <Item key={p.id}>
-                <H>{p.Name}</H>
-                <ImgComp
-                  src={'https://via.placeholder.com/363x500.png/'}
-                  alt={getImageUrl(
-                    '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
-                  )}
-                  // alt={p.Name}
+      <T>{'Selecione os snacks do seu pack'}</T>
+      <Wrapper>
+        {data.products.map((p: Product) => {
+          return (
+            <Item key={p.id}>
+              <H>{p.Name}</H>
+              <ImgComp
+                src={'https://via.placeholder.com/363x500.png/'}
+                alt={getImageUrl(
+                  '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
+                )}
+                // alt={p.Name}
+              />
+              <H>{'R$' + p.BaseValue}</H>
+              <BtnsWrapper>
+                <Input
+                  idOfSnack={Number(p.id)}
+                  photoOfSnack={p.Image1['hash'] + p.Image1['ext']}
+                  parentCallback={handleSnackOnPack}
+                  scale={'1'}
+                  value={0}
                 />
-                <H>{'R$' + p.BaseValue}</H>
-                <BtnsWrapper>
-                  <Input
-                    idOfSnack={Number(p.id)}
-                    photoOfSnack={p.Image1['hash'] + p.Image1['ext']}
-                    parentCallback={handleSnackOnPack}
-                    scale={'1'}
-                    value={0}
-                  />
-                </BtnsWrapper>
-                <Sum
-                  isVisible={customPack.some((snk) => snk.id === Number(p.id))}
-                >
-                  <h1>{calculatePartial(p.id, p.BaseValue)}</h1>
-                </Sum>
-              </Item>
-            )
-          })}
-        </Wrapper>
-        <PackPanel pack={customPack} />
-      </Container>
+              </BtnsWrapper>
+              <Sum
+                isVisible={customPack.some((snk) => snk.id === Number(p.id))}
+              >
+                <h1>{calculatePartial(p.id, p.BaseValue)}</h1>
+              </Sum>
+            </Item>
+          )
+        })}
+      </Wrapper>
+      <PackPanel pack={customPack} />
     </>
   )
 }
 
-const Container = styled.div`
-  align-items: center;
-  background: 'transparent';
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  margin: auto;
-  min-height: calc(100vh - 70px);
-  width: 100%;
-  z-index: 0;
+// const Container = styled.div`
+//   align-items: center;
+//   background: 'transparent';
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+//   justify-content: center;
+//   margin: auto;
+//   min-height: calc(100vh - 70px);
+//   width: 100%;
+//   z-index: 0;
 
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+//   -ms-overflow-style: none;
+//   scrollbar-width: none;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
 
-  &::-webkit-scrollbar {
-    width: 0 !important;
-  }
+//   &::-webkit-scrollbar {
+//     width: 0 !important;
+//   }
 
-  @media only screen and (min-width: 1024px) {
-    padding-top: 70px;
-    max-width: 1200px;
-  }
-`
+//   @media only screen and (min-width: 1024px) {
+//     padding-top: 70px;
+//     max-width: 1200px;
+//   }
+// `
 
 const T = styled.h1`
   color: #fbc822;

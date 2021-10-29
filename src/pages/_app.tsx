@@ -7,18 +7,17 @@ import { client } from 'lib/apollo/client'
 
 import {
   MenuProvider,
-  UserProvider,
+  // UserProvider,
   OverlayProvider,
-  BagOverlayProvider,
-  BagProvider,
+  // BagOverlayProvider,
+  // BagProvider,
 } from 'contexts'
 
 import styled from 'styled-components'
 import GlobalStyles from 'styles/global'
 
 import Header from 'components/Header'
-import LoginOverlay from 'components/LoginOverlay'
-import BagOverlay from 'components/BagOverlay'
+// import LoginOverlay from 'components/LoginOverlay'
 import VideoBg from 'components/VideoBG'
 import Footer from 'components/Footer'
 
@@ -43,24 +42,25 @@ function App({ Component, pageProps }: AppProps) {
           height={3}
         />
         <MenuProvider>
-          <UserProvider>
-            <BagProvider>
-              <OverlayProvider>
-                <BagOverlayProvider>
-                  <ContainerOuter>
-                    <Header />
-                    <ContainerInner>
-                      <LoginOverlay />
-                      <BagOverlay />
-                      <VideoBg />
-                      <Component {...pageProps} />
-                    </ContainerInner>
-                    <Footer />
-                  </ContainerOuter>
-                </BagOverlayProvider>
-              </OverlayProvider>
-            </BagProvider>
-          </UserProvider>
+          {/* <UserProvider>
+            <BagProvider> */}
+          <OverlayProvider>
+            {/* <BagOverlayProvider> */}
+            <ContainerOuter>
+              <Header />
+              <ContainerInner>
+                {/* <LoginOverlay /> */}
+                <VideoBg />
+                <ContainerExtra>
+                  <Component {...pageProps} />
+                </ContainerExtra>
+              </ContainerInner>
+              <Footer />
+            </ContainerOuter>
+            {/* </BagOverlayProvider> */}
+          </OverlayProvider>
+          {/* </BagProvider>
+          </UserProvider> */}
         </MenuProvider>
       </ApolloProvider>
     </>
@@ -109,6 +109,35 @@ const ContainerInner = styled.main`
   @media only screen and (min-width: 1024px) {
     height: unset;
     min-height: calc(100vh - 70px);
+  }
+`
+
+const ContainerExtra = styled.div`
+  align-items: center;
+  background: 'transparent';
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  margin: auto;
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  z-index: 0;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    padding-top: 70px;
+    position: absolute;
   }
 `
 

@@ -1,13 +1,10 @@
-import * as S from './styles'
 import Logo from 'components/Logo'
 import MadeInNikiti from 'components/MadeIn'
 
 const Home = () => (
   <>
-    <S.Container>
-      <Logo />
-      <MadeInNikiti />
-    </S.Container>
+    <Logo />
+    <MadeInNikiti />
   </>
 )
 
