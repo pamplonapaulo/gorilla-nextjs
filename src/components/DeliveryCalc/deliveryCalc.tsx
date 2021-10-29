@@ -16,6 +16,7 @@ const DeliveryCalc = ({ pack }: { pack: Snack[] }) => {
       console.log('pack')
       console.log(pack)
       const myHeaders = new Headers()
+      myHeaders.append('Access-Control-Allow-Origin', '*')
       myHeaders.append('Accept', 'application/json')
       myHeaders.append('Content-Type', 'application/json')
       myHeaders.append(
