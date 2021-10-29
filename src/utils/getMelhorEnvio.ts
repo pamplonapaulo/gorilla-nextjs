@@ -1,1 +1,3 @@
-export const getMelhorEnvio = () => console.log('melhor envio')
+export const getMelhorEnvio = () => {
+  console.log('melhor envio')
+}

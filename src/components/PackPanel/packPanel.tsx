@@ -2,21 +2,13 @@ import * as S from './styles'
 
 import { getImageUrl } from 'utils/getImageUrl'
 
+import { Snack } from 'types/api'
+
 import Btn from 'components/Btn'
 import BtnRadio from 'components/BtnRadio'
 import DeliveryCalc from 'components/DeliveryCalc'
 
-type Snack = {
-  id: number
-  quantity: number
-  photo: string
-}
-
-type Props = {
-  pack: Snack[]
-}
-
-const PackPanel = ({ pack }: Props) => (
+const PackPanel = ({ pack }: { pack: Snack[] }) => (
   <S.PackPanel isVisible={pack.length > 0}>
     <S.Content>
       <S.Text>Pack:</S.Text>
@@ -61,7 +53,7 @@ const PackPanel = ({ pack }: Props) => (
     <S.Content>
       <S.Text>Frete:</S.Text>
       <S.Items>
-        <DeliveryCalc />
+        <DeliveryCalc pack={pack} />
       </S.Items>
     </S.Content>
     <S.Content>

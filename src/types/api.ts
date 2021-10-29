@@ -30,6 +30,12 @@ export type ProductNameProps = {
   Url: string
 }
 
+export type Snack = {
+  id: number
+  quantity: number
+  photo: string
+}
+
 export type Pack = {
   id: string
   Name: string
