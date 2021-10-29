@@ -10,7 +10,7 @@ const DeliveryCalc = ({ pack }: { pack: Snack[] }) => {
 
   useEffect(() => {
     if (postcode.length > 8) {
-      const cepWithoutDash = postcode.replace(/\d/, '')
+      const cepWithoutDash = postcode.replace('-', '')
       console.log('cepWithoutDash')
       console.log(cepWithoutDash)
       console.log('pack')
@@ -85,7 +85,7 @@ const DeliveryCalc = ({ pack }: { pack: Snack[] }) => {
       //   redirect: string
       // }
 
-      fetch('{{url}}/api/v2/me/shipment/calculate', requestOptions)
+      fetch('https://docs.menv.io/api/v2/me/shipment/calculate', requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.log('error', error))
