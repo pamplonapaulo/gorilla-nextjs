@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-export const endpoint = 'http://127.0.0.1:1337/'
+export const endpoint = process.env.DB_HOST
 
 export const client = new ApolloClient({
   uri: endpoint + 'graphql',
