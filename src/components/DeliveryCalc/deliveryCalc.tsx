@@ -75,13 +75,6 @@ const DeliveryCalc = ({ pack }: { pack: Snack[] }) => {
         // redirect: 'follow',
       }
 
-      // type rqstOptns = {
-      //   method: string
-      //   headers: Headers
-      //   body: string
-      //   redirect: string
-      // }
-
       fetch(
         'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate',
         requestOptions
