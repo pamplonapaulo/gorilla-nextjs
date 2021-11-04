@@ -3,7 +3,7 @@ import GET_PACKS from 'graphql/queries/getPacks'
 
 import { Pack } from 'types/api'
 
-import { getImageUrl } from 'utils/getImageUrl'
+// import { getImageUrl } from 'utils/getImageUrl'
 import { getPackPrice } from 'utils/getPackPrice'
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 
@@ -30,10 +30,10 @@ const Packs = () => {
             <ImgWrap>
               <ImgComp
                 src={'https://via.placeholder.com/500.png/'}
-                alt={getImageUrl(
-                  '/uploads/' + p.Image['hash'] + p.Image['ext']
-                )}
-                // alt={p.Name}
+                // src={getImageUrl(
+                //   '/uploads/' + p.Image['hash'] + p.Image['ext']
+                // )}
+                alt={p.Name}
               />
             </ImgWrap>
             <H>R$ {getPackPrice(p)} / mês</H>

@@ -5,7 +5,7 @@ import * as S from './styles'
 import { useQuery } from '@apollo/client'
 import GET_PLANS from 'graphql/queries/getPlans'
 
-import { getImageUrl } from 'utils/getImageUrl'
+// import { getImageUrl } from 'utils/getImageUrl'
 
 import { Snack, Plans, ProductFull } from 'types/api'
 
@@ -68,12 +68,8 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
 
   const formatDiscount = (value: number) => (100 * value).toFixed(0)
 
-  const applyDiscount = (initialValue: number, discount: number) => {
-    console.log('valor total antes do desconto: ', initialValue)
-    console.log(initialValue)
-    console.log('valor do desconto em si: ', initialValue * discount)
-    return initialValue - initialValue * discount
-  }
+  const applyDiscount = (initialValue: number, discount: number) =>
+    initialValue - initialValue * discount
 
   useEffect(() => {
     const asyncRes = Promise.all(
@@ -89,11 +85,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   }, [pack])
 
   useEffect(() => {
-    console.log('preço do pack mudou: ', priceAfterPack)
-
-    if (step > 0) {
-      setPriceAfterPlan(applyDiscount(priceAfterPack, planDiscount))
-    }
+    if (step > 0) setPriceAfterPlan(applyDiscount(priceAfterPack, planDiscount))
   }, [priceAfterPack, step, planDiscount])
 
   if (loading) return <Loader isHidden={false} />
@@ -107,8 +99,8 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           {pack.map((s: Snack) => (
             <S.Snack key={s.id}>
               <S.Icon
-                // src={'https://via.placeholder.com/113x156.png/'}
-                src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
+                src={'https://via.placeholder.com/113x156.png/'}
+                // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
                 alt={'teste'}
               />
               <S.Quantity>
