@@ -23,6 +23,27 @@
 //   type: string
 // }
 
+export type ProductFull = {
+  Name: string
+  id: string
+  quantity: number
+  photo: string
+  BaseValue: number
+  TotalValue: number
+  Weight: number
+  WeightUnit: string
+  Height: number
+  Width: number
+  Length: number
+}
+
+export type Plans = {
+  id: string
+  Type: string
+  Multiplier: number
+  Discount: number
+}
+
 export type ProductNameProps = {
   Name: string
   Price: number

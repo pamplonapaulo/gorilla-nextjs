@@ -4,8 +4,19 @@ import * as S from './styles'
 
 import { Snack } from 'types/api'
 
-const DeliveryCalc = ({ pack }: { pack: Snack[] }) => {
+type Props = {
+  pack: Snack[]
+  parentCallback: () => void
+}
+
+const DeliveryCalc = ({ pack, parentCallback }: Props) => {
   const [postcode, setPostcode] = useState('')
+
+  useEffect(() => {
+    if (postcode.length > 8) {
+      parentCallback()
+    }
+  }, [parentCallback, postcode])
 
   useEffect(() => {
     if (postcode.length > 8) {
@@ -15,7 +26,7 @@ const DeliveryCalc = ({ pack }: { pack: Snack[] }) => {
       myHeaders.append('Content-Type', 'application/json')
       myHeaders.append(
         'Authorization',
-        'Bearer {{eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImUzOTEwZGEzOTFjNmMwZmU2OWVjZmI0ODBhNjg0ODI5YTM1NzUyZmUzMDJjZTAzYTJmYmE0NTRjZmRjODNjNDU3YmZmOTE2YjI0MzE2N2RiIn0.eyJhdWQiOiI5NTYiLCJqdGkiOiJlMzkxMGRhMzkxYzZjMGZlNjllY2ZiNDgwYTY4NDgyOWEzNTc1MmZlMzAyY2UwM2EyZmJhNDU0Y2ZkYzgzYzQ1N2JmZjkxNmIyNDMxNjdkYiIsImlhdCI6MTYzNTU0MjYxMSwibmJmIjoxNjM1NTQyNjExLCJleHAiOjE2NjcwNzg2MTEsInN1YiI6ImNhYjUwYmZhLWM0YWUtNDIyYy1hYjlmLWQ1MGFhN2I3NGI2NiIsInNjb3BlcyI6WyJlY29tbWVyY2Utc2hpcHBpbmciXX0.k7xly_DQXZ9jMfOyUrzt_gPKw3SHPzIfp6uICo1Y2GXnZnG9Kl8hl9OK5zgLNuA9ZKNiTFAc_4br_qNbKLxitWVar2UuKnAuHQarTTsbMxhEfJ_DMmfllAHLAogXCSprgHQ9r7P0s_42XIbheW2zogpC7UD_wtRdktni06NUz66WcEuil9sXxf8p_NsBauT62biSaDpCvpuTv5-w4nDvXx5t5471DkoVBO_q3j4SuYVziyoiFA9aibzGPu53A88VDg0MJ8dmEmlX19m_8bgwZVvNXBRYpSP_t09sNaX8z1tSgQxZzhSQQTVhzZLnX6-OJhpCtHWVaEEKzxdvaLIBXyv3lIqU2p0DSHfhRuyV51yL87xotoLAah5eR-DwIzeG8R3u9HSMydkvqwCXYcoMJcbtyBZmC9PMRQa_RAWsueX60OdkqNl4HE0Jw2jUw5mTns9TsRMyVXPghBqydmtHA0owz8izelmsPGVOf7zGtxGQIPsRKOV9ZM8hCtI__fNKeylv6K0fpCLpZCv2z6GEhDD8KP4oH3tkQ7rn6XIk9dtQAPLvEYFk9URIEiDyXo-zCQwiLQqc8zBTXRJb8C-HLs8cng9ohadDhLB3ud5EYgvu0wAcqo93CutBLSqp-WuM68fVQ6UThevsRtxFsjT2Gb1-_5wQKfg0V8_0SppJ5oQ}}'
+        'Bearer {{def502009333ba44f917aa900696a0b337de47a038c63d0d07af976bdb3e71f3b60eb08364567540ea2f0cea4e9c1facb4cc80d08f3542bd508a51aac735e4c7f340a23efc83399e29244283369931979a1c7bf613de414bd6bbc024891d384c06679832d11daa0b0e59941529386082047ff1e56478afb7623e7a3c7824a0878c425412d0926b77d1ac08eced15c6af9580866b7f5cd2f357cff8b159e3b2a4a36f235d7eed602b61d76c415b1bad8c2184db80ba3f32f75b53f30ad7f414413f114332063f1ab9bb11205add029944bef9fbe31bc707fd62c116823c0a40bcf80a46d8711fd0e8b705bfb972d5713c87a5a12af1660c727fafbca091c85b9452c7bdd76c1e00e3868d79c7ef0637223c0de2b4596e66246c8018f45a4aa45d8f63b66c1a58437e91e9155859de748d7f804066748427ab97765768018098174aab626c4de69b9afea0902d3f2d59c44b3e952364e33b7eeec580531a40dff97c19d1e1e0255e43c77f89ae39f713dab17ac996717632f0546fcb329d6210c0945caf0396ebae644b395145e718d4c5188cf17227}}'
       )
       myHeaders.append('User-Agent', 'Gorilla Pack (pamplonapaulo@gmail.com)')
       myHeaders.append('Access-Control-Allow-Origin', '*')
@@ -99,8 +110,8 @@ const DeliveryCalc = ({ pack }: { pack: Snack[] }) => {
       <S.Wrap>
         <S.Label>Digite o CEP para as entregas:</S.Label>
         <S.Input value={postcode} onChange={handleChangePostCode} />
-        <S.Label>Custo de cada entrega:</S.Label>
-        <S.Cost>R$ {'44'}</S.Cost>
+        <S.Label>Custo de cada frete:</S.Label>
+        <S.Cost>R$ {'99,00'}</S.Cost>
       </S.Wrap>
     </>
   )

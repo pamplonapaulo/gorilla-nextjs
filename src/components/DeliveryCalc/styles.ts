@@ -31,9 +31,6 @@ export const Input = styled.input`
   font-weight: 300;
   font-size: 16px;
   font-style: italic;
-
-  /* width: calc(100% - 12px); */
-
   text-align: center;
   transition: 0.2s all;
 
@@ -56,6 +53,7 @@ export const Input = styled.input`
 `
 
 export const Cost = styled.h1`
+  color: #fff;
   font-weight: 300;
   font-size: 2.75rem;
   font-style: italic;
