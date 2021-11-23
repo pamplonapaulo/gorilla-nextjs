@@ -5,11 +5,12 @@ export const Wrap = styled.div`
   flex-direction: column;
 `
 
-export const Label = styled.label`
+export const Label = styled.label<{ isHidden?: boolean }>`
   color: #aaaaaa;
   font-weight: 300;
   font-size: 1.35em;
   font-style: italic;
+  opacity: ${(p) => (p.isHidden ? 0 : 1)};
   text-transform: uppercase;
   text-shadow: 0px 1px 4px #000;
 `
@@ -52,11 +53,12 @@ export const Input = styled.input`
   }
 `
 
-export const Cost = styled.h1`
+export const Cost = styled.h1<{ isHidden: boolean }>`
   color: #fff;
   font-weight: 300;
   font-size: 2.75rem;
   font-style: italic;
+  opacity: ${(p) => (p.isHidden ? 0 : 1)};
   text-transform: uppercase;
   text-shadow: 0px 1px 4px #000;
 `

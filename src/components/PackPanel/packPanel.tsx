@@ -5,7 +5,7 @@ import * as S from './styles'
 import { useQuery } from '@apollo/client'
 import GET_PLANS from 'graphql/queries/getPlans'
 
-// import { getImageUrl } from 'utils/getImageUrl'
+import { getImageUrl } from 'utils/getImageUrl'
 
 import { Snack, Plans, ProductFull } from 'types/api'
 
@@ -24,7 +24,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   const [priceAfterPack, setPriceAfterPack] = useState(0)
   const [priceAfterPlan, setPriceAfterPlan] = useState(0)
   const [planDiscount, setPlanDiscount] = useState(0)
-  // const [priceAfterFrete, setPriceAfterFrete] = useState(0)
+  const [priceAfterFrete, setPriceAfterFrete] = useState(0)
   // const [bigPack, setBigPack] = useState<ProductFull[]>([])
 
   const { loading, error, data } = useQuery(GET_PLANS)
@@ -59,7 +59,8 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     setPlanDiscount(discount)
   }
 
-  const deliveryFeeIsSet = () => {
+  const deliveryFeeIsSet = (num: number) => {
+    setPriceAfterFrete(priceAfterPlan + num)
     setStep(2)
   }
 
@@ -99,8 +100,8 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           {pack.map((s: Snack) => (
             <S.Snack key={s.id}>
               <S.Icon
-                src={'https://via.placeholder.com/113x156.png/'}
-                // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
+                // src={'https://via.placeholder.com/113x156.png/'}
+                src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
                 alt={'teste'}
               />
               <S.Quantity>
@@ -134,7 +135,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       <S.Content isVisible={step > 1}>
         <S.Text>Total:</S.Text>
         <S.Text>
-          R$ {formatCurrency(priceAfterPlan)}/<span> mês</span>
+          R$ {formatCurrency(priceAfterFrete)}/<span> mês</span>
         </S.Text>
         <Btn as={'/checkout'} pathname={'/checkout'} text={'Avançar'} />
       </S.Content>

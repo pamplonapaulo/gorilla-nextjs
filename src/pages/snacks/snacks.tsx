@@ -7,7 +7,7 @@ import GET_PRODUCTS from 'graphql/queries/getProducts'
 
 import { Product } from 'types/api'
 
-// import { getImageUrl } from 'utils/getImageUrl'
+import { getImageUrl } from 'utils/getImageUrl'
 // import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 
 import Loader from 'components/Loader'
@@ -74,10 +74,10 @@ const Snacks = () => {
             <Item key={p.id}>
               <H>{p.Name}</H>
               <ImgComp
-                src={'https://via.placeholder.com/363x500.png/'}
-                // src={getImageUrl(
-                //   '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
-                // )}
+                // src={'https://via.placeholder.com/363x500.png/'}
+                src={getImageUrl(
+                  '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
+                )}
                 alt={p.Name}
               />
               <H>{'R$' + p.BaseValue}</H>

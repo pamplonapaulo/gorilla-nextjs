@@ -3,7 +3,7 @@ import GET_PACKS from 'graphql/queries/getPacks'
 
 import { Pack } from 'types/api'
 
-// import { getImageUrl } from 'utils/getImageUrl'
+import { getImageUrl } from 'utils/getImageUrl'
 import { getPackPrice } from 'utils/getPackPrice'
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 
@@ -29,10 +29,10 @@ const Packs = () => {
             <H>{p.Name}</H>
             <ImgWrap>
               <ImgComp
-                src={'https://via.placeholder.com/500.png/'}
-                // src={getImageUrl(
-                //   '/uploads/' + p.Image['hash'] + p.Image['ext']
-                // )}
+                // src={'https://via.placeholder.com/500.png/'}
+                src={getImageUrl(
+                  '/uploads/' + p.Image['hash'] + p.Image['ext']
+                )}
                 alt={p.Name}
               />
             </ImgWrap>
@@ -50,8 +50,8 @@ const Packs = () => {
           <H>{''}</H>
           <ImgWrap>
             <ImgComp
-              src={'https://via.placeholder.com/500.png/'}
-              // src={getImageUrl('/uploads/custom_a407b5b52e.png')}
+              // src={'https://via.placeholder.com/500.png/'}
+              src={getImageUrl('/uploads/custom_a407b5b52e.png')}
               alt={'custom'}
             />
           </ImgWrap>
