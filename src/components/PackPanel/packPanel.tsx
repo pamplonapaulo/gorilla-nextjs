@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client'
 import GET_PLANS from 'graphql/queries/getPlans'
 
 import { getImageUrl } from 'utils/getImageUrl'
+import { formatCurrency } from 'utils/formatCurrency'
 
 import { Snack, Plans, ProductFull } from 'types/api'
 
@@ -59,13 +60,28 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     setPlanDiscount(discount)
   }
 
-  const deliveryFeeIsSet = (num: number) => {
-    setPriceAfterFrete(priceAfterPlan + num)
-    setStep(2)
+  const handleDeliveryFeeDisplay = (bool: boolean, num: number) => {
+    console.log(' ')
+    console.log('bool')
+    console.log(bool)
+    console.log(' ')
+    console.log('num')
+    console.log(num)
+    if (step === 1 && bool) {
+      setPriceAfterFrete(priceAfterPlan + num)
+      setStep(2)
+    }
+
+    if (step === 2 && !bool) {
+      console.log('TOTAL PRICE deveria sumir agora')
+      setPriceAfterFrete(0)
+      setStep(1)
+    }
   }
 
-  const formatCurrency = (value: number) =>
-    value.toFixed(2).toString().replace('.', ',')
+  useEffect(() => {
+    console.log('current step is:', step)
+  }, [step])
 
   const formatDiscount = (value: number) => (100 * value).toFixed(0)
 
@@ -129,7 +145,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       <S.Content isVisible={step > 0}>
         <S.Text>Frete:</S.Text>
         <S.Items>
-          <DeliveryCalc pack={pack} parentCallback={deliveryFeeIsSet} />
+          <DeliveryCalc pack={pack} parentCallback={handleDeliveryFeeDisplay} />
         </S.Items>
       </S.Content>
       <S.Content isVisible={step > 1}>

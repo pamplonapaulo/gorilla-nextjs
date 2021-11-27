@@ -40,9 +40,15 @@ const bounce = keyframes`
   100% { transform: translateY(0%); }
 `
 
+const hide = keyframes`
+  0% { transform: translateY(0%); }
+  100% { transform: scale(1,1) translateY(-115%); }
+`
+
 export const Content = styled.div<{ isVisible: boolean }>`
-  animation: ${bounce} 2.5s forwards;
-  animation-play-state: ${(p) => (p.isVisible ? 'running' : 'paused')};
+  animation: ${(p) => (p.isVisible ? bounce : hide)} forwards;
+  animation-duration: ${(p) => (p.isVisible ? '2.5s' : '0.8s')};
+  animation-play-state: ${(p) => (p.isVisible ? 'running' : 'running')};
   animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
   display: flex;
   flex-direction: column;
@@ -89,6 +95,7 @@ export const Text = styled.h1`
 
   &&:nth-of-type(2) {
     color: #fff;
+    white-space: nowrap;
   }
 `
 

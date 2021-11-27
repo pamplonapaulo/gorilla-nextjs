@@ -22,7 +22,6 @@ export const Input = styled.input`
   margin: 0.35em 0 0.85em 0;
   outline: none;
   letter-spacing: 1.75px;
-
   outline-color: white;
   outline-width: 1px;
   border-width: 1px;
@@ -53,7 +52,7 @@ export const Input = styled.input`
   }
 `
 
-export const Cost = styled.h1<{ isHidden: boolean }>`
+export const Fee = styled.h1<{ isHidden: boolean }>`
   color: #fff;
   font-weight: 300;
   font-size: 2.75rem;

@@ -4,41 +4,44 @@ import * as S from './styles'
 import axios, { AxiosResponse } from 'axios'
 import { endpoint } from 'lib/apollo/client'
 
+import { formatCurrency } from 'utils/formatCurrency'
+
 import { Snack } from 'types/api'
 
 type Props = {
   pack: Snack[]
-  parentCallback: (num: number) => void
+  parentCallback: (bool: boolean, num: number) => void
 }
 
 const DeliveryCalc = ({ pack, parentCallback }: Props) => {
   const [postcode, setPostcode] = useState('')
-  const [deliveryCost, setDeliveryCost] = useState(0)
+  const [fullPostcode, setFullPostcode] = useState('')
+  const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
 
   useEffect(() => {
-    if (postcode.length > 8) {
-      parentCallback(deliveryCost)
-    }
-  }, [parentCallback, postcode, deliveryCost])
-
-  useEffect(() => {
-    if (postcode.length > 8) {
-      const cepWithoutDash = postcode.replace('-', '')
+    if (fullPostcode != '') {
+      console.log('pack')
+      console.log(pack)
+      console.log('fullPostcode')
+      console.log(fullPostcode)
+      console.log('Calculando valor do frete...')
       axios
         .post(endpoint + 'delivery-costs/create-estimation', {
-          dropOffPostCode: cepWithoutDash,
+          dropOffPostCode: fullPostcode,
           pack: pack,
         })
         .then((response: AxiosResponse<unknown>) => {
           if (typeof response.data === 'number') {
-            setDeliveryCost(response.data)
+            console.log(response.data)
+            setDeliveryFee(response.data)
+            parentCallback(true, response.data)
           }
         })
         .catch((error: { response: unknown }) => {
           console.log('we still must format an error display: ', error)
         })
     }
-  }, [pack, postcode])
+  }, [pack, fullPostcode, parentCallback])
 
   const postCodeMask = (value: string) =>
     value
@@ -46,18 +49,32 @@ const DeliveryCalc = ({ pack, parentCallback }: Props) => {
       .replace(/(\d{5})(\d)/, '$1-$2')
       .replace(/(-\d{3})\d+?$/, '$1')
 
-  const handleChangePostCode = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChangePostCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value)
     setPostcode(postCodeMask(e.target.value))
+
+    if (postCodeMask(e.target.value).length > 8) {
+      console.log('o campo está completo')
+      setFullPostcode(postCodeMask(e.target.value).replace('-', ''))
+    }
+
+    if (postcode.length > 8 && postCodeMask(e.target.value).length < 9) {
+      console.log('o campo NÃO está mais completo')
+      setFullPostcode('')
+      setDeliveryFee(false)
+      parentCallback(false, 0)
+    }
+  }
 
   return (
     <>
       <S.Wrap>
         <S.Label>Digite o CEP para as entregas:</S.Label>
         <S.Input value={postcode} onChange={handleChangePostCode} />
-        <S.Label isHidden={postcode.length < 9}>Custo de cada frete:</S.Label>
-        <S.Cost isHidden={postcode.length < 9}>
-          R$ {deliveryCost.toString().replace('.', ',')}
-        </S.Cost>
+        <S.Label isHidden={!deliveryFee}>Custo de cada frete:</S.Label>
+        <S.Fee isHidden={!deliveryFee}>
+          R$ {typeof deliveryFee === 'number' && formatCurrency(deliveryFee)}
+        </S.Fee>
       </S.Wrap>
     </>
   )
