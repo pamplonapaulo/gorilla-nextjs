@@ -21,12 +21,10 @@ import Loader from 'components/Loader'
 const client = new GraphQLClient(endpoint + 'graphql')
 
 const PackPanel = ({ pack }: { pack: Snack[] }) => {
-  const [step, setStep] = useState(0)
-  const [priceAfterPack, setPriceAfterPack] = useState(0)
-  const [priceAfterPlan, setPriceAfterPlan] = useState(0)
-  const [planDiscount, setPlanDiscount] = useState(0)
-  const [priceAfterFrete, setPriceAfterFrete] = useState(0)
-  // const [bigPack, setBigPack] = useState<ProductFull[]>([])
+  const [snacksCost, setSnacksCost] = useState<boolean | number>(false)
+  const [discount, setDiscount] = useState<boolean | number>(false)
+  const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
+  const [finalPrice, setFinalPrice] = useState(0)
 
   const { loading, error, data } = useQuery(GET_PLANS)
 
@@ -56,37 +54,37 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   }
 
   const planIsSet = (discount: number) => {
-    setStep(1)
-    setPlanDiscount(discount)
+    setDiscount(discount)
   }
 
-  const handleDeliveryFeeDisplay = (bool: boolean, num: number) => {
-    console.log(' ')
-    console.log('bool')
-    console.log(bool)
-    console.log(' ')
-    console.log('num')
-    console.log(num)
-    if (step === 1 && bool) {
-      setPriceAfterFrete(priceAfterPlan + num)
-      setStep(2)
+  const handleDeliveryFeeDisplay = (bool: boolean, deliveryFee: number) => {
+    if (bool) {
+      setDeliveryFee(deliveryFee)
     }
 
-    if (step === 2 && !bool) {
-      console.log('TOTAL PRICE deveria sumir agora')
-      setPriceAfterFrete(0)
-      setStep(1)
+    if (!bool) {
+      console.log('FINAL PRICE deveria sumir agora')
+      setDeliveryFee(false)
+      setFinalPrice(0)
     }
   }
 
   useEffect(() => {
-    console.log('current step is:', step)
-  }, [step])
+    if (
+      typeof snacksCost === 'number' &&
+      typeof discount === 'number' &&
+      typeof deliveryFee === 'number'
+    ) {
+      const afterDiscount = applyDiscount(snacksCost, discount)
+      const afterAll = afterDiscount + deliveryFee
+      setFinalPrice(afterAll)
+    }
+  }, [snacksCost, discount, deliveryFee])
 
   const formatDiscount = (value: number) => (100 * value).toFixed(0)
 
-  const applyDiscount = (initialValue: number, discount: number) =>
-    initialValue - initialValue * discount
+  const applyDiscount = (snacks: number, discount: number) =>
+    snacks - snacks * discount
 
   useEffect(() => {
     const asyncRes = Promise.all(
@@ -97,13 +95,9 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       result.map(
         (p: ProductFull) => (partialPrice = partialPrice + p.TotalValue)
       )
-      setPriceAfterPack(partialPrice)
+      setSnacksCost(partialPrice)
     })
   }, [pack])
-
-  useEffect(() => {
-    if (step > 0) setPriceAfterPlan(applyDiscount(priceAfterPack, planDiscount))
-  }, [priceAfterPack, step, planDiscount])
 
   if (loading) return <Loader isHidden={false} />
   if (error) return <p>Error :(</p>
@@ -142,16 +136,16 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           </S.Items>
         ))}
       </S.Content>
-      <S.Content isVisible={step > 0}>
+      <S.Content isVisible={discount !== false}>
         <S.Text>Frete:</S.Text>
         <S.Items>
           <DeliveryCalc pack={pack} parentCallback={handleDeliveryFeeDisplay} />
         </S.Items>
       </S.Content>
-      <S.Content isVisible={step > 1}>
+      <S.Content isVisible={deliveryFee !== false}>
         <S.Text>Total:</S.Text>
         <S.Text>
-          R$ {formatCurrency(priceAfterFrete)}/<span> mês</span>
+          R$ {formatCurrency(finalPrice)}/<span> mês</span>
         </S.Text>
         <Btn as={'/checkout'} pathname={'/checkout'} text={'Avançar'} />
       </S.Content>

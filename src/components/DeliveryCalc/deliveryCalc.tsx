@@ -20,11 +20,6 @@ const DeliveryCalc = ({ pack, parentCallback }: Props) => {
 
   useEffect(() => {
     if (fullPostcode != '') {
-      console.log('pack')
-      console.log(pack)
-      console.log('fullPostcode')
-      console.log(fullPostcode)
-      console.log('Calculando valor do frete...')
       axios
         .post(endpoint + 'delivery-costs/create-estimation', {
           dropOffPostCode: fullPostcode,
@@ -32,7 +27,6 @@ const DeliveryCalc = ({ pack, parentCallback }: Props) => {
         })
         .then((response: AxiosResponse<unknown>) => {
           if (typeof response.data === 'number') {
-            console.log(response.data)
             setDeliveryFee(response.data)
             parentCallback(true, response.data)
           }
@@ -50,16 +44,13 @@ const DeliveryCalc = ({ pack, parentCallback }: Props) => {
       .replace(/(-\d{3})\d+?$/, '$1')
 
   const handleChangePostCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
     setPostcode(postCodeMask(e.target.value))
 
     if (postCodeMask(e.target.value).length > 8) {
-      console.log('o campo está completo')
       setFullPostcode(postCodeMask(e.target.value).replace('-', ''))
     }
 
     if (postcode.length > 8 && postCodeMask(e.target.value).length < 9) {
-      console.log('o campo NÃO está mais completo')
       setFullPostcode('')
       setDeliveryFee(false)
       parentCallback(false, 0)
@@ -71,9 +62,15 @@ const DeliveryCalc = ({ pack, parentCallback }: Props) => {
       <S.Wrap>
         <S.Label>Digite o CEP para as entregas:</S.Label>
         <S.Input value={postcode} onChange={handleChangePostCode} />
-        <S.Label isHidden={!deliveryFee}>Custo de cada frete:</S.Label>
-        <S.Fee isHidden={!deliveryFee}>
-          R$ {typeof deliveryFee === 'number' && formatCurrency(deliveryFee)}
+        <S.Label isHidden={typeof deliveryFee === 'boolean'}>
+          Custo de cada frete:
+        </S.Label>
+        <S.Fee isHidden={typeof deliveryFee === 'boolean'}>
+          {typeof deliveryFee === 'number' &&
+            deliveryFee !== 0 &&
+            'R$ ' + formatCurrency(deliveryFee)}
+          {deliveryFee === 0 && 'GRÁTIS'}
+          {deliveryFee === false && 'is hidden'}
         </S.Fee>
       </S.Wrap>
     </>
