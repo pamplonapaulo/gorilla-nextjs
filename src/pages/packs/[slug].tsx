@@ -6,36 +6,46 @@ import { gql, GraphQLClient } from 'graphql-request'
 import { endpoint } from 'lib/apollo/client'
 import GET_PACKS from 'graphql/queries/getPacks'
 
-import { Pack, Params, PackItem } from 'types/api'
+import { Pack, Params, PackItem, Snack } from 'types/api'
 
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 
 import styled from 'styled-components'
+import { getImageUrl } from 'utils/getImageUrl'
+import PackPanel from 'components/PackPanel'
 
 const client = new GraphQLClient(endpoint + 'graphql')
 
-export default function Pacote({ ...pack }: Pack) {
+type ComplexPack = {
+  pack: Pack
+  currentPack: Snack[]
+}
+
+export default function Pacote({ ...complexPack }: ComplexPack) {
   return (
     <>
-      <T>{'Pack ' + pack.Name}</T>
+      <T>{'Pack ' + complexPack.pack.Name}</T>
       <Wrapper>
-        {pack.Item.map((p: PackItem) => {
+        {complexPack.pack.Item.map((p: PackItem) => {
           return (
             <Item key={p.id}>
               <H>
                 {p.Quantity} {p.product.Name}
               </H>
               <ImgComp
-                src={'https://via.placeholder.com/363x500.png/'}
-                // src={getImageUrl(
-                //   '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
-                // )}
+                // src={'https://via.placeholder.com/363x500.png/'}
+                src={getImageUrl(
+                  '/uploads/small_' +
+                    p.product.Image1['hash'] +
+                    p.product.Image1['ext']
+                )}
                 alt={p.product.Name}
               />
             </Item>
           )
         })}
       </Wrapper>
+      {<PackPanel pack={complexPack.currentPack} />}
     </>
   )
 }
@@ -171,7 +181,12 @@ export const getStaticProps = async ({ params }: Params) => {
           id
           Quantity
           product {
+            id
             Name
+            Image1 {
+              ext
+              hash
+            }
           }
         }
       }
@@ -179,9 +194,25 @@ export const getStaticProps = async ({ params }: Params) => {
   `
   const { pack } = await client.request(GET_PACK)
 
+  const currentPack: Snack[] = []
+  pack.Item.map((p: PackItem) => {
+    console.log(p)
+    const snack = {
+      id: parseInt(p.product.id),
+      quantity: p.Quantity,
+      photo: p.product.Image1['hash'] + p.product.Image1['ext'],
+    }
+    currentPack.push(snack)
+  })
+
+  const complexPack = {
+    pack: { ...pack },
+    currentPack: [...currentPack],
+  }
+
   return {
     props: {
-      ...pack,
+      ...complexPack,
     },
   }
 }

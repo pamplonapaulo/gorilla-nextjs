@@ -1,6 +1,6 @@
 import Hamburguer from 'components/Hamburguer'
 // import UserSection from 'components/UserSection'
-import Menu from 'components/Menu'
+// import Menu from 'components/Menu'
 import Logotype from 'components/Logotype'
 
 import * as S from './styles'
@@ -12,7 +12,7 @@ const Header = () => (
       {/* <UserSection /> */}
       <Hamburguer />
     </S.Wrapper>
-    <Menu />
+    {/* <Menu /> */}
   </S.TopBar>
 )
 

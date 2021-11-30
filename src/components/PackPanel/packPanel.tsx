@@ -29,6 +29,12 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   const { loading, error, data } = useQuery(GET_PLANS)
 
   const completeSnackDetails = async (s: Snack) => {
+    console.log('s')
+    console.log(s)
+
+    console.log('s.id')
+    console.log(s.id)
+
     const GET_PRODUCT = gql`
       query GET_PRODUCT {
         product(id: ${s.id}) {
@@ -36,7 +42,6 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           id
           BaseValue
           Weight
-          WeightUnit
           Height
           Width
           Length
@@ -46,9 +51,12 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
 
     const { product } = await client.request(GET_PRODUCT)
 
-    product.quantity = s.quantity
+    console.log('product')
+    console.log(product)
+
     product.photo = s.photo
     product.TotalValue = s.quantity * product.BaseValue
+    product.quantity = s.quantity
 
     return product
   }
@@ -63,7 +71,6 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     }
 
     if (!bool) {
-      console.log('FINAL PRICE deveria sumir agora')
       setDeliveryFee(false)
       setFinalPrice(0)
     }

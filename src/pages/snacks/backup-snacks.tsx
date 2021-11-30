@@ -104,35 +104,6 @@ const Snacks = () => {
   )
 }
 
-// const Container = styled.div`
-//   align-items: center;
-//   background: 'transparent';
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
-//   justify-content: center;
-//   margin: auto;
-//   min-height: calc(100vh - 70px);
-//   width: 100%;
-//   z-index: 0;
-
-//   -ms-overflow-style: none;
-//   scrollbar-width: none;
-
-//   &::-webkit-scrollbar {
-//     display: none;
-//   }
-
-//   &::-webkit-scrollbar {
-//     width: 0 !important;
-//   }
-
-//   @media only screen and (min-width: 1024px) {
-//     padding-top: 70px;
-//     max-width: 1200px;
-//   }
-// `
-
 const T = styled.h1`
   color: #fbc822;
   font-size: 5rem;

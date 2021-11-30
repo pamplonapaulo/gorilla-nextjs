@@ -31,7 +31,6 @@ export type ProductFull = {
   BaseValue: number
   TotalValue: number
   Weight: number
-  WeightUnit: string
   Height: number
   Width: number
   Length: number
@@ -80,7 +79,6 @@ export type Product = {
   Name: string
   BaseValue: number
   Weight: number
-  WeightUnit: string
   Description: string
   HasStockController: boolean
   AmountInStock: number
