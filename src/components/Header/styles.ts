@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const TopBar = styled.header`
-  background: #2da650;
+  /* background: #2da650; */
   height: 70px;
   top: 0;
   width: 100%;
@@ -10,7 +10,7 @@ export const TopBar = styled.header`
   justify-content: space-between;
   position: fixed;
   z-index: 9;
-  box-shadow: 0px 1px 8px #000;
+  /* box-shadow: 0px 1px 8px #000; */
 
   @media only screen and (min-width: 1024px) {
     padding: 0 5vw;
