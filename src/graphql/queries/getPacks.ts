@@ -13,11 +13,6 @@ const GET_PACKS = gql`
           BaseValue
         }
       }
-      Image {
-        url
-        hash
-        ext
-      }
       Description
       ExtraDiscount
     }
