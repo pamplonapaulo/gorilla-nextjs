@@ -11,7 +11,7 @@ import { Pack, Params, PackItem, Snack } from 'types/api'
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 
 import styled from 'styled-components'
-import { getImageUrl } from 'utils/getImageUrl'
+// import { getImageUrl } from 'utils/getImageUrl'
 import PackPanel from 'components/PackPanel'
 
 const client = new GraphQLClient(endpoint + 'graphql')
@@ -33,12 +33,12 @@ export default function Pacote({ ...complexPack }: ComplexPack) {
                 {p.Quantity} {p.product.Name}
               </H>
               <ImgComp
-                // src={'https://via.placeholder.com/363x500.png/'}
-                src={getImageUrl(
-                  '/uploads/small_' +
-                    p.product.Image1['hash'] +
-                    p.product.Image1['ext']
-                )}
+                src={'https://via.placeholder.com/363x500.png/'}
+                // src={getImageUrl(
+                //   '/uploads/small_' +
+                //     p.product.Image1['hash'] +
+                //     p.product.Image1['ext']
+                // )}
                 alt={p.product.Name}
               />
             </Item>
@@ -171,11 +171,6 @@ export const getStaticProps = async ({ params }: Params) => {
       pack(id: ${packId}) {
         id
         Name
-        Image {
-          url
-          hash
-          ext
-        }
         Description
         Item {
           id

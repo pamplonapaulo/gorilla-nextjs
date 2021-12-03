@@ -61,7 +61,6 @@ export type Pack = {
   Name: string
   Item: PackItem[]
   Description: string
-  Image: Image
 }
 
 export type PackItem = {

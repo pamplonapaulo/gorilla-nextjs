@@ -5,7 +5,7 @@ import * as S from './styles'
 import { useQuery } from '@apollo/client'
 import GET_PLANS from 'graphql/queries/getPlans'
 
-import { getImageUrl } from 'utils/getImageUrl'
+// import { getImageUrl } from 'utils/getImageUrl'
 import { formatCurrency } from 'utils/formatCurrency'
 
 import { Snack, Plans, ProductFull } from 'types/api'
@@ -108,8 +108,8 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           {pack.map((s: Snack) => (
             <S.Snack key={s.id}>
               <S.Icon
-                // src={'https://via.placeholder.com/113x156.png/'}
-                src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
+                src={'https://via.placeholder.com/113x156.png/'}
+                // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
                 alt={'teste'}
               />
               <S.Quantity>
