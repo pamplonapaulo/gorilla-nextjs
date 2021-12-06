@@ -65,17 +65,11 @@ const Carousel = ({ packs }: Props) => {
         </S.Window>
       </S.Wrapper>
       <S.Wrapper>
+        <S.Arrow onClick={handleNavigation} dir={'left'}></S.Arrow>
         {packs.map((p: Pack) => (
           <S.Dot onClick={handlePagination} id={p.id} key={p.id}></S.Dot>
         ))}
-      </S.Wrapper>
-      <S.Wrapper>
-        <S.Arrow onClick={handleNavigation} dir={'left'}>
-          {/* &#xab; */}
-        </S.Arrow>
-        <S.Arrow onClick={handleNavigation} dir={'right'}>
-          {/* &#xbb; */}
-        </S.Arrow>
+        <S.Arrow onClick={handleNavigation} dir={'right'}></S.Arrow>
       </S.Wrapper>
     </>
   )

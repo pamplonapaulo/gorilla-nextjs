@@ -25,7 +25,9 @@ export const Wrapper = styled.section`
   }
 
   &&:nth-of-type(2) {
+    align-items: center;
     margin-top: 25px;
+    overflow: visible;
   }
 
   &&:nth-of-type(3) {
@@ -137,7 +139,6 @@ export const Arrow = styled.span`
   color: #fbc822;
   cursor: pointer;
   display: flex;
-  /* display: table-cell; */
   font-weight: 400;
   justify-content: center;
   padding: 0;
@@ -162,7 +163,7 @@ export const Arrow = styled.span`
     }
   }
 
-  &&:nth-of-type(2) {
+  &&:last-of-type {
     margin-left: 3rem;
 
     &::after {
