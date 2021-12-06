@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
-  width: 80px;
+  /* width: 80px; */
+  width: 190px;
   height: 70px;
   display: flex;
   justify-content: center;
 
-  @media only screen and (min-width: 1024px) {
-    width: 190px;
-  }
+  /* @media only screen and (min-width: 1024px) {
+  } */
 `
 
 export const Btn = styled.button`
@@ -19,25 +19,24 @@ export const Btn = styled.button`
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-size: 1rem;
+  /* font-size: 1rem; */
+  font-size: 1.3rem;
+  font-weight: 100;
   height: 50px;
   letter-spacing: 1px;
+  overflow: hidden;
   padding: 1.3em 1.7em;
   text-align: center;
   text-decoration: none;
+  text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
   transition: all 0.05s;
-  width: 80px;
-  font-weight: 100;
-  text-shadow: 0px 1px 2px #000;
-  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  /* width: 80px; */
+  width: 190px;
   z-index: 0;
 
   @media only screen and (min-width: 1024px) {
-    font-size: 1.3rem;
-    width: 190px;
-    transition: all 0.2s ease-in-out;
-
     &&:before {
       width: 0%;
       height: 100%;

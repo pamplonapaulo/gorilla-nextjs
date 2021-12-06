@@ -2,21 +2,33 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.section`
   display: flex;
-  height: 100%;
-  overflow: hidden;
   flex-direction: row;
+  overflow: hidden;
+  width: calc(100vw - 50px);
 
   &&:nth-of-type(1) {
+    @media only screen and (min-width: 320px) {
+      width: 300px;
+    }
+
+    @media only screen and (min-width: 480px) {
+      width: 470px;
+    }
+
+    @media only screen and (min-width: 600px) {
+      width: 520px;
+    }
+
     @media only screen and (min-width: 768px) {
       width: 600px;
     }
 
     @media only screen and (min-width: 1024px) {
-      width: 768px;
+      width: 900px;
     }
 
     @media only screen and (min-width: 1260px) {
-      width: 1024px;
+      width: 1150px;
     }
 
     @media only screen and (min-width: 1300px) {
@@ -26,15 +38,16 @@ export const Wrapper = styled.section`
 
   &&:nth-of-type(2) {
     align-items: center;
+    justify-content: space-between;
     margin-top: 25px;
     overflow: visible;
   }
 
-  &&:nth-of-type(3) {
+  /* &&:nth-of-type(3) {
     height: 100px;
     overflow: visible;
     align-items: center;
-  }
+  } */
 `
 
 export const Window = styled.div`
@@ -44,12 +57,12 @@ export const Window = styled.div`
 
 export const Item = styled.div`
   text-align: center;
-  width: 300px;
-  height: 550px;
-  padding: 20px 10px 10px;
   display: flex;
   flex-direction: column;
+  height: 550px;
   justify-content: space-around;
+  padding: 20px 10px 10px;
+  width: calc(100vw - 50px);
 
   &&:nth-child(even) {
     background: rgba(28, 19, 11, 0.9);
@@ -59,16 +72,28 @@ export const Item = styled.div`
     background: rgba(45, 166, 80, 0.9);
   }
 
+  @media only screen and (min-width: 320px) {
+    width: 300px;
+  }
+
+  @media only screen and (min-width: 480px) {
+    width: calc(470px / 2);
+  }
+
+  @media only screen and (min-width: 600px) {
+    width: calc(520px / 2);
+  }
+
   @media only screen and (min-width: 768px) {
     width: calc(600px / 2);
   }
 
   @media only screen and (min-width: 1024px) {
-    width: calc(768px / 3);
+    width: calc(900px / 3);
   }
 
   @media only screen and (min-width: 1260px) {
-    width: calc(1024px / 4);
+    width: calc(1150px / 4);
   }
 
   @media only screen and (min-width: 1300px) {
@@ -172,9 +197,17 @@ export const Arrow = styled.span`
     }
   }
 
-  &:hover {
-    transform: scale(1.3);
+  @media only screen and (min-width: 1024px) {
+    &:hover {
+      color: #ef8321;
+      transform: scale(1.3);
+    }
   }
+`
+
+export const DotsWrap = styled.div`
+  display: flex;
+  flex-direction: row;
 `
 
 export const Dot = styled.span`
@@ -187,8 +220,10 @@ export const Dot = styled.span`
   margin: 10px;
   transition: ease-in 0.2s all;
 
-  &:hover {
-    background: #fbc822;
-    transform: scale(1.3);
+  @media only screen and (min-width: 1024px) {
+    &:hover {
+      background: #fbc822;
+      transform: scale(1.3);
+    }
   }
 `

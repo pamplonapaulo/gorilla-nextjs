@@ -121,6 +121,7 @@ const ContainerExtra = styled.div`
   justify-content: center;
   margin: auto;
   min-height: calc(100vh - 70px);
+  /* padding-top: 70px; */
   width: 100%;
   z-index: 0;
 

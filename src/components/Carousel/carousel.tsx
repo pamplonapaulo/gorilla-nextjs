@@ -66,9 +66,11 @@ const Carousel = ({ packs }: Props) => {
       </S.Wrapper>
       <S.Wrapper>
         <S.Arrow onClick={handleNavigation} dir={'left'}></S.Arrow>
-        {packs.map((p: Pack) => (
-          <S.Dot onClick={handlePagination} id={p.id} key={p.id}></S.Dot>
-        ))}
+        <S.DotsWrap>
+          {packs.map((p: Pack) => (
+            <S.Dot onClick={handlePagination} id={p.id} key={p.id}></S.Dot>
+          ))}
+        </S.DotsWrap>
         <S.Arrow onClick={handleNavigation} dir={'right'}></S.Arrow>
       </S.Wrapper>
     </>
