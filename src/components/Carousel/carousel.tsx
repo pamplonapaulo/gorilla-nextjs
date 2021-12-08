@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useLayoutEffect, useCallback, useState } from 'react'
 
 import * as S from './styles'
 
 import { getPackPrice } from 'utils/getPackPrice'
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 import BtnLittle from 'components/BtnLittle'
+import Pagination from 'components/Pagination'
 
 import { Pack } from 'types/api'
 
@@ -12,14 +13,48 @@ type Props = {
   packs: Pack[]
 }
 
-const Carousel = ({ packs }: Props) => {
-  const handlePagination = (e: React.MouseEvent<HTMLSpanElement>) => {
-    console.dir((e.target as Element).id)
-  }
+type Page = { packsIDs: string[] }
 
-  const handleNavigation = (e: React.MouseEvent<HTMLHeadElement>) => {
-    console.dir((e.target as Element).getAttribute('dir'))
-  }
+const Carousel = ({ packs }: Props) => {
+  const [pageLength, setPageLength] = useState(1)
+
+  useLayoutEffect(() => {
+    console.log('window.innerWidth: ', window.innerWidth)
+    const updateSize = () => {
+      if (window.innerWidth < 480) setPageLength(1)
+      if (window.innerWidth < 1024 && window.innerWidth >= 480) setPageLength(2)
+      if (window.innerWidth < 1260 && window.innerWidth >= 1024)
+        setPageLength(3)
+      if (window.innerWidth >= 1260) setPageLength(4)
+    }
+    window.addEventListener('resize', updateSize)
+    updateSize()
+    return () => window.removeEventListener('resize', updateSize)
+  })
+
+  const getPagination = useCallback(() => {
+    const numOfPages = Math.ceil(packs.length / pageLength)
+    const packsArr = [...packs]
+    const pagesArr: Page[] = []
+    console.log('pageLength: ', pageLength)
+    console.log('packs.length: ', packs.length)
+    console.log('Math.ceil(packs.length): ', Math.ceil(packs.length))
+    console.log('numOfPages: ', numOfPages)
+
+    for (let i = 0; i < numOfPages; i++) {
+      console.log('pagesArr 1')
+      const page: Page = { packsIDs: [] }
+
+      for (let x = 0; x < pageLength; x++) {
+        console.log('pagesArr 2')
+        const item = packsArr.shift()
+        if (item !== undefined) page.packsIDs.push(item.id)
+      }
+      pagesArr.push(page)
+    }
+    console.log(pagesArr)
+    return pagesArr
+  }, [packs, pageLength])
 
   return (
     <>
@@ -65,13 +100,7 @@ const Carousel = ({ packs }: Props) => {
         </S.Window>
       </S.Wrapper>
       <S.Wrapper>
-        <S.Arrow onClick={handleNavigation} dir={'left'}></S.Arrow>
-        <S.DotsWrap>
-          {packs.map((p: Pack) => (
-            <S.Dot onClick={handlePagination} id={p.id} key={p.id}></S.Dot>
-          ))}
-        </S.DotsWrap>
-        <S.Arrow onClick={handleNavigation} dir={'right'}></S.Arrow>
+        <Pagination getPagination={getPagination} />
       </S.Wrapper>
     </>
   )
