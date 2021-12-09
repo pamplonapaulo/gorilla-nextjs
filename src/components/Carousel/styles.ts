@@ -77,9 +77,11 @@ export const Wrapper = styled.section`
   } */
 `
 
-export const Window = styled.div`
+export const Window = styled.div<{ moving: number }>`
   display: flex;
   flex-direction: row;
+  transition: transform 0.2s ease-in;
+  transform: ${(p) => 'translateX(' + p.moving + 'px)'};
 `
 
 export const Item = styled.div`

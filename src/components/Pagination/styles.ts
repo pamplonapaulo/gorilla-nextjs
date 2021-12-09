@@ -1,25 +1,25 @@
 import styled from 'styled-components'
 
-export const Arrow = styled.span`
+export const Arrow = styled.span<{ isVisible: boolean }>`
   align-items: center;
   background: rgba(255, 255, 255, 0.3);
   color: #fbc822;
-  cursor: pointer;
+  cursor: ${(p) => (p.isVisible ? 'pointer' : 'default')};
   display: flex;
+  font-family: monospace;
   font-weight: 400;
+  font-size: 50px;
+  height: 50px;
   justify-content: center;
+  line-height: 100%;
+  opacity: ${(p) => (p.isVisible ? '1' : '0')};
   padding: 0;
   transition: ease-in 0.2s all;
   text-align: center;
   text-shadow: 0px 1px 4px #000;
   white-space: nowrap;
-  vertical-align: middle;
-
-  height: 50px;
   width: 50px;
-  font-size: 50px;
-  line-height: 100%;
-  font-family: monospace;
+  vertical-align: middle;
 
   &&:nth-of-type(1) {
     margin-right: 3rem;
