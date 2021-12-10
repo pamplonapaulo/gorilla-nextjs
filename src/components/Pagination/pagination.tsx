@@ -2,36 +2,31 @@ import React, { useEffect, useState } from 'react'
 
 import * as S from './styles'
 
-type Page = { packsIDs: string[] }
-
 type Props = {
-  getPagination: () => Page[]
+  getPagination: () => number[]
   moveCarousel: (dir: string) => void
+  total: number
   length: number
   nav: number
+  pageLength: number
 }
 
-const Pagination = ({ getPagination, moveCarousel, length, nav }: Props) => {
-  const [dots, setDots] = useState<Page[]>([])
-  console.log('pagesArr')
-
-  const handlePagination = (e: React.MouseEvent<HTMLSpanElement>) => {
-    console.dir((e.target as Element).id)
-    // moveCarousel()
-  }
+const Pagination = ({
+  getPagination,
+  moveCarousel,
+  length,
+  nav,
+  pageLength,
+}: Props) => {
+  const [dots, setDots] = useState<number[]>([])
 
   const handleNavigation = (e: React.MouseEvent<HTMLHeadElement>) => {
-    console.dir((e.target as Element).getAttribute('dir'))
     const dir = (e.target as Element).getAttribute('dir')
-
     if (typeof dir === 'string') moveCarousel(dir)
   }
 
   useEffect(() => {
-    console.log('Updating')
     setDots(getPagination())
-    console.log(getPagination())
-    console.log("Updating pagination's dots")
   }, [getPagination])
 
   return (
@@ -43,9 +38,9 @@ const Pagination = ({ getPagination, moveCarousel, length, nav }: Props) => {
       ></S.Arrow>
       <S.DotsWrap>
         {dots.length > 0 &&
-          dots.map((p: Page, index) => (
+          dots.map((id: number, index) => (
             <S.Dot
-              onClick={handlePagination}
+              isCurrent={index >= nav && index <= pageLength + nav - 1}
               id={index.toString()}
               key={index}
             ></S.Dot>

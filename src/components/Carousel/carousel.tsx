@@ -19,13 +19,14 @@ type Props = {
   packs: Pack[]
 }
 
-type Page = { packsIDs: string[] }
-
 const Carousel = ({ packs }: Props) => {
   const [pageLength, setPageLength] = useState(1)
   const [nav, setNav] = useState(0)
   const [translate, setTranslate] = useState<number>(0)
   const refItem = useRef<HTMLDivElement>(null)
+
+  console.log('packs:', packs)
+  console.log('packs.length:', packs.length)
 
   useEffect(() => {
     console.log(translate)
@@ -67,28 +68,13 @@ const Carousel = ({ packs }: Props) => {
   }
 
   const getPagination = useCallback(() => {
-    const numOfPages = Math.ceil(packs.length / pageLength)
-    const packsArr = [...packs]
-    const pagesArr: Page[] = []
-    // console.log('pageLength: ', pageLength)
-    // console.log('packs.length: ', packs.length)
-    // console.log('Math.ceil(packs.length): ', Math.ceil(packs.length))
-    // console.log('numOfPages: ', numOfPages)
+    const pagination: number[] = []
 
-    for (let i = 0; i < numOfPages; i++) {
-      // console.log('pagesArr 1')
-      const page: Page = { packsIDs: [] }
-
-      for (let x = 0; x < pageLength; x++) {
-        // console.log('pagesArr 2')
-        const item = packsArr.shift()
-        if (item !== undefined) page.packsIDs.push(item.id)
-      }
-      pagesArr.push(page)
+    for (let i = 0; i < packs.length; i++) {
+      pagination.push(parseInt(packs[i].id))
     }
-    // console.log(pagesArr)
-    return pagesArr
-  }, [packs, pageLength])
+    return pagination
+  }, [packs])
 
   return (
     <>
@@ -137,8 +123,10 @@ const Carousel = ({ packs }: Props) => {
         <Pagination
           getPagination={getPagination}
           moveCarousel={moveCarousel}
+          total={packs.length}
           length={packs.length - pageLength}
           nav={nav}
+          pageLength={pageLength}
         />
       </S.Wrapper>
     </>

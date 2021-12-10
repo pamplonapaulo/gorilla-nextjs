@@ -52,17 +52,32 @@ export const DotsWrap = styled.div`
   flex-direction: row;
 `
 
-export const Dot = styled.span`
-  background: #ccc;
+export const Dot = styled.span<{ isCurrent: boolean }>`
+  background: ${(p) => (p.isCurrent ? '#2da650' : '#ccc')};
   border-radius: 7.5px;
   box-shadow: 0px 1px 4px #000;
-  cursor: pointer;
-  width: 15px;
-  height: 15px;
-  margin: 10px;
+  width: 5px;
+  height: 5px;
+  margin: 7px;
   transition: ease-in 0.2s all;
 
+  @media only screen and (min-width: 480px) {
+    width: 8px;
+    height: 8px;
+    margin: 8px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 12.5px;
+    height: 12.5px;
+    margin: 9px;
+  }
+
   @media only screen and (min-width: 1024px) {
+    width: 15px;
+    height: 15px;
+    margin: 10px;
+
     &:hover {
       background: #fbc822;
       transform: scale(1.3);
