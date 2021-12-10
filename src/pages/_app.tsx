@@ -118,7 +118,7 @@ const ContainerExtra = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: center;
+  /* justify-content: center; */
   margin: auto;
   min-height: calc(100vh - 70px);
   /* padding-top: 70px; */
