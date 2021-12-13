@@ -138,7 +138,6 @@ const ContainerExtra = styled.div`
 
   @media only screen and (min-width: 1024px) {
     padding-top: 70px;
-    /* position: absolute; */
   }
 `
 

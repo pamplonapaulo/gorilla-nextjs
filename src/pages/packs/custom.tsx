@@ -67,7 +67,9 @@ const Custom = () => {
 
   return (
     <>
-      <T>{'Selecione os snacks do seu pack'}</T>
+      <T makeRoomToTopPanel={customPack.length !== 0}>
+        {'Selecione os snacks do seu pack'}
+      </T>
       <Wrapper>
         {data.products.map((p: Product) => {
           return (
@@ -104,7 +106,7 @@ const Custom = () => {
   )
 }
 
-const T = styled.h1`
+const T = styled.h1<{ makeRoomToTopPanel: boolean }>`
   color: #fbc822;
   font-size: 5rem;
   margin: 30px 0;
@@ -116,6 +118,7 @@ const T = styled.h1`
 
   @media only screen and (min-width: 1024px) {
     margin: 70px 0;
+    margin-top: ${(p) => (p.makeRoomToTopPanel ? '300px' : '70px')};
   }
 `
 

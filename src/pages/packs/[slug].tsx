@@ -30,7 +30,8 @@ export default function Pacote({ ...complexPack }: ComplexPack) {
           return (
             <Item key={p.id}>
               <H>
-                {p.Quantity} {p.product.Name}
+                <Span>{p.Quantity}</Span> <Span>x</Span>{' '}
+                <Span>{p.product.Name}</Span>
               </H>
               <ImgComp
                 src={'https://via.placeholder.com/363x500.png/'}
@@ -62,6 +63,7 @@ const T = styled.h1`
 
   @media only screen and (min-width: 1024px) {
     margin: 70px 0;
+    margin-top: 300px;
   }
 `
 
@@ -88,6 +90,44 @@ const Item = styled.div`
   }
 `
 
+const Span = styled.span`
+  color: #fbc822;
+  font-size: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &&:nth-of-type(1) {
+    background: rgb(28, 19, 11);
+
+    color: rgb(28, 19, 11);
+    color: #fbc822;
+    text-shadow: 0px 1px 4px #47311b;
+    min-width: 70px;
+    text-align: center;
+  }
+
+  &&:nth-of-type(2) {
+    font-size: 1.75rem;
+    color: rgb(28, 19, 11);
+    text-shadow: 1px 1px 0px #fbc822;
+    font-weight: 700;
+    padding: 5px;
+  }
+
+  &&:nth-of-type(3) {
+    font-size: 3.5rem;
+    color: rgb(28, 19, 11);
+    text-shadow: 1px 1px 0px #fbc822;
+    font-weight: 700;
+    padding-left: 0;
+
+    @media only screen and (min-width: 1024px) {
+      width: 250px;
+    }
+  }
+`
+
 const H = styled.h1`
   margin-bottom: 2.5px;
   text-align: center;
@@ -95,22 +135,29 @@ const H = styled.h1`
   font-size: 1.4rem;
   margin-top: 5px;
   text-transform: uppercase;
+  color: rgb(28, 19, 11);
+  text-align: left;
+  flex-direction: row;
+  display: flex;
+
+  ${Span} {
+    /* background: #2da650; */
+    padding: 10px;
+  }
 
   &&:nth-of-type(1) {
-    color: #2da650;
     font-style: italic;
     margin-top: -30px;
     position: absolute;
-    text-shadow: 0px 1px 4px #47311b;
     width: 145px;
 
     @media only screen and (min-width: 1024px) {
-      font-size: 4rem;
+      font-size: 3rem;
       width: 250px;
     }
   }
 
-  &&:nth-of-type(2) {
+  /* &&:nth-of-type(2) {
     background: rgba(187, 255, 187, 0.85);
     border-radius: 50%;
     box-shadow: 0px 1px 8px #000;
@@ -125,7 +172,7 @@ const H = styled.h1`
     @media only screen and (min-width: 1024px) {
       font-size: 2rem;
     }
-  }
+  } */
 `
 
 const ImgComp = styled.img`

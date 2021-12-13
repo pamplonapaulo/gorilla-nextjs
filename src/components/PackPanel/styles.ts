@@ -16,6 +16,20 @@ export const PackPanel = styled.div<{ isVisible: boolean }>`
   transition: 0.1s ease-in-out all;
 `
 
+const pulse = keyframes`
+	0% {
+		opacity: 0.5;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+`
+
 const bounce = keyframes`
   0% { transform: scale(1,1) translateY(-115%); }
   5% { transform: scale(1,1) translateY(-115%); }
@@ -79,13 +93,16 @@ export const Content = styled.div<{ isVisible: boolean }>`
   }
 `
 
-export const Text = styled.h1`
+export const Text = styled.h1<{ shouldPulse: boolean }>`
   font-size: 3rem;
   text-transform: uppercase;
   font-style: italic;
   font-weight: 600;
   text-shadow: 0px 1px 2px #000;
   margin-bottom: 2rem;
+
+  animation: 1s infinite;
+  animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
 
   span {
     font-size: 15px;
@@ -118,6 +135,11 @@ export const Items = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
+
+  /* &&:nth-child(odd) {
+    background: blue;
+    color: yellow;
+  } */
 
   @media only screen and (min-width: 1024px) {
     &:hover {

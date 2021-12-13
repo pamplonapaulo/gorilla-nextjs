@@ -1,6 +1,20 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
-export const Check = styled.div`
+const pulse = keyframes`
+	0% {
+		opacity: 0.5;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+`
+
+export const Check = styled.div<{ shouldPulse: boolean }>`
   display: block;
   position: absolute;
   border: 3px solid #aaaaaa;
@@ -8,9 +22,12 @@ export const Check = styled.div`
   height: 20px;
   width: 20px;
   top: 0;
-  /* left: 20px; */
   z-index: 5;
   transition: border 0.25s linear;
+
+  animation: 1s infinite;
+  /* animation-play-state: ${(p) => (p.shouldPulse ? 'running' : 'paused')}; */
+  animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
 
   &&:before {
     display: block;
@@ -26,7 +43,7 @@ export const Check = styled.div`
   }
 `
 
-export const Label = styled.label`
+export const Label = styled.label<{ shouldPulse: boolean }>`
   display: block;
   position: relative;
   font-weight: 300;
@@ -39,6 +56,10 @@ export const Label = styled.label`
   transition: all 0.25s linear;
   font-style: italic;
   text-transform: uppercase;
+
+  /* text-shadow: 0 0 0 rgba(255, 255, 255, 1); */
+  animation: 1s infinite;
+  animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
 `
 
 export const Input = styled.input`
@@ -62,9 +83,6 @@ export const Wrap = styled.div`
   color: #aaaaaa;
   display: block;
   position: relative;
-  /* float: left;
-  width: 100%;
-  height: 100px; */
 
   &:hover {
     ${Label} {
@@ -83,9 +101,5 @@ export const Wrap = styled.div`
         border: 3px solid #fbc822;
       }
     }
-  }
-
-  @media only screen and (min-width: 1024px) {
-    /* width: 190px; */
   }
 `

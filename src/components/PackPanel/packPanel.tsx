@@ -103,7 +103,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   return (
     <S.PackPanel isVisible={pack.length > 0}>
       <S.Content isVisible={pack.length > 0}>
-        <S.Text>Pack:</S.Text>
+        <S.Text shouldPulse={false}>Pack:</S.Text>
         <S.Items>
           {pack.map((s: Snack) => (
             <S.Snack key={s.id}>
@@ -121,7 +121,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         </S.Items>
       </S.Content>
       <S.Content isVisible={pack.length > 0}>
-        <S.Text>Plano:</S.Text>
+        <S.Text shouldPulse={!discount}>Plano:</S.Text>
         {data.periodicidades.map((p: Plans) => (
           <S.Items key={p.id}>
             <BtnRadio
@@ -129,20 +129,21 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
               group={'plano'}
               parentCallback={planIsSet}
               discount={p.Discount}
+              neverClicked={!discount}
             />
             <S.HoverContent>{formatDiscount(p.Discount)}% off</S.HoverContent>
           </S.Items>
         ))}
       </S.Content>
       <S.Content isVisible={discount !== false}>
-        <S.Text>Frete:</S.Text>
+        <S.Text shouldPulse={false}>Frete:</S.Text>
         <S.Items>
           <DeliveryCalc pack={pack} parentCallback={handleDeliveryFeeDisplay} />
         </S.Items>
       </S.Content>
       <S.Content isVisible={deliveryFee !== false}>
-        <S.Text>Total:</S.Text>
-        <S.Text>
+        <S.Text shouldPulse={false}>Total:</S.Text>
+        <S.Text shouldPulse={false}>
           R$ {formatCurrency(finalPrice)}/<span> mês</span>
         </S.Text>
         <Btn as={'/checkout'} pathname={'/checkout'} text={'Avançar'} />
