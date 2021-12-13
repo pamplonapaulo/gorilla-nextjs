@@ -68,7 +68,7 @@ export const Item = styled.div`
   justify-content: space-evenly;
 
   /* height: 350px; */
-  height: calc(100vh - calc(70px + 58px + 50px + 4rem));
+  height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem));
 
   &&:nth-child(even) {
     background: rgba(28, 19, 11, 0.9);
