@@ -3,17 +3,17 @@ import styled from 'styled-components'
 export const Wrap = styled.div`
   /* width: 80px; */
   width: 190px;
-  height: 70px;
+  /* height: 70px; */
   display: flex;
   justify-content: center;
 
   height: unset;
   transform: scale(0.65);
-  transform-origin: bottom right;
+  /* transform-origin: bottom right; */
 
   @media only screen and (min-width: 1024px) {
     height: 70px;
-    transform-origin: center;
+    /* transform-origin: center; */
     transform: scale(1);
   }
 `

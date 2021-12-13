@@ -61,11 +61,14 @@ export const Item = styled.div`
   width: calc(100vw - 50px);
 
   padding: 10px;
-  justify-content: start;
+  /* justify-content: start; */
 
-  height: unset;
-  justify-content: space-between;
-  height: 350px;
+  /* height: unset; */
+  /* justify-content: space-between; */
+  justify-content: space-evenly;
+
+  /* height: 350px; */
+  height: calc(100vh - calc(70px + 58px + 50px + 4rem));
 
   &&:nth-child(even) {
     background: rgba(28, 19, 11, 0.9);
@@ -114,21 +117,18 @@ export const H = styled.h1`
   text-transform: uppercase;
   font-size: 3rem;
 
-  text-align: left;
+  text-align: center;
   font-size: 20px;
 
   @media only screen and (min-width: 1024px) {
     font-size: 3rem;
-    text-align: center;
   }
 
   &&:nth-of-type(2) {
     font-size: 1.3rem;
-    text-align: right;
 
     @media only screen and (min-width: 1024px) {
       font-size: 2.3rem;
-      text-align: center;
     }
   }
 `
@@ -139,14 +139,13 @@ export const Desc = styled.p`
   text-shadow: 0px 1px 2px #000;
 
   margin: 0;
-  text-align: left;
+  text-align: center;
   font-size: 13px;
   font-style: italic;
 
   @media only screen and (min-width: 1024px) {
     font-size: 16px;
     margin: 10px;
-    text-align: center;
     font-style: normal;
   }
 `
@@ -163,12 +162,14 @@ export const Attribute = styled.li<{ isChecked: boolean }>`
   line-height: 1.75;
   text-align: left;
   text-shadow: 0px 1px 2px #000;
-  font-size: 1rem;
+  /* font-size: 1rem; */
+  font-size: 1.2rem;
 
   &::before {
     content: '${(p) => (p.isChecked ? '\\2713' : '\\00D7')}';
     margin-right: 5px;
-    font-size: 1rem;
+    /* font-size: 1rem; */
+    font-size: 1.2rem;
     font-weight: 900;
     transform: translateY(-6px);
   }
@@ -185,9 +186,9 @@ export const Attribute = styled.li<{ isChecked: boolean }>`
 export const FlexCenter = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: center;
 
-  @media only screen and (min-width: 1024px) {
+  /* @media only screen and (min-width: 1024px) {
     justify-content: center;
-  }
+  } */
 `
