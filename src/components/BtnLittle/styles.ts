@@ -7,8 +7,15 @@ export const Wrap = styled.div`
   display: flex;
   justify-content: center;
 
-  /* @media only screen and (min-width: 1024px) {
-  } */
+  height: unset;
+  transform: scale(0.65);
+  transform-origin: bottom right;
+
+  @media only screen and (min-width: 1024px) {
+    height: 70px;
+    transform-origin: center;
+    transform: scale(1);
+  }
 `
 
 export const Btn = styled.button`

@@ -21,8 +21,13 @@ export const Arrow = styled.span<{ isVisible: boolean }>`
   width: 50px;
   vertical-align: middle;
 
+  background: rgb(28, 19, 11);
+
   &&:nth-of-type(1) {
     margin-right: 3rem;
+
+    transform: scale(0.5);
+    transform-origin: left;
 
     &::after {
       content: '\\00ab';
@@ -33,6 +38,9 @@ export const Arrow = styled.span<{ isVisible: boolean }>`
   &&:last-of-type {
     margin-left: 3rem;
 
+    transform: scale(0.5);
+    transform-origin: right;
+
     &::after {
       content: '\\00bb';
       transform: translateY(-6px);
@@ -40,6 +48,10 @@ export const Arrow = styled.span<{ isVisible: boolean }>`
   }
 
   @media only screen and (min-width: 1024px) {
+    background: rgba(255, 255, 255, 0.3) !important;
+    transform: scale(1) !important;
+    transform-origin: center !important;
+
     &:hover {
       color: #ef8321;
       transform: scale(1.3);

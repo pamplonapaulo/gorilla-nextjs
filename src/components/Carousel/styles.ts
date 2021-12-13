@@ -37,8 +37,13 @@ export const Wrapper = styled.section`
   &&:nth-of-type(2) {
     align-items: center;
     justify-content: space-between;
-    margin-top: 25px;
     overflow: visible;
+
+    margin-top: 0;
+
+    @media only screen and (min-width: 1024px) {
+      margin-top: 25px;
+    }
   }
 `
 
@@ -53,10 +58,14 @@ export const Item = styled.div`
   text-align: center;
   display: flex;
   flex-direction: column;
-  height: 550px;
-  justify-content: space-around;
-  padding: 20px 10px 10px;
   width: calc(100vw - 50px);
+
+  padding: 10px;
+  justify-content: start;
+
+  height: unset;
+  justify-content: space-between;
+  height: 350px;
 
   &&:nth-child(even) {
     background: rgba(28, 19, 11, 0.9);
@@ -83,6 +92,9 @@ export const Item = styled.div`
   }
 
   @media only screen and (min-width: 1024px) {
+    padding: 20px 10px 10px;
+    height: 550px;
+    justify-content: space-around;
     width: calc(900px / 3);
   }
 
@@ -98,15 +110,25 @@ export const Item = styled.div`
 export const H = styled.h1`
   color: #ef8321;
   font-weight: 600;
-  font-size: 1.4rem;
-  text-align: center;
   text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
   font-size: 3rem;
 
+  text-align: left;
+  font-size: 20px;
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 3rem;
+    text-align: center;
+  }
+
   &&:nth-of-type(2) {
+    font-size: 1.3rem;
+    text-align: right;
+
     @media only screen and (min-width: 1024px) {
       font-size: 2.3rem;
+      text-align: center;
     }
   }
 `
@@ -114,10 +136,19 @@ export const H = styled.h1`
 export const Desc = styled.p`
   color: #ef8321;
   font-weight: 600;
-  font-size: 16px;
-  margin: 10px;
   text-shadow: 0px 1px 2px #000;
-  text-align: center;
+
+  margin: 0;
+  text-align: left;
+  font-size: 13px;
+  font-style: italic;
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 16px;
+    margin: 10px;
+    text-align: center;
+    font-style: normal;
+  }
 `
 
 export const Benefits = styled.ul`
@@ -129,22 +160,34 @@ export const Benefits = styled.ul`
 export const Attribute = styled.li<{ isChecked: boolean }>`
   color: ${(p) => (p.isChecked ? '#fbc822' : '#ccc')};
   list-style-type: none;
-  font-size: 13px;
   line-height: 1.75;
   text-align: left;
   text-shadow: 0px 1px 2px #000;
+  font-size: 1rem;
 
   &::before {
     content: '${(p) => (p.isChecked ? '\\2713' : '\\00D7')}';
     margin-right: 5px;
-    font-size: 15px;
+    font-size: 1rem;
     font-weight: 900;
     transform: translateY(-6px);
+  }
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 13px;
+
+    &::before {
+      font-size: 15px;
+    }
   }
 `
 
 export const FlexCenter = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: end;
+
+  @media only screen and (min-width: 1024px) {
+    justify-content: center;
+  }
 `

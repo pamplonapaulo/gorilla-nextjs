@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components'
 
-// Totally inspired in the great work from Imran Pardes:
+// Totally inspired in Imran Pardes's great work:
 // https://codepen.io/folaad/pen/YvmRpz
 
 const color_anim = keyframes`
@@ -19,6 +19,14 @@ export const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
+
+  height: 35px;
+  margin-top: 5px;
+
+  @media only screen and (min-width: 1024px) {
+    height: unset;
+    margin-top: unset;
+  }
 `
 
 export const Span = styled.span`
@@ -26,11 +34,22 @@ export const Span = styled.span`
   transform: skewX(15deg);
   transition: 0.5s;
 
+  @media only screen and (min-width: 1024px) {
+    &&:nth-child(1) {
+      transform: skewX(15deg) translateY(2px);
+    }
+  }
+
   &&:nth-child(2) {
-    width: 20px;
-    margin-left: 30px;
-    position: relative;
-    top: 12%;
+    display: none;
+
+    @media only screen and (min-width: 1024px) {
+      position: relative;
+      display: unset;
+      width: 20px;
+      margin-left: 30px;
+      top: 12%;
+    }
   }
 `
 
@@ -52,13 +71,8 @@ export const Cta = styled.a`
   box-shadow: 6px 6px 0 black;
   display: flex;
   font-weight: 800;
-  font-size: 2rem;
   font-style: italic;
-  font-size: 4rem;
-  /* padding: 10px 45px 10px 45px; */
   padding: 10px 25px;
-
-  /* padding: 10px 60px 10px 45px; */
   text-decoration: none;
   text-transform: uppercase;
   transition: 1s;
@@ -66,6 +80,16 @@ export const Cta = styled.a`
 
   &:focus {
     outline: none;
+  }
+
+  font-size: 16px;
+  /* padding: 5px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; */
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 4rem;
   }
 
   &:hover {

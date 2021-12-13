@@ -31,7 +31,6 @@ const Home = () => {
 const T = styled.h1`
   color: #fbc822;
   font-weight: 700;
-  font-size: 4rem;
   font-style: italic;
   text-transform: uppercase;
   text-shadow: 0px 1px 4px #000;
@@ -39,19 +38,23 @@ const T = styled.h1`
   display: flex;
   justify-content: center;
 
+  font-size: 16px;
+
   @media only screen and (min-width: 1024px) {
-    /* margin: 70px 0; */
+    font-size: 4rem;
   }
 `
 
 const FlexCenter = styled.div`
   display: flex;
-  flex-direction: row;
   overflow: visible;
   justify-content: space-between;
   width: calc(100vw - 50px);
-  margin-top: 20px;
+  margin-top: 16px;
   margin-bottom: 2rem;
+
+  flex-direction: column;
+  text-align: center;
 
   @media only screen and (min-width: 320px) {
     width: 300px;
@@ -70,6 +73,8 @@ const FlexCenter = styled.div`
   }
 
   @media only screen and (min-width: 1024px) {
+    flex-direction: row;
+    text-align: left;
     width: 900px;
   }
 
