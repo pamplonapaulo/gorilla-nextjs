@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Arrow = styled.span<{ isVisible: boolean }>`
   align-items: center;
-  background: rgba(255, 255, 255, 0.3);
+  background: #402c1c;
   color: #fbc822;
   cursor: ${(p) => (p.isVisible ? 'pointer' : 'default')};
   display: flex;
@@ -14,19 +14,16 @@ export const Arrow = styled.span<{ isVisible: boolean }>`
   line-height: 100%;
   opacity: ${(p) => (p.isVisible ? '1' : '0')};
   padding: 0;
-  transition: ease-in 0.2s all;
   text-align: center;
   text-shadow: 0px 1px 4px #000;
+  transform: scale(0.5);
+  transition: ease-in 0.2s all;
   white-space: nowrap;
   width: 50px;
   vertical-align: middle;
 
-  background: rgb(28, 19, 11);
-
   &&:nth-of-type(1) {
     margin-right: 3rem;
-
-    transform: scale(0.5);
     transform-origin: left;
 
     &::after {
@@ -37,8 +34,6 @@ export const Arrow = styled.span<{ isVisible: boolean }>`
 
   &&:last-of-type {
     margin-left: 3rem;
-
-    transform: scale(0.5);
     transform-origin: right;
 
     &::after {
@@ -48,12 +43,13 @@ export const Arrow = styled.span<{ isVisible: boolean }>`
   }
 
   @media only screen and (min-width: 1024px) {
-    background: rgba(255, 255, 255, 0.3) !important;
-    transform: scale(1) !important;
+    background: rgba(255, 255, 255, 0.3);
     transform-origin: center !important;
+    transform: scale(1);
 
     &:hover {
       color: #ef8321;
+      background: #fbc822;
       transform: scale(1.3);
     }
   }
@@ -89,10 +85,5 @@ export const Dot = styled.span<{ isCurrent: boolean }>`
     width: 15px;
     height: 15px;
     margin: 10px;
-
-    &:hover {
-      background: #fbc822;
-      transform: scale(1.3);
-    }
   }
 `
