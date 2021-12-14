@@ -23,6 +23,7 @@ export const Benefits = styled.ul`
   padding: 50px 7.25px;
   width: 50%;
   background: #ee7416;
+  box-shadow: 2px 2px 5px #000;
 `
 
 export const Attribute = styled.li<{ isChecked: boolean }>`
@@ -33,6 +34,7 @@ export const Attribute = styled.li<{ isChecked: boolean }>`
   font-size: 2.5rem;
   width: 80%;
   margin: auto;
+  opacity: ${(p) => (p.isChecked ? '1' : '0.5')};
 
   &::before {
     content: '${(p) => (p.isChecked ? '\\2713' : '\\00D7')}';
