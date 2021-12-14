@@ -15,7 +15,7 @@ const Footer = ({ address = 'gorillapack' }) => (
     </S.Instagram>
 
     <S.Copy>
-      <S.PCopy>{'Gorilla Pack © 2020 Todos os direitos reservados'}</S.PCopy>
+      <S.PCopy>{'Gorilla Pack © 2022 Todos os direitos reservados'}</S.PCopy>
     </S.Copy>
   </S.Wrapper>
 )

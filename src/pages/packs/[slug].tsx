@@ -13,6 +13,7 @@ import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 import styled from 'styled-components'
 // import { getImageUrl } from 'utils/getImageUrl'
 import PackPanel from 'components/PackPanel'
+import Benefits from 'components/Benefits'
 
 const client = new GraphQLClient(endpoint + 'graphql')
 
@@ -46,7 +47,10 @@ export default function Pacote({ ...complexPack }: ComplexPack) {
           )
         })}
       </Wrapper>
-      {<PackPanel pack={complexPack.currentPack} />}
+      <Wrapper>
+        <Benefits description={complexPack.pack.Description} />
+      </Wrapper>
+      <PackPanel pack={complexPack.currentPack} />
     </>
   )
 }
@@ -72,6 +76,10 @@ const Wrapper = styled.section`
   flex-wrap: wrap;
   height: 100%;
   justify-content: space-around;
+
+  &&:nth-of-type(2) {
+    margin-bottom: 10rem;
+  }
 
   @media only screen and (min-width: 1024px) {
     /* max-width: 75%; */
