@@ -57,23 +57,11 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   }
 
   const planIsSet = (upcomingDiscount: number) => {
-    console.log('olá olá olá')
-    // if (discount === upcomingDiscount) {
-    //   setMobilePanelStep(2)
-    // } else {
-    //   setDiscount(upcomingDiscount)
-    // }
     setDiscount(upcomingDiscount)
   }
 
   const handleDeliveryFeeDisplay = (bool: boolean, deliveryFee: number) => {
-    console.log('teve alguma coisa aqui? handleDeliveryFeeDisplay')
-    console.log('bool', bool)
-
-    console.log('mobilePanelStep:', mobilePanelStep)
-
     if (!bool) {
-      console.log('olá 1')
       setDeliveryReset(true)
       setDeliveryFee(false)
       setFinalPrice(0)
@@ -81,50 +69,25 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     }
 
     if (bool) {
-      console.log('olá 2')
       setDeliveryFee(deliveryFee)
       setForwardBtn(false)
     }
   }
 
   const moveBackwards = () => {
-    console.log('olá 222222olá olá')
-
-    console.log('MOVING BACKWARDS - mobilePanelStep:', mobilePanelStep)
-
     if (mobilePanelStep === 3) {
-      console.log('The mobile panel step should be 3:', mobilePanelStep)
       setDeliveryFee(false)
       setFinalPrice(0)
     }
-
-    // if (mobilePanelStep === 2) {
-    //   setDiscount(false)
-    // }
     setMobilePanelStep(mobilePanelStep - 1)
   }
 
   const moveForward = () => {
-    // if (mobilePanelStep === 0) {}
-    // if (mobilePanelStep === 1) {}
-    // if (mobilePanelStep === 2) {}
-    // if (mobilePanelStep === 3) {}
-
     setMobilePanelStep(mobilePanelStep + 1)
     setForwardBtn(true)
   }
 
   useEffect(() => {
-    console.log('The mobile panel step is:', mobilePanelStep)
-    // setForwardBtn(true)
-
-    // if (mobilePanelStep === 2) {
-    //   setDeliveryReset(true)
-    // }
-  }, [mobilePanelStep])
-
-  useEffect(() => {
-    console.log('snacksCost:', snacksCost)
     if (
       typeof snacksCost === 'number' &&
       typeof discount === 'number' &&
@@ -137,33 +100,8 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   }, [snacksCost, discount, deliveryFee])
 
   useEffect(() => {
-    console.log('discount', discount)
     setForwardBtn(false)
-    // if (discount !== false) {
-    //   console.log('olá3333333 olá olá')
-
-    //   setMobilePanelStep(2)
-    // }
   }, [discount])
-
-  // useEffect(() => {
-  //   console.log('deliveryFee:', deliveryFee)
-  //   console.log('4444444 olá olá')
-
-  //   if (deliveryFee !== false && mobilePanelStep === 2) {
-  //     console.log('como pode não ser false?')
-  //     console.log('deliveryFee:', deliveryFee)
-  //     setDeliveryReset(false)
-  //     setMobilePanelStep(3)
-  //   }
-
-  //   if (deliveryFee === false && mobilePanelStep === 3) {
-  //     console.log('5555555 olá olá')
-
-  //     setDeliveryReset(true)
-  //     setMobilePanelStep(2)
-  //   }
-  // }, [deliveryFee, mobilePanelStep])
 
   const formatDiscount = (value: number) => (100 * value).toFixed(0)
 
