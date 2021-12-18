@@ -9,14 +9,22 @@ import { formatCurrency } from 'utils/formatCurrency'
 import { Snack } from 'types/api'
 
 type Props = {
+  forceReset: boolean
   pack: Snack[]
   parentCallback: (bool: boolean, num: number) => void
 }
 
-const DeliveryCalc = ({ pack, parentCallback }: Props) => {
+const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
   const [postcode, setPostcode] = useState('')
   const [fullPostcode, setFullPostcode] = useState('')
   const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
+
+  useEffect(() => {
+    if (forceReset) {
+      setPostcode('')
+      // setFullPostcode('')
+    }
+  }, [forceReset])
 
   useEffect(() => {
     if (fullPostcode != '') {

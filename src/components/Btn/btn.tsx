@@ -4,12 +4,14 @@ import Link from 'next/link'
 import * as S from './styles'
 
 type Props = {
-  as: string
-  pathname: string
+  displayMobile: string
+  as?: string
+  pathname?: string
   text: string
+  onClick?: () => void
 }
 
-const Btn = ({ as, pathname, text }: Props) => (
+const Btn = ({ displayMobile, as, pathname, text }: Props) => (
   <>
     <Link
       as={as}
@@ -17,7 +19,7 @@ const Btn = ({ as, pathname, text }: Props) => (
         pathname: pathname,
       }}
     >
-      <S.Wrap>
+      <S.Wrap displayMobile={displayMobile}>
         <S.Btn>{text}</S.Btn>
       </S.Wrap>
     </Link>

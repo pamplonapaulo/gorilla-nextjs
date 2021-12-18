@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 
-export const Wrap = styled.div`
+export const Wrap = styled.div<{ displayMobile: string }>`
   width: 80px;
   height: 70px;
-  display: flex;
+  display: ${(p) => p.displayMobile};
   justify-content: center;
 
   @media only screen and (min-width: 1024px) {
+    display: flex;
     width: 190px;
   }
 `
@@ -34,7 +35,6 @@ export const Btn = styled.button`
   position: absolute;
   overflow: hidden;
   z-index: 0;
-  /* transform: translateX(-50%); */
 
   @media only screen and (min-width: 1024px) {
     font-size: 1.6rem;

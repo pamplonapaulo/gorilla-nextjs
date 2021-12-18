@@ -68,7 +68,7 @@ const Custom = () => {
   return (
     <>
       <T makeRoomToTopPanel={customPack.length !== 0}>
-        {'Selecione os snacks do seu pack'}
+        {'Escolha os snacks do seu pack'}
       </T>
       <Wrapper>
         {data.products.map((p: Product) => {
@@ -108,7 +108,7 @@ const Custom = () => {
 
 const T = styled.h1<{ makeRoomToTopPanel: boolean }>`
   color: #fbc822;
-  font-size: 5rem;
+  font-size: 1.75rem;
   margin: 30px 0;
   text-transform: uppercase;
 
@@ -117,6 +117,7 @@ const T = styled.h1<{ makeRoomToTopPanel: boolean }>`
   text-shadow: 0px 1px 5px #000;
 
   @media only screen and (min-width: 1024px) {
+    font-size: 5rem;
     margin: 70px 0;
     margin-top: ${(p) => (p.makeRoomToTopPanel ? '300px' : '70px')};
   }
@@ -127,11 +128,13 @@ const Wrapper = styled.section`
   flex-wrap: wrap;
   height: 100%;
   justify-content: space-around;
+  padding-top: 40px;
 
   @media only screen and (min-width: 1024px) {
     /* max-width: 75%; */
     max-width: 1159px;
     flex-direction: row;
+    padding-top: 0;
   }
 `
 
@@ -149,7 +152,7 @@ const H = styled.h1`
   margin-bottom: 2.5px;
   text-align: center;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 2.3rem;
   margin-top: 5px;
   text-transform: uppercase;
 
@@ -158,7 +161,8 @@ const H = styled.h1`
     font-style: italic;
     margin-top: -30px;
     position: absolute;
-    text-shadow: 0px 1px 4px #47311b;
+    /* text-shadow: 0px 1px 4px #47311b; */
+    text-shadow: 0px 1px 2px #000;
     width: 145px;
 
     @media only screen and (min-width: 1024px) {
@@ -202,18 +206,21 @@ const Sum = styled.div<{ isVisible: boolean }>`
     color: #000;
     float: right;
     font-weight: 600;
-    height: 125px;
     padding: 0;
     position: absolute;
-    width: 125px;
 
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
 
+    width: 60px;
+    height: 60px;
+
     @media only screen and (min-width: 1024px) {
       font-size: 3rem;
+      width: 125px;
+      height: 125px;
     }
   }
 `

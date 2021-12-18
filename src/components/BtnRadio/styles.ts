@@ -25,10 +25,6 @@ export const Check = styled.div<{ shouldPulse: boolean }>`
   z-index: 5;
   transition: border 0.25s linear;
 
-  animation: 1s infinite;
-  /* animation-play-state: ${(p) => (p.shouldPulse ? 'running' : 'paused')}; */
-  animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
-
   &&:before {
     display: block;
     position: absolute;
@@ -40,6 +36,11 @@ export const Check = styled.div<{ shouldPulse: boolean }>`
     left: 2px;
     margin: auto;
     transition: background 0.25s linear;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    animation: 1s infinite;
+    animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
   }
 `
 
@@ -57,9 +58,10 @@ export const Label = styled.label<{ shouldPulse: boolean }>`
   font-style: italic;
   text-transform: uppercase;
 
-  /* text-shadow: 0 0 0 rgba(255, 255, 255, 1); */
-  animation: 1s infinite;
-  animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
+  @media only screen and (min-width: 1024px) {
+    animation: 1s infinite;
+    animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
+  }
 `
 
 export const Input = styled.input`

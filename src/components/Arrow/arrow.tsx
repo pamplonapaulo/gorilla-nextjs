@@ -1,11 +1,11 @@
 import * as S from './styles'
 
 type Props = {
-  color: string
-  rotate: string
+  color?: string
+  rotate?: string
 }
 
-const Arrow = ({ color, rotate = '0' }: Props) => (
+const Arrow = ({ color = '#FFF', rotate = '0' }: Props) => (
   <S.Svg
     aria-hidden="true"
     focusable="false"

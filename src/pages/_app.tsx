@@ -90,7 +90,8 @@ const ContainerOuter = styled.div`
 const ContainerInner = styled.main`
   /* background: #ef8321; */
   background: 'transparent';
-  height: 100%;
+  /* height: 100%; */
+  height: unset;
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-y: hidden;
@@ -107,7 +108,7 @@ const ContainerInner = styled.main`
     width: 0 !important;
   }
   @media only screen and (min-width: 1024px) {
-    height: unset;
+    /* height: unset; */
     min-height: calc(100vh - 70px);
   }
 `
