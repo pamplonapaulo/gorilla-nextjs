@@ -69,6 +69,21 @@ export const UnderLimitMessage = styled.h1<{ isVisible: boolean }>`
   justify-content: space-evenly;
   text-align: center;
   line-height: 1.7;
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 3rem;
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 600;
+    text-shadow: 0px 1px 2px #000;
+    width: 300px;
+
+    /* width: unset;
+    margin-top: 0;
+    line-height: unset;
+    justify-content: end;
+    flex-direction: row; */
+  }
 `
 
 export const SpanMessage = styled.span<{ gotMinimumValue: boolean }>`
@@ -82,6 +97,10 @@ export const SpanMessage = styled.span<{ gotMinimumValue: boolean }>`
         ? 'Agora avance ou adicione mais.'
         : 'Selecione mais para poder avançar!'}';
   }
+
+  @media only screen and (min-width: 1024px) {
+    display: ${(p) => (p.gotMinimumValue ? 'none' : 'flex')};
+  }
 `
 
 export const MobileBtnWrapper = styled.div`
@@ -90,7 +109,8 @@ export const MobileBtnWrapper = styled.div`
   justify-content: space-between;
 
   @media only screen and (min-width: 1024px) {
-    display: none;
+    position: absolute;
+    right: 0;
   }
 `
 
@@ -138,8 +158,7 @@ export const ActionBtn = styled.button<ActionBtnType>`
   }
 
   &&:nth-of-type(2) {
-    margin: ${(p) =>
-      p.selfCentered ? '15px auto 15px auto' : '15px 15px 15px auto'};
+    margin: 15px 15px 15px auto;
     animation: 1s infinite;
     animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
   }

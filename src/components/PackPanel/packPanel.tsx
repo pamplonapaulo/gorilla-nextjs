@@ -65,26 +65,21 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       setDeliveryReset(true)
       setDeliveryFee(false)
       setFinalPrice(0)
-      setForwardBtn(true)
     }
 
     if (bool) {
       setDeliveryFee(deliveryFee)
-      setForwardBtn(false)
     }
   }
 
   const moveBackwards = () => {
-    if (mobilePanelStep === 3) {
-      setDeliveryFee(false)
-      setFinalPrice(0)
-    }
     setMobilePanelStep(mobilePanelStep - 1)
+    setForwardBtn(true)
   }
 
   const moveForward = () => {
     setMobilePanelStep(mobilePanelStep + 1)
-    setForwardBtn(true)
+    setForwardBtn(false)
   }
 
   useEffect(() => {
@@ -100,8 +95,20 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   }, [snacksCost, discount, deliveryFee])
 
   useEffect(() => {
-    setForwardBtn(false)
-  }, [discount])
+    if (mobilePanelStep === 2 && deliveryFee !== false) setForwardBtn(true)
+    if (mobilePanelStep === 2 && deliveryFee === false) setForwardBtn(false)
+  }, [deliveryFee, mobilePanelStep])
+
+  useEffect(() => {
+    if (mobilePanelStep === 1 && typeof discount === 'number')
+      setForwardBtn(true)
+    if (mobilePanelStep === 1 && discount === false) setForwardBtn(false)
+  }, [discount, mobilePanelStep])
+
+  useEffect(() => {
+    if (mobilePanelStep === 0 && snacksCost >= 7) setForwardBtn(true)
+    if (mobilePanelStep === 0 && snacksCost < 7) setForwardBtn(false)
+  }, [snacksCost, mobilePanelStep])
 
   const formatDiscount = (value: number) => (100 * value).toFixed(0)
 
@@ -142,8 +149,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         <S.ActionBtn
           onClick={() => moveForward()}
           switchContent={false}
-          selfCentered={mobilePanelStep < 1}
-          isDeactivated={snacksCost < 7 || forwardBtn}
+          isDeactivated={forwardBtn === false}
           shouldPulse={mobilePanelStep === 3}
         >
           <S.BtnText>
@@ -172,7 +178,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         </S.Items>
       </S.Content>
       <S.Content
-        isVisible={pack.length > 0}
+        isVisible={snacksCost >= 7}
         showOnMobile={mobilePanelStep === 1}
       >
         <S.Text shouldPulse={!discount}>Plano</S.Text>
@@ -190,7 +196,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         ))}
       </S.Content>
       <S.Content
-        isVisible={discount !== false}
+        isVisible={discount !== false && snacksCost >= 7}
         showOnMobile={mobilePanelStep === 2}
       >
         <S.Text shouldPulse={false}>Frete</S.Text>
@@ -203,7 +209,9 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         </S.Items>
       </S.Content>
       <S.Content
-        isVisible={deliveryFee !== false}
+        isVisible={
+          deliveryFee !== false && discount !== false && snacksCost >= 7
+        }
         showOnMobile={mobilePanelStep === 3}
       >
         <S.Text shouldPulse={false}>Total</S.Text>
