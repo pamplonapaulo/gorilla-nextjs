@@ -45,9 +45,10 @@ export default function Pacote({ ...complexPack }: ComplexPack) {
         })}
       </Wrapper>
       <Wrapper>
+        <T>{complexPack.pack.Description}</T>
         <Benefits
-          description={complexPack.pack.Description}
           benefits={sortBenefitsById(complexPack.pack.Benefits)}
+          isHome={false}
         />
       </Wrapper>
       <PackPanel pack={complexPack.currentPack} />
@@ -58,12 +59,12 @@ export default function Pacote({ ...complexPack }: ComplexPack) {
 const T = styled.h1`
   color: #fbc822;
   font-size: 5rem;
-  margin: 30px 0;
   text-transform: uppercase;
-
   font-style: italic;
   font-weight: 600;
   text-shadow: 0px 1px 5px #000;
+
+  margin: 30px 0;
 
   @media only screen and (min-width: 1024px) {
     margin: 70px 0;
@@ -79,10 +80,27 @@ const Wrapper = styled.section`
 
   &&:nth-of-type(2) {
     margin-bottom: 10rem;
+    background: red;
+
+    ${T} {
+      background: black;
+      text-align: center;
+      font-size: 4rem;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 2;
+      padding: 0 4rem;
+      margin: 0;
+    }
+
+    @media only screen and (min-width: 1024px) {
+      flex-direction: row;
+    }
   }
 
   @media only screen and (min-width: 1024px) {
-    /* max-width: 75%; */
     max-width: 1159px;
     flex-direction: row;
   }

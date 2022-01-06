@@ -59,15 +59,8 @@ export const Item = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100vw - 50px);
-
   padding: 10px;
-  /* justify-content: start; */
-
-  /* height: unset; */
-  /* justify-content: space-between; */
   justify-content: space-evenly;
-
-  /* height: 350px; */
   height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem));
 
   &&:nth-child(even) {
@@ -150,45 +143,8 @@ export const Desc = styled.p`
   }
 `
 
-export const Benefits = styled.ul`
-  display: flex;
-  flex-direction: column;
-  padding: 0 7.25px;
-`
-
-export const Attribute = styled.li<{ isChecked: boolean }>`
-  color: ${(p) => (p.isChecked ? '#fbc822' : '#ccc')};
-  list-style-type: none;
-  line-height: 1.75;
-  text-align: left;
-  text-shadow: 0px 1px 2px #000;
-  /* font-size: 1rem; */
-  font-size: 1.2rem;
-
-  &::before {
-    content: '${(p) => (p.isChecked ? '\\2713' : '\\00D7')}';
-    margin-right: 5px;
-    /* font-size: 1rem; */
-    font-size: 1.2rem;
-    font-weight: 900;
-    transform: translateY(-6px);
-  }
-
-  @media only screen and (min-width: 1024px) {
-    font-size: 13px;
-
-    &::before {
-      font-size: 15px;
-    }
-  }
-`
-
 export const FlexCenter = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-
-  /* @media only screen and (min-width: 1024px) {
-    justify-content: center;
-  } */
 `

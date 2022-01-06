@@ -7,6 +7,7 @@ export const T = styled.h1`
   font-style: italic;
   font-weight: 600;
   text-shadow: 0px 1px 5px #000;
+
   text-align: center;
   font-size: 4rem;
   width: 50%;
@@ -17,38 +18,41 @@ export const T = styled.h1`
   padding: 0 4rem;
 `
 
-export const Benefits = styled.ul`
+export const Benefits = styled.ul<{ isHome: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 50px 7.25px;
-  width: 50%;
-  background: #ee7416;
-  box-shadow: 2px 2px 5px #000;
+  padding: ${(p) => (p.isHome ? '0px 7.25px' : '50px 7.25px')};
+  width: ${(p) => (p.isHome ? 'unset' : '50%')};
+  background: ${(p) => (p.isHome ? 'none' : '#ee7416')};
+  box-shadow: ${(p) => (p.isHome ? 'none' : '2px 2px 5px #000')};
 `
 
-export const Attribute = styled.li<{ isChecked: boolean }>`
-  color: ${(p) => (p.isChecked ? '#402c1c' : '#ccc')};
+export const Attribute = styled.li<{ isChecked: boolean; isHome: boolean }>`
   list-style-type: none;
-  line-height: 1.75;
   text-align: left;
-  font-size: 2.5rem;
-  width: 80%;
   margin: auto;
-  opacity: ${(p) => (p.isChecked ? '1' : '0.5')};
+  font-size: ${(p) => (p.isHome ? '13px' : '2.5rem')};
+  width: ${(p) => (p.isHome ? 'unset' : '80%')};
+  color: ${(p) =>
+    !p.isChecked
+      ? p.isHome
+        ? '#ccc'
+        : 'rgba(204, 204, 204, 0.6)'
+      : p.isHome
+      ? '#fbc822'
+      : '#402c1c'};
+
+  text-shadow: ${(p) => (p.isHome ? '0px 1px 2px #000' : 'none')};
+  line-height: 1.75;
 
   &::before {
     content: '${(p) => (p.isChecked ? '\\2713' : '\\00D7')}';
     margin-right: 5px;
-    font-size: 2.5rem;
     font-weight: 900;
     transform: translateY(-6px);
   }
 
   @media only screen and (min-width: 1024px) {
-    font-size: 2.5rem;
-
-    &::before {
-      font-size: 2.5rem;
-    }
+    line-height: ${(p) => (p.isHome ? 2 : 1.75)};
   }
 `

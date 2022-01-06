@@ -4,10 +4,11 @@ import * as S from './styles'
 
 import { getPackPrice } from 'utils/getPackPrice'
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
+import Benefits from 'components/Benefits'
 import BtnLittle from 'components/BtnLittle'
 import Pagination from 'components/Pagination'
 
-import { Pack, Benefit } from 'types/api'
+import { Pack } from 'types/api'
 
 import { sortBenefitsById } from 'utils/sortBenefitsById'
 
@@ -76,13 +77,10 @@ const Carousel = ({ packs }: Props) => {
                 <S.Desc>{p.Description}</S.Desc>
                 <S.H>R$ {getPackPrice(p)} / mês</S.H>
 
-                <S.Benefits>
-                  {sortBenefitsById(p.Benefits).map((b: Benefit) => (
-                    <S.Attribute key={b.benefit.id} isChecked={b.CurrentStatus}>
-                      {b.benefit.Benefit}
-                    </S.Attribute>
-                  ))}
-                </S.Benefits>
+                <Benefits
+                  benefits={sortBenefitsById(p.Benefits)}
+                  isHome={true}
+                />
 
                 <S.FlexCenter>
                   <BtnLittle
