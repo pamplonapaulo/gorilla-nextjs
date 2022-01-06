@@ -10,6 +10,16 @@ const GET_PRODUCTS = gql`
         ext
         hash
       }
+      NutritionFacts {
+        Portion
+        TotalFat
+        SaturatedFat
+        TransFat
+        EnergeticValue
+        Carbohydrates
+        Sodium
+        Proteins
+      }
     }
   }
 `

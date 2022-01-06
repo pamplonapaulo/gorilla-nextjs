@@ -1,10 +1,4 @@
-import React, {
-  useLayoutEffect,
-  useEffect,
-  useCallback,
-  useState,
-  useRef,
-} from 'react'
+import React, { useLayoutEffect, useCallback, useState, useRef } from 'react'
 
 import * as S from './styles'
 
@@ -13,7 +7,9 @@ import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 import BtnLittle from 'components/BtnLittle'
 import Pagination from 'components/Pagination'
 
-import { Pack } from 'types/api'
+import { Pack, Benefit } from 'types/api'
+
+import { sortBenefitsById } from 'utils/sortBenefitsById'
 
 type Props = {
   packs: Pack[]
@@ -24,13 +20,6 @@ const Carousel = ({ packs }: Props) => {
   const [nav, setNav] = useState(0)
   const [translate, setTranslate] = useState<number>(0)
   const refItem = useRef<HTMLDivElement>(null)
-
-  console.log('packs:', packs)
-  console.log('packs.length:', packs.length)
-
-  useEffect(() => {
-    console.log(translate)
-  }, [translate])
 
   useLayoutEffect(() => {
     const updateSize = () => {
@@ -80,43 +69,31 @@ const Carousel = ({ packs }: Props) => {
     <>
       <S.Wrapper>
         <S.Window moving={translate}>
-          {packs.map((p: Pack) => (
-            <S.Item key={p.id} className={p.id} ref={refItem}>
-              <S.H>{p.Name}</S.H>
-              <S.Desc>{p.Description}</S.Desc>
-              <S.H>R$ {getPackPrice(p)} / mês</S.H>
+          {packs.map((p: Pack) => {
+            return (
+              <S.Item key={p.id} className={p.id} ref={refItem}>
+                <S.H>{p.Name}</S.H>
+                <S.Desc>{p.Description}</S.Desc>
+                <S.H>R$ {getPackPrice(p)} / mês</S.H>
 
-              <S.Benefits>
-                <S.Attribute isChecked={true}>
-                  Uso do Selo eureciclo nas embalagens do Selo eureciclo nas
-                  embalagens
-                </S.Attribute>
-                <S.Attribute isChecked={true}>
-                  Videos para seu consumidor sobre a parceria seu consumidor
-                </S.Attribute>
-                <S.Attribute isChecked={true}>
-                  Infográfico para divulgar o investimento em reciclagem
-                  divulgar o investimento
-                </S.Attribute>
-                <S.Attribute isChecked={false}>
-                  Entrega de informações personalizadas para criação de seus
-                  conteúdos
-                </S.Attribute>
-                <S.Attribute isChecked={false}>
-                  Cases de Sucesso no nosso site sobre a parceria site sobre a
-                  parceria
-                </S.Attribute>
-              </S.Benefits>
+                <S.Benefits>
+                  {sortBenefitsById(p.Benefits).map((b: Benefit) => (
+                    <S.Attribute key={b.benefit.id} isChecked={b.CurrentStatus}>
+                      {b.benefit.Benefit}
+                    </S.Attribute>
+                  ))}
+                </S.Benefits>
 
-              <S.FlexCenter>
-                <BtnLittle
-                  as={`/packs/${replaceSpecialChars(p.Name)}`}
-                  pathname={'/packs/[slug]'}
-                  text={'Selecionar'}
-                />
-              </S.FlexCenter>
-            </S.Item>
-          ))}
+                <S.FlexCenter>
+                  <BtnLittle
+                    as={`/packs/${replaceSpecialChars(p.Name)}`}
+                    pathname={'/packs/[slug]'}
+                    text={'Selecionar'}
+                  />
+                </S.FlexCenter>
+              </S.Item>
+            )
+          })}
         </S.Window>
       </S.Wrapper>
       <S.Wrapper>

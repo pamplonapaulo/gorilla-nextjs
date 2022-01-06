@@ -4,6 +4,7 @@ import GET_PACKS from 'graphql/queries/getPacks'
 import Loader from 'components/Loader'
 import Carousel from 'components/Carousel'
 import BtnArrow from 'components/BtnArrow'
+import DialogBox from 'components/DialogBox'
 
 import styled from 'styled-components'
 
@@ -11,10 +12,11 @@ const Home = () => {
   const { loading, error, data } = useQuery(GET_PACKS)
 
   if (loading) return <Loader isHidden={false} />
-  if (error) return <p>Error :(</p>
+  if (error) return <p>Erro no carregamento dos packs do Gorilla</p>
 
   return (
     <>
+      <DialogBox />
       <FlexCenter>
         <T>{'Qual o melhor pack para você?'}</T>
         <BtnArrow

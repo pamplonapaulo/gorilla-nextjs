@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
 
-// import Link from 'next/link'
-
 import { useQuery } from '@apollo/client'
 import GET_PRODUCTS from 'graphql/queries/getProducts'
 
 import { Product } from 'types/api'
 
-// import { getImageUrl } from 'utils/getImageUrl'
-// import { replaceSpecialChars } from 'utils/replaceSpecialChars'
-
 import Loader from 'components/Loader'
 import Input from 'components/Input'
 import PackPanel from 'components/PackPanel'
+import SlugSnack from 'components/SlugSnack'
 
 import styled from 'styled-components'
 
@@ -52,11 +48,23 @@ const Custom = () => {
     }
   }
 
-  const calculatePartial = (id: string, baseValue: number) => {
-    const item = customPack.filter((snk) => snk.id === Number(id))
+  const getItem = (id: string) =>
+    customPack.filter((snk) => snk.id === Number(id))
 
-    if (item.length > 0) {
-      return 'R$' + item[0].quantity * baseValue
+  const getQuantity = (id: string) => {
+    const items = getItem(id)
+    if (items.length === 1) {
+      return items[0].quantity
+    } else {
+      return 0
+    }
+  }
+
+  const getPartial = (id: string, baseValue: number) => {
+    const items = getItem(id)
+
+    if (items.length > 0) {
+      return 'R$' + items[0].quantity * baseValue
     } else {
       return ''
     }
@@ -72,15 +80,18 @@ const Custom = () => {
       </T>
       <Wrapper>
         {data.products.map((p: Product) => {
+          console.log(p)
+          console.log(p.NutritionFacts)
           return (
             <Item key={p.id}>
-              <H>{p.Name}</H>
-              <ImgComp
-                src={'https://via.placeholder.com/363x500.png/'}
-                // src={getImageUrl(
-                //   '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
-                // )}
-                alt={p.Name}
+              <SlugSnack
+                Quantity={getQuantity(p.id)}
+                Name={p.Name}
+                ImageFile={
+                  '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
+                }
+                BaseValue={p.BaseValue}
+                NutritionFacts={p.NutritionFacts}
               />
               <H>{'R$' + p.BaseValue}</H>
               <BtnsWrapper>
@@ -95,7 +106,7 @@ const Custom = () => {
               <Sum
                 isVisible={customPack.some((snk) => snk.id === Number(p.id))}
               >
-                <h1>{calculatePartial(p.id, p.BaseValue)}</h1>
+                <h1>{getPartial(p.id, p.BaseValue)}</h1>
               </Sum>
             </Item>
           )
@@ -131,10 +142,49 @@ const Wrapper = styled.section`
   padding-top: 40px;
 
   @media only screen and (min-width: 1024px) {
-    /* max-width: 75%; */
     max-width: 1159px;
     flex-direction: row;
     padding-top: 0;
+  }
+`
+
+const H = styled.h1`
+  margin-bottom: 2.5px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 2.3rem;
+  text-transform: uppercase;
+  background: rgba(187, 255, 187, 0.85);
+  border-radius: 50%;
+  box-shadow: 0px 1px 8px #000;
+  color: #47311b;
+  float: right;
+  height: 75px;
+  margin-top: -80px;
+  padding-top: 25px;
+  position: relative;
+  width: 75px;
+  opacity: 1;
+  transition: all 0.2s;
+  z-index: 1;
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 2rem;
+    transform: translateX(-20px);
+  }
+`
+
+const BtnsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  z-index: 8;
+
+  @media only screen and (min-width: 1024px) {
+    padding: 0;
   }
 `
 
@@ -145,47 +195,6 @@ const Item = styled.div`
 
   @media only screen and (min-width: 1024px) {
     margin: 0 20px 150px;
-  }
-`
-
-const H = styled.h1`
-  margin-bottom: 2.5px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 2.3rem;
-  margin-top: 5px;
-  text-transform: uppercase;
-
-  &&:nth-of-type(1) {
-    color: #2da650;
-    font-style: italic;
-    margin-top: -30px;
-    position: absolute;
-    /* text-shadow: 0px 1px 4px #47311b; */
-    text-shadow: 0px 1px 2px #000;
-    width: 145px;
-
-    @media only screen and (min-width: 1024px) {
-      font-size: 4rem;
-      width: 250px;
-    }
-  }
-
-  &&:nth-of-type(2) {
-    background: rgba(187, 255, 187, 0.85);
-    border-radius: 50%;
-    box-shadow: 0px 1px 8px #000;
-    color: #47311b;
-    float: right;
-    height: 75px;
-    margin-top: -80px;
-    padding-top: 25px;
-    position: relative;
-    width: 75px;
-
-    @media only screen and (min-width: 1024px) {
-      font-size: 2rem;
-    }
   }
 `
 
@@ -222,32 +231,6 @@ const Sum = styled.div<{ isVisible: boolean }>`
       width: 125px;
       height: 125px;
     }
-  }
-`
-
-const ImgComp = styled.img`
-  display: block;
-  height: auto;
-  max-width: 145px;
-  width: 145px;
-
-  @media only screen and (min-width: 1024px) {
-    max-width: 250px;
-    width: 250px;
-  }
-`
-
-const BtnsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  z-index: 8;
-
-  @media only screen and (min-width: 1024px) {
-    padding: 0;
   }
 `
 

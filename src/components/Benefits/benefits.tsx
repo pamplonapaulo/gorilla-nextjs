@@ -2,8 +2,11 @@ import React from 'react'
 
 import * as S from './styles'
 
+import { Benefit } from 'types/api'
+
 type Data = {
   description: string
+  benefits: Benefit[]
 }
 
 const Benefits = ({ ...Data }: Data) => {
@@ -11,22 +14,11 @@ const Benefits = ({ ...Data }: Data) => {
     <>
       <S.T>{Data.description}</S.T>
       <S.Benefits>
-        <S.Attribute isChecked={true}>
-          Uso do Selo eureciclo nas embalagens do Selo eureciclo nas embalagens
-        </S.Attribute>
-        <S.Attribute isChecked={true}>
-          Videos para seu consumidor sobre a parceria seu consumidor
-        </S.Attribute>
-        <S.Attribute isChecked={true}>
-          Infográfico para divulgar o investimento em reciclagem divulgar o
-          investimento
-        </S.Attribute>
-        <S.Attribute isChecked={false}>
-          Entrega de informações personalizadas para criação de seus conteúdos
-        </S.Attribute>
-        <S.Attribute isChecked={false}>
-          Cases de Sucesso no nosso site sobre a parceria site sobre a parceria
-        </S.Attribute>
+        {Data.benefits.map((b: Benefit) => (
+          <S.Attribute key={b.benefit.id} isChecked={b.CurrentStatus}>
+            {b.benefit.Benefit}
+          </S.Attribute>
+        ))}
       </S.Benefits>
     </>
   )

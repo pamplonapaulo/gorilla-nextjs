@@ -5,7 +5,6 @@ import * as S from './styles'
 import { useQuery } from '@apollo/client'
 import GET_PLANS from 'graphql/queries/getPlans'
 
-// import { getImageUrl } from 'utils/getImageUrl'
 import { formatCurrency } from 'utils/formatCurrency'
 
 import { Snack, Plans, ProductFull } from 'types/api'
@@ -29,6 +28,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   const [mobilePanelStep, setMobilePanelStep] = useState(0)
   const [deliveryReset, setDeliveryReset] = useState(false)
   const [forwardBtn, setForwardBtn] = useState(false)
+  const [minimumValue, setMinimumValue] = useState(987654)
 
   const { loading, error, data } = useQuery(GET_PLANS)
 
@@ -46,15 +46,37 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         }
       }
     `
-
     const { product } = await client.request(GET_PRODUCT)
 
     product.photo = s.photo
     product.TotalValue = s.quantity * product.BaseValue
     product.quantity = s.quantity
-
     return product
   }
+
+  // const isCustomPack = () => {
+  //   const text = window.location.href
+  //   const pattern = /packs\/custom/
+  //   return pattern.test(text)
+  // }
+
+  // const getMinimumValue = async () => {
+  //   if (!isCustomPack()) {
+  //     setMinimumValue(0)
+  //     return
+  //   }
+
+  //   const GET_MINIMUM_VALUE = gql`
+  //     query GET_MINIMUM_VALUE {
+  //       minimumPackValue {
+  //         MinimumValue
+  //       }
+  //     }
+  //   `
+  //   const { minimumPackValue } = await client.request(GET_MINIMUM_VALUE)
+
+  //   setMinimumValue(minimumPackValue.MinimumValue)
+  // }
 
   const planIsSet = (upcomingDiscount: number) => {
     setDiscount(upcomingDiscount)
@@ -128,6 +150,34 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     })
   }, [pack])
 
+  useEffect(() => {
+    const isCustomPack = () => {
+      const text = window.location.href
+      const pattern = /packs\/custom/
+      return pattern.test(text)
+    }
+
+    const getMinimumValue = async () => {
+      if (!isCustomPack()) {
+        setMinimumValue(0)
+        return
+      }
+
+      const GET_MINIMUM_VALUE = gql`
+        query GET_MINIMUM_VALUE {
+          minimumPackValue {
+            MinimumValue
+          }
+        }
+      `
+      const { minimumPackValue } = await client.request(GET_MINIMUM_VALUE)
+
+      setMinimumValue(minimumPackValue.MinimumValue)
+    }
+
+    if (minimumValue === 987654) getMinimumValue()
+  }, [minimumValue])
+
   if (loading) return <Loader isHidden={false} />
   if (error) return <p>Error :(</p>
 
@@ -135,7 +185,9 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     <S.PackPanel isVisible={pack.length > 0} showOnMobile={mobilePanelStep > 0}>
       <S.MobileBtnWrapper>
         <S.UnderLimitMessage isVisible={mobilePanelStep === 0}>
-          <S.SpanMessage gotMinimumValue={snacksCost >= 7}></S.SpanMessage>
+          <S.SpanMessage
+            gotMinimumValue={snacksCost >= minimumValue}
+          ></S.SpanMessage>
         </S.UnderLimitMessage>
         <S.ActionBtn
           onClick={() => moveBackwards()}
@@ -178,7 +230,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         </S.Items>
       </S.Content>
       <S.Content
-        isVisible={snacksCost >= 7}
+        isVisible={snacksCost >= minimumValue}
         showOnMobile={mobilePanelStep === 1}
       >
         <S.Text shouldPulse={!discount}>Plano</S.Text>
@@ -196,7 +248,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         ))}
       </S.Content>
       <S.Content
-        isVisible={discount !== false && snacksCost >= 7}
+        isVisible={discount !== false && snacksCost >= minimumValue}
         showOnMobile={mobilePanelStep === 2}
       >
         <S.Text shouldPulse={false}>Frete</S.Text>
@@ -210,7 +262,9 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       </S.Content>
       <S.Content
         isVisible={
-          deliveryFee !== false && discount !== false && snacksCost >= 7
+          deliveryFee !== false &&
+          discount !== false &&
+          snacksCost >= minimumValue
         }
         showOnMobile={mobilePanelStep === 3}
       >

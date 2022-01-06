@@ -4,8 +4,8 @@ import Link from 'next/link'
 import * as S from './styles'
 
 type Props = {
-  as: string
-  pathname: string
+  as?: string
+  pathname?: string
   text: string
 }
 

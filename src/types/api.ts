@@ -61,6 +61,17 @@ export type Pack = {
   Name: string
   Item: PackItem[]
   Description: string
+  Benefits: Benefit[]
+}
+
+export type Benefit = {
+  CurrentStatus: boolean
+  benefit: benefit
+}
+
+type benefit = {
+  id: string
+  Benefit: string
 }
 
 export type PackItem = {

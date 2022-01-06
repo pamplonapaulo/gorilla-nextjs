@@ -9,6 +9,7 @@ import GET_PACKS from 'graphql/queries/getPacks'
 import { Pack, Params, PackItem, Snack } from 'types/api'
 
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
+import { sortBenefitsById } from 'utils/sortBenefitsById'
 
 import styled from 'styled-components'
 import SlugSnack from 'components/SlugSnack'
@@ -38,12 +39,16 @@ export default function Pacote({ ...complexPack }: ComplexPack) {
                 p.product.Image1['hash'] +
                 p.product.Image1['ext']
               }
+              NutritionFacts={p.product.NutritionFacts}
             />
           )
         })}
       </Wrapper>
       <Wrapper>
-        <Benefits description={complexPack.pack.Description} />
+        <Benefits
+          description={complexPack.pack.Description}
+          benefits={sortBenefitsById(complexPack.pack.Benefits)}
+        />
       </Wrapper>
       <PackPanel pack={complexPack.currentPack} />
     </>
@@ -114,6 +119,13 @@ export const getStaticProps = async ({ params }: Params) => {
       pack(id: ${packId}) {
         id
         Name
+        Benefits {
+          benefit {
+            id
+            Benefit
+          }
+          CurrentStatus
+        }
         Description
         Item {
           id
@@ -125,6 +137,16 @@ export const getStaticProps = async ({ params }: Params) => {
               ext
               hash
             }
+            NutritionFacts {
+              Portion
+              TotalFat
+              SaturatedFat
+              TransFat
+              EnergeticValue
+              Carbohydrates
+              Sodium
+              Proteins
+            }
           }
         }
       }
@@ -134,7 +156,6 @@ export const getStaticProps = async ({ params }: Params) => {
 
   const currentPack: Snack[] = []
   pack.Item.map((p: PackItem) => {
-    console.log(p)
     const snack = {
       id: parseInt(p.product.id),
       quantity: p.Quantity,

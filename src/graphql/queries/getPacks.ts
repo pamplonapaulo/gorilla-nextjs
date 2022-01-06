@@ -5,6 +5,13 @@ const GET_PACKS = gql`
     packs {
       id
       Name
+      Benefits {
+        benefit {
+          id
+          Benefit
+        }
+        CurrentStatus
+      }
       Item {
         id
         Quantity

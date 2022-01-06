@@ -10,6 +10,7 @@ export const NutritionFacts = styled.div`
   padding: 8px 7px;
   position: absolute;
   transition: all 0.2;
+  z-index: 2;
 
   @media only screen and (min-width: 1024px) {
     height: 344.34px;
@@ -46,7 +47,7 @@ export const S = styled.span`
   background: transparent;
 `
 
-export const Span = styled.span`
+export const Span = styled.span<{ widthByLength?: number }>`
   color: #fbc822;
   font-size: 6rem;
   display: flex;
@@ -59,7 +60,9 @@ export const Span = styled.span`
     color: rgb(28, 19, 11);
     color: #fbc822;
     text-shadow: 0px 1px 4px #47311b;
-    min-width: 70px;
+    /* min-width: 70px; */
+    min-width: ${(p) =>
+      p.widthByLength && p.widthByLength > 1 ? '100px' : '70px'};
     text-align: center;
   }
 
@@ -113,13 +116,18 @@ export const H = styled.h1`
   }
 `
 
-export const Item = styled.div`
+type MargimBottom = {
+  margimBottom?: boolean
+}
+
+export const Item = styled.div<MargimBottom>`
   margin: 0 0 50px;
   text-align: center;
   max-width: 300px;
 
   @media only screen and (min-width: 1024px) {
     margin: 0 20px 150px;
+    margin-bottom: ${(p) => (p.margimBottom ? '0px' : '150px')};
     /* box-shadow: 0 0 8px #000; */
 
     &:hover {
