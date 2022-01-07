@@ -65,11 +65,10 @@ export type Pack = {
 }
 
 export type Benefit = {
-  CurrentStatus: boolean
   benefit: benefit
 }
 
-type benefit = {
+export type benefit = {
   id: string
   Benefit: string
 }

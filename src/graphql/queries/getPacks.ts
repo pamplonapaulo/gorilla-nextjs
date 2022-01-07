@@ -10,7 +10,6 @@ const GET_PACKS = gql`
           id
           Benefit
         }
-        CurrentStatus
       }
       Item {
         id

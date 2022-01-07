@@ -6,7 +6,7 @@ import { gql, GraphQLClient } from 'graphql-request'
 import { endpoint } from 'lib/apollo/client'
 import GET_PACKS from 'graphql/queries/getPacks'
 
-import { Pack, Params, PackItem, Snack } from 'types/api'
+import { Pack, Params, PackItem, Snack, benefit } from 'types/api'
 
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 import { sortBenefitsById } from 'utils/sortBenefitsById'
@@ -21,6 +21,7 @@ const client = new GraphQLClient(endpoint + 'graphql')
 type ComplexPack = {
   pack: Pack
   currentPack: Snack[]
+  benefits: benefit[]
 }
 
 export default function Pacote({ ...complexPack }: ComplexPack) {
@@ -47,7 +48,8 @@ export default function Pacote({ ...complexPack }: ComplexPack) {
       <Wrapper>
         <T>{complexPack.pack.Description}</T>
         <Benefits
-          benefits={sortBenefitsById(complexPack.pack.Benefits)}
+          packBenefits={sortBenefitsById(complexPack.pack.Benefits)}
+          generalBenefits={complexPack.benefits}
           isHome={false}
         />
       </Wrapper>
@@ -123,7 +125,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: Params) => {
   const { slug } = params
-
   const { packs } = await client.request(GET_PACKS)
 
   function matchSlug(p: Pack) {
@@ -142,7 +143,6 @@ export const getStaticProps = async ({ params }: Params) => {
             id
             Benefit
           }
-          CurrentStatus
         }
         Description
         Item {
@@ -168,9 +168,13 @@ export const getStaticProps = async ({ params }: Params) => {
           }
         }
       }
+      benefits {
+        id
+        Benefit
+      }
     }
   `
-  const { pack } = await client.request(GET_PACK)
+  const { pack, benefits } = await client.request(GET_PACK)
 
   const currentPack: Snack[] = []
   pack.Item.map((p: PackItem) => {
@@ -185,6 +189,7 @@ export const getStaticProps = async ({ params }: Params) => {
   const complexPack = {
     pack: { ...pack },
     currentPack: [...currentPack],
+    benefits: [...benefits],
   }
 
   return {

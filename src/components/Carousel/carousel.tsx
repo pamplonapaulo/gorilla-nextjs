@@ -1,5 +1,9 @@
 import React, { useLayoutEffect, useCallback, useState, useRef } from 'react'
 
+import { useQuery } from '@apollo/client'
+import GET_BENEFITS from 'graphql/queries/getBenefits'
+import Loader from 'components/Loader'
+
 import * as S from './styles'
 
 import { getPackPrice } from 'utils/getPackPrice'
@@ -10,8 +14,6 @@ import Pagination from 'components/Pagination'
 
 import { Pack } from 'types/api'
 
-import { sortBenefitsById } from 'utils/sortBenefitsById'
-
 type Props = {
   packs: Pack[]
 }
@@ -21,6 +23,8 @@ const Carousel = ({ packs }: Props) => {
   const [nav, setNav] = useState(0)
   const [translate, setTranslate] = useState<number>(0)
   const refItem = useRef<HTMLDivElement>(null)
+
+  const { loading, error, data } = useQuery(GET_BENEFITS)
 
   useLayoutEffect(() => {
     const updateSize = () => {
@@ -66,6 +70,9 @@ const Carousel = ({ packs }: Props) => {
     return pagination
   }, [packs])
 
+  if (loading) return <Loader isHidden={false} />
+  if (error) return <p>Erro no carregamento dos BENEFÍCIOS</p>
+
   return (
     <>
       <S.Wrapper>
@@ -78,7 +85,8 @@ const Carousel = ({ packs }: Props) => {
                 <S.H>R$ {getPackPrice(p)} / mês</S.H>
 
                 <Benefits
-                  benefits={sortBenefitsById(p.Benefits)}
+                  packBenefits={p.Benefits}
+                  generalBenefits={data.benefits}
                   isHome={true}
                 />
 
