@@ -7,10 +7,10 @@ type ContentType = {
 
 type ActionBtnType = {
   switchContent: boolean
-  selfCentered?: boolean
   isHidden?: boolean
   isDeactivated?: boolean
   shouldPulse?: boolean
+  isCentered?: boolean
 }
 
 const pulse = keyframes`
@@ -77,12 +77,6 @@ export const UnderLimitMessage = styled.h1<{ isVisible: boolean }>`
     font-weight: 600;
     text-shadow: 0px 1px 2px #000;
     width: 300px;
-
-    /* width: unset;
-    margin-top: 0;
-    line-height: unset;
-    justify-content: end;
-    flex-direction: row; */
   }
 `
 
@@ -123,30 +117,19 @@ export const ActionBtn = styled.button<ActionBtnType>`
   cursor: pointer;
   font-size: 1rem;
   font-style: italic;
-  font-weight: 500;
+  font-weight: 600;
   height: 70px;
   letter-spacing: 1px;
-  /* padding: 1.3em 1.7em; */
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  width: 80px;
-  font-weight: 600;
-  /* position: absolute; */
   position: relative;
-
   overflow: hidden;
   z-index: 0;
-
-  width: 135px;
-  /* margin: 5px 20%; */
   height: 50px;
-
   display: flex;
   flex-direction: ${(p) => (p.switchContent ? 'row-reverse' : 'row')};
   transition: 0.2s all;
-  justify-content: space-around;
-  /* margin: 15px calc(calc(100% - 135px) / 2); */
   width: calc(50% - 15px - 7.5px);
   justify-content: space-evenly;
   padding: 0;
@@ -155,12 +138,14 @@ export const ActionBtn = styled.button<ActionBtnType>`
   &&:nth-of-type(1) {
     margin: 15px auto 15px 15px;
     display: ${(p) => (p.isHidden ? 'none' : 'flex')};
+    margin: ${(p) => (p.isCentered ? '15px auto' : '15px auto 15px 15px')};
   }
 
   &&:nth-of-type(2) {
     margin: 15px 15px 15px auto;
     animation: 1s infinite;
     animation-name: ${(p) => (p.shouldPulse ? pulse : 'none')};
+    margin: ${(p) => (p.isCentered ? '15px auto' : '15px 15px 15px auto')};
   }
 
   @media only screen and (min-width: 1024px) {
@@ -247,6 +232,42 @@ export const Quantity = styled.h1`
   }
 `
 
+export const HoverContent = styled.span`
+  background: #fff;
+  color: #000;
+  display: none;
+  height: 35px;
+  width: 170px;
+  font-size: 2.8rem;
+  font-style: italic;
+  font-weight: 600;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translate(80%, -5px);
+`
+
+export const Items = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+
+  width: 150px;
+  margin: 0 auto;
+
+  @media only screen and (min-width: 1024px) {
+    width: unset;
+    margin: 0;
+    justify-content: flex-start;
+
+    &:hover {
+      ${HoverContent} {
+        display: block;
+      }
+    }
+  }
+`
+
 export const Content = styled.div<ContentType>`
   display: flex;
   flex-direction: column;
@@ -254,13 +275,13 @@ export const Content = styled.div<ContentType>`
   flex-shrink: 3;
   transform-origin: bottom;
   transform: translateY(0%);
-
   height: calc(100% - 7.5vw - 80px);
-  /* margin: 80px auto 7.5vw 7.5vw; */
-
   width: auto;
   margin: 0 15px;
-  justify-content: start;
+  /* justify-content: start; */
+
+  justify-content: space-evenly;
+  text-align: center;
 
   @media only screen and (min-width: 1024px) {
     height: unset;
@@ -271,6 +292,8 @@ export const Content = styled.div<ContentType>`
     animation-duration: ${(p) => (p.isVisible ? '2.5s' : '0.8s')};
     animation-play-state: ${(p) => (p.isVisible ? 'running' : 'running')};
     animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
+
+    text-align: unset;
   }
 
   display: ${(p) => (p.showOnMobile ? 'flex' : 'none')};
@@ -289,6 +312,14 @@ export const Content = styled.div<ContentType>`
     animation-delay: 0.5s;
     z-index: 2;
 
+    ${Items} {
+      justify-content: start;
+
+      @media only screen and (min-width: 1024px) {
+        justify-content: unset;
+      }
+    }
+
     @media only screen and (min-width: 1024px) {
       max-width: 192.44px;
       display: flex;
@@ -297,6 +328,10 @@ export const Content = styled.div<ContentType>`
 
   &&:nth-of-type(4) {
     z-index: 1;
+
+    ${Items} {
+      width: unset;
+    }
 
     @media only screen and (min-width: 1024px) {
       max-width: 276.58px;
@@ -308,40 +343,6 @@ export const Content = styled.div<ContentType>`
     @media only screen and (min-width: 1024px) {
       max-width: 190px;
       display: flex;
-    }
-  }
-`
-
-export const HoverContent = styled.span`
-  background: #fff;
-  color: #000;
-  display: none;
-  height: 35px;
-  width: 170px;
-  font-size: 2.8rem;
-  font-style: italic;
-  font-weight: 600;
-  position: absolute;
-  text-align: center;
-  text-transform: uppercase;
-  transform: translate(80%, -5px);
-`
-
-export const Items = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-
-  /* &&:nth-child(odd) {
-    background: blue;
-    color: yellow;
-  } */
-
-  @media only screen and (min-width: 1024px) {
-    &:hover {
-      ${HoverContent} {
-        display: block;
-      }
     }
   }
 `
@@ -364,7 +365,6 @@ export const PackPanel = styled.div<{
   transition: 0.1s ease-in-out all;
 
   padding: 0;
-  /* height: 80px; */
   height: ${(p) => (p.showOnMobile ? '50vh' : '80px')};
   width: 85%;
 

@@ -20,7 +20,7 @@ export const Wrap = styled.div<{ isOff: boolean }>`
   background: black;
   background: rgb(28, 19, 11);
   box-shadow: 0px 0px 1px rgb(255 255 255 / 75%);
-  width: 400px;
+  width: 90%;
   height: 400px;
   padding: 4rem;
   justify-content: space-around;
@@ -29,6 +29,10 @@ export const Wrap = styled.div<{ isOff: boolean }>`
   transform: translateY(-75px);
   opacity: ${(p) => (p.isOff ? '0' : '1')};
   transition: all 0.1s;
+
+  @media only screen and (min-width: 1024px) {
+    width: 400px;
+  }
 `
 
 export const Txt = styled.h5`

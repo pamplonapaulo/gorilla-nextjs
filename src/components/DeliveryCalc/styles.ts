@@ -19,7 +19,7 @@ export const Input = styled.input`
   color: #fbc822;
   height: 30px;
   width: 120px;
-  margin: 0.35em 0 0.85em 0;
+  margin: 0.35em auto 0.85em auto;
   outline: none;
   letter-spacing: 1.75px;
   outline-color: white;
@@ -49,6 +49,10 @@ export const Input = styled.input`
     &::-webkit-input-placeholder {
       color: transparent;
     }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    margin: 0.35em 0 0.85em 0;
   }
 `
 

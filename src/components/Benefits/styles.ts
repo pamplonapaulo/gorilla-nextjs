@@ -22,16 +22,20 @@ export const Benefits = styled.ul<{ isHome: boolean }>`
   display: flex;
   flex-direction: column;
   padding: ${(p) => (p.isHome ? '0px 7.25px' : '50px 7.25px')};
-  width: ${(p) => (p.isHome ? 'unset' : '50%')};
+  width: ${(p) => (p.isHome ? 'unset' : '100%')};
   background: ${(p) => (p.isHome ? 'none' : '#ee7416')};
   box-shadow: ${(p) => (p.isHome ? 'none' : '2px 2px 5px #000')};
+
+  @media only screen and (min-width: 1024px) {
+    width: ${(p) => (p.isHome ? 'unset' : '50%')};
+  }
 `
 
 export const Attribute = styled.li<{ isChecked: boolean; isHome: boolean }>`
   list-style-type: none;
   text-align: left;
   margin: auto;
-  font-size: ${(p) => (p.isHome ? '13px' : '2.5rem')};
+  font-size: ${(p) => (p.isHome ? '13px' : '1.5rem')};
   width: ${(p) => (p.isHome ? 'unset' : '80%')};
   color: ${(p) =>
     !p.isChecked
@@ -53,6 +57,7 @@ export const Attribute = styled.li<{ isChecked: boolean; isHome: boolean }>`
   }
 
   @media only screen and (min-width: 1024px) {
+    font-size: ${(p) => (p.isHome ? '13px' : '2.5rem')};
     line-height: ${(p) => (p.isHome ? 2 : 1.75)};
   }
 `

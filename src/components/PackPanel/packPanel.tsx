@@ -184,7 +184,9 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   return (
     <S.PackPanel isVisible={pack.length > 0} showOnMobile={mobilePanelStep > 0}>
       <S.MobileBtnWrapper>
-        <S.UnderLimitMessage isVisible={mobilePanelStep === 0}>
+        <S.UnderLimitMessage
+          isVisible={mobilePanelStep === 0 && minimumValue !== 0}
+        >
           <S.SpanMessage
             gotMinimumValue={snacksCost >= minimumValue}
           ></S.SpanMessage>
@@ -192,7 +194,11 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         <S.ActionBtn
           onClick={() => moveBackwards()}
           switchContent={true}
-          isHidden={mobilePanelStep < 1}
+          isHidden={
+            (mobilePanelStep === 0 && snacksCost >= minimumValue) ||
+            mobilePanelStep < 1
+          }
+          isCentered={false}
         >
           <S.BtnText>{'Voltar'}</S.BtnText>
           <Arrow rotate={'0'} />
@@ -203,6 +209,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           switchContent={false}
           isDeactivated={forwardBtn === false}
           shouldPulse={mobilePanelStep === 3}
+          isCentered={mobilePanelStep === 0 && minimumValue === 0}
         >
           <S.BtnText>
             {mobilePanelStep === 3 ? 'Concluir' : 'Avançar'}

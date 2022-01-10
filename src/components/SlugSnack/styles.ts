@@ -50,17 +50,21 @@ export const S = styled.span`
 export const Span = styled.span<{ widthByLength?: number }>`
   color: #fbc822;
   font-size: 6rem;
+  font-size: 3.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-height: 60px;
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 6rem;
+    max-height: unset;
+  }
 
   &&:nth-of-type(1) {
     background: rgb(28, 19, 11);
-
-    color: rgb(28, 19, 11);
     color: #fbc822;
     text-shadow: 0px 1px 4px #47311b;
-    /* min-width: 70px; */
     min-width: ${(p) =>
       p.widthByLength && p.widthByLength > 1 ? '100px' : '70px'};
     text-align: center;
@@ -75,13 +79,18 @@ export const Span = styled.span<{ widthByLength?: number }>`
   }
 
   &&:nth-of-type(3) {
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: rgb(28, 19, 11);
     text-shadow: 1px 1px 0px #fbc822;
     font-weight: 700;
     padding-left: 0;
+    transform: translate(-92.31px, 75%);
+    min-width: 100%;
 
     @media only screen and (min-width: 1024px) {
+      font-size: 3.5rem;
+      transform: unset;
+      min-width: unset;
       width: 250px;
     }
   }
