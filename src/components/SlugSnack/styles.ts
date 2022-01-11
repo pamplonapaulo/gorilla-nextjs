@@ -131,6 +131,7 @@ type MargimBottom = {
 
 export const Item = styled.div<MargimBottom>`
   margin: 0 0 50px;
+  margin-bottom: ${(p) => (p.margimBottom ? '0px' : '50px')};
   text-align: center;
   max-width: 300px;
 

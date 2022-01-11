@@ -233,18 +233,30 @@ export const Quantity = styled.h1`
 `
 
 export const HoverContent = styled.span`
-  background: #fff;
   color: #000;
-  display: none;
   height: 35px;
   width: 170px;
-  font-size: 2.8rem;
   font-style: italic;
   font-weight: 600;
   position: absolute;
   text-align: center;
   text-transform: uppercase;
   transform: translate(80%, -5px);
+
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 1.7rem;
+
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-left: 1rem;
+
+  @media only screen and (min-width: 1024px) {
+    background: #fff;
+    font-size: 2.8rem;
+    display: none;
+  }
 `
 
 export const Items = styled.div`
@@ -278,8 +290,6 @@ export const Content = styled.div<ContentType>`
   height: calc(100% - 7.5vw - 80px);
   width: auto;
   margin: 0 15px;
-  /* justify-content: start; */
-
   justify-content: space-evenly;
   text-align: center;
 
@@ -367,6 +377,7 @@ export const PackPanel = styled.div<{
   padding: 0;
   height: ${(p) => (p.showOnMobile ? '50vh' : '80px')};
   width: 85%;
+  overflow: hidden;
 
   @media only screen and (min-width: 1024px) {
     flex-direction: row;

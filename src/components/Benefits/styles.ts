@@ -57,7 +57,7 @@ export const Attribute = styled.li<{ isChecked: boolean; isHome: boolean }>`
   }
 
   @media only screen and (min-width: 1024px) {
-    font-size: ${(p) => (p.isHome ? '13px' : '2.5rem')};
+    font-size: ${(p) => (p.isHome ? '13px' : '2rem')};
     line-height: ${(p) => (p.isHome ? 2 : 1.75)};
   }
 `

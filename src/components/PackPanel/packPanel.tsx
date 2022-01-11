@@ -54,30 +54,6 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     return product
   }
 
-  // const isCustomPack = () => {
-  //   const text = window.location.href
-  //   const pattern = /packs\/custom/
-  //   return pattern.test(text)
-  // }
-
-  // const getMinimumValue = async () => {
-  //   if (!isCustomPack()) {
-  //     setMinimumValue(0)
-  //     return
-  //   }
-
-  //   const GET_MINIMUM_VALUE = gql`
-  //     query GET_MINIMUM_VALUE {
-  //       minimumPackValue {
-  //         MinimumValue
-  //       }
-  //     }
-  //   `
-  //   const { minimumPackValue } = await client.request(GET_MINIMUM_VALUE)
-
-  //   setMinimumValue(minimumPackValue.MinimumValue)
-  // }
-
   const planIsSet = (upcomingDiscount: number) => {
     setDiscount(upcomingDiscount)
   }
@@ -100,8 +76,10 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   }
 
   const moveForward = () => {
-    setMobilePanelStep(mobilePanelStep + 1)
-    setForwardBtn(false)
+    if (forwardBtn) {
+      setMobilePanelStep(mobilePanelStep + 1)
+      setForwardBtn(false)
+    }
   }
 
   useEffect(() => {
@@ -176,7 +154,10 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     }
 
     if (minimumValue === 987654) getMinimumValue()
-  }, [minimumValue])
+
+    if (minimumValue <= snacksCost) setForwardBtn(true)
+    else setForwardBtn(false)
+  }, [minimumValue, snacksCost])
 
   if (loading) return <Loader isHidden={false} />
   if (error) return <p>Error :(</p>
@@ -208,7 +189,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           onClick={() => moveForward()}
           switchContent={false}
           isDeactivated={forwardBtn === false}
-          shouldPulse={mobilePanelStep === 3}
+          shouldPulse={mobilePanelStep === 3 || forwardBtn === true}
           isCentered={mobilePanelStep === 0 && minimumValue === 0}
         >
           <S.BtnText>

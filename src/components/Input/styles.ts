@@ -1,12 +1,4 @@
-import styled, { keyframes } from 'styled-components'
-
-const blink = keyframes`
- 0% { background: #D9D9D9; }
- 25% { background: #fff; }
- 50% { background: #D9D9D9; }
- 75% { background: #fff; }
- 100% { background: #D9D9D9; }
-`
+import styled from 'styled-components'
 
 export const HiddenInput = styled.input`
   display: none;
@@ -19,7 +11,6 @@ export const Container = styled.div`
 
   @media only screen and (min-width: 1024px) {
     align-items: center;
-    /* margin-right: 15px; */
   }
 `
 
@@ -58,9 +49,6 @@ export const Btn = styled.button`
 `
 
 export const FakeInput = styled.div`
-  animation-duration: 1.7s;
-  animation-iteration-count: infinite;
-  animation-name: ${(props) => (props.theme.quantity > 0 ? blink : 'none')};
   text-align: center;
   background: white;
   border: none;
@@ -85,7 +73,7 @@ export const FakeInput = styled.div`
   height: 25px;
 
   @media only screen and (min-width: 1024px) {
-    width: ${(props) => (props.theme.isCartPage ? '80px' : '65px')};
+    width: 65px;
     height: 50px;
   }
 `

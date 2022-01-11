@@ -80,8 +80,6 @@ const Custom = () => {
       </T>
       <Wrapper>
         {data.products.map((p: Product) => {
-          console.log(p)
-          console.log(p.NutritionFacts)
           return (
             <Item key={p.id}>
               <SlugSnack
@@ -126,6 +124,7 @@ const T = styled.h1<{ makeRoomToTopPanel: boolean }>`
   font-style: italic;
   font-weight: 600;
   text-shadow: 0px 1px 5px #000;
+  transition: 0.1s ease-in-out all;
 
   @media only screen and (min-width: 1024px) {
     font-size: 5rem;
@@ -167,9 +166,12 @@ const H = styled.h1`
   opacity: 1;
   transition: all 0.2s;
   z-index: 1;
+  transform: scale(0.75);
+  transform-origin: bottom;
 
   @media only screen and (min-width: 1024px) {
     font-size: 2rem;
+    transform-origin: unset;
     transform: translateX(-20px);
   }
 `
@@ -182,14 +184,17 @@ const BtnsWrapper = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 8;
+  transform: scale(1.25);
+  transform-origin: top;
 
   @media only screen and (min-width: 1024px) {
     padding: 0;
+    transform: unset;
   }
 `
 
 const Item = styled.div`
-  margin: 0 0 50px;
+  margin: 0 0 75px;
   text-align: center;
   max-width: 300px;
 
