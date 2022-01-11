@@ -52,7 +52,7 @@ const bounce = keyframes`
 `
 
 const hide = keyframes`
-  0% { transform: translateY(0%); }
+  0% { transform: scale(1,1) translateY(-115%); }
   100% { transform: scale(1,1) translateY(-115%); }
 `
 
@@ -265,11 +265,10 @@ export const Items = styled.div`
   flex-direction: row;
 
   width: 150px;
-  margin: 0 auto;
+  margin: 0;
 
   @media only screen and (min-width: 1024px) {
     width: unset;
-    margin: 0;
     justify-content: flex-start;
 
     &:hover {
@@ -294,6 +293,7 @@ export const Content = styled.div<ContentType>`
   text-align: center;
 
   @media only screen and (min-width: 1024px) {
+    transform: translateY(-115%);
     height: unset;
     margin: unset;
     justify-content: space-between;

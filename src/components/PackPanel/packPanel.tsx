@@ -22,7 +22,7 @@ const client = new GraphQLClient(endpoint + 'graphql')
 
 const PackPanel = ({ pack }: { pack: Snack[] }) => {
   const [snacksCost, setSnacksCost] = useState<boolean | number>(false)
-  const [discount, setDiscount] = useState<boolean | number>(false)
+  const [discount, setDiscount] = useState<number>(-1)
   const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
   const [finalPrice, setFinalPrice] = useState(0)
   const [mobilePanelStep, setMobilePanelStep] = useState(0)
@@ -85,7 +85,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   useEffect(() => {
     if (
       typeof snacksCost === 'number' &&
-      typeof discount === 'number' &&
+      discount > -1 &&
       typeof deliveryFee === 'number'
     ) {
       const afterDiscount = applyDiscount(snacksCost, discount)
@@ -100,15 +100,19 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   }, [deliveryFee, mobilePanelStep])
 
   useEffect(() => {
-    if (mobilePanelStep === 1 && typeof discount === 'number')
-      setForwardBtn(true)
-    if (mobilePanelStep === 1 && discount === false) setForwardBtn(false)
+    if (mobilePanelStep === 1 && discount > -1) setForwardBtn(true)
+    if (mobilePanelStep === 1 && discount === -1) setForwardBtn(false)
   }, [discount, mobilePanelStep])
 
   useEffect(() => {
     if (mobilePanelStep === 0 && snacksCost >= 7) setForwardBtn(true)
     if (mobilePanelStep === 0 && snacksCost < 7) setForwardBtn(false)
   }, [snacksCost, mobilePanelStep])
+
+  useEffect(() => {
+    console.log('console.log(discount)')
+    console.log(discount)
+  }, [discount])
 
   const formatDiscount = (value: number) => (100 * value).toFixed(0)
 
@@ -221,7 +225,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         isVisible={snacksCost >= minimumValue}
         showOnMobile={mobilePanelStep === 1}
       >
-        <S.Text shouldPulse={!discount}>Plano</S.Text>
+        <S.Text shouldPulse={discount === -1}>Plano</S.Text>
         {data.periodicidades.map((p: Plans) => (
           <S.Items key={p.id}>
             <BtnRadio
@@ -229,14 +233,14 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
               group={'plano'}
               parentCallback={planIsSet}
               discount={p.Discount}
-              neverClicked={!discount}
+              neverClicked={discount === -1}
             />
             <S.HoverContent>{formatDiscount(p.Discount)}% off</S.HoverContent>
           </S.Items>
         ))}
       </S.Content>
       <S.Content
-        isVisible={discount !== false && snacksCost >= minimumValue}
+        isVisible={discount > -1 && snacksCost >= minimumValue}
         showOnMobile={mobilePanelStep === 2}
       >
         <S.Text shouldPulse={false}>Frete</S.Text>
@@ -250,9 +254,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       </S.Content>
       <S.Content
         isVisible={
-          deliveryFee !== false &&
-          discount !== false &&
-          snacksCost >= minimumValue
+          deliveryFee !== false && discount > -1 && snacksCost >= minimumValue
         }
         showOnMobile={mobilePanelStep === 3}
       >
