@@ -80,19 +80,17 @@ const Carousel = ({ packs }: Props) => {
           {packs.map((p: Pack) => {
             return (
               <S.Item key={p.id} className={p.id} ref={refItem}>
-                <S.H>{p.Name}</S.H>
-                <S.Desc>{p.Description}</S.Desc>
+                <S.H>{p.attributes.Name}</S.H>
+                <S.Desc>{p.attributes.Description}</S.Desc>
                 <S.H>R$ {getPackPrice(p)} / mês</S.H>
-
                 <Benefits
-                  packBenefits={p.Benefits}
-                  generalBenefits={data.benefits}
+                  packBenefits={p.attributes.Benefits[0].benefits.data}
+                  generalBenefits={data.benefits.data}
                   isHome={true}
                 />
-
                 <S.FlexCenter>
                   <BtnLittle
-                    as={`/packs/${replaceSpecialChars(p.Name)}`}
+                    as={`/packs/${replaceSpecialChars(p.attributes.Name)}`}
                     pathname={'/packs/[slug]'}
                     text={'Selecionar'}
                   />

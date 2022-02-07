@@ -75,7 +75,7 @@ export const Legend = styled.legend`
   text-transform: uppercase;
   transform: translateY(250%);
   transform: translateY(100%);
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   width: calc(100% - 40px);
 
@@ -158,7 +158,7 @@ export const Forgot = styled.a`
   cursor: pointer;
   font-weight: 100;
   letter-spacing: 1.5px;
-  opacity: 0.5;
+  opacity: 0.75;
   text-align: right;
   text-decoration: none;
   text-transform: uppercase;
@@ -168,4 +168,11 @@ export const Forgot = styled.a`
     opacity: 1;
     text-decoration: underline;
   }
+`
+
+export const Loading = styled.img.attrs(() => ({
+  src: '/img/dots.svg',
+  alt: 'Carrregando...',
+}))`
+  width: 4rem;
 `

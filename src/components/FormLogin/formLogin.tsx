@@ -1,22 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
+import { signIn } from 'next-auth/client'
 
 import Button from 'components/Button'
 import ErrorMessage from 'components/ErrorMessage'
 
-import { useUser } from 'contexts'
-
 import { isEmailValid } from 'utils/formValidations'
-
-import axios, { AxiosResponse } from 'axios'
-// import { Customer } from 'types/api'
-import { endpoint } from 'lib/apollo/client'
 
 import * as S from './styles'
 
 const FormLogin = () => {
-  const { setUserLog } = useUser()
-
   const [validation, setValidation] = useState({
     email: true,
     password: true,
@@ -28,6 +21,8 @@ const FormLogin = () => {
   })
 
   const [message, setMessage] = useState('')
+
+  const [loading, setLoading] = useState(false)
 
   const handleFocusOut = (e: React.FocusEvent<HTMLInputElement>) => {
     const target = e.target
@@ -66,7 +61,8 @@ const FormLogin = () => {
     })
   }
 
-  const handleLogin = () => {
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
     const errors = []
 
     if (isEmailValid(inputData.email) && inputData.password.length >= 8)
@@ -92,30 +88,49 @@ const FormLogin = () => {
     }
   }
 
-  const loginCustomer = () => {
-    axios
-      .post(endpoint + 'auth/local', {
-        identifier: inputData.email,
-        password: inputData.password,
-      })
-      // .then((response: AxiosResponse<unknown, any>) => {
-      // .then((response: { data: { user: any; jwt: any } }) => {
-      //   // Handle success.
-      //   console.log('User profile', response.data.user)
-      //   console.log('User token', response.data.jwt)
-      //   setUserLog(response.data.user.username)
-      // })
-      .then((response: AxiosResponse<any, any>) => {
-        // Handle success.
-        console.log('User profile', response.data.user)
-        console.log('User token', response.data.jwt)
-        setUserLog(response.data.user.username)
-        console.log('response', response)
-      })
-      .catch((err: any) => {
-        // Handle error.
-        setMessage(err.response.data.message[0].messages[0].message)
-      })
+  // .then((response: AxiosResponse<unknown, any>) => {
+  // .then((response: { data: { user: any; jwt: any } }) => {
+  //   // Handle success.
+  //   console.log('User profile', response.data.user)
+  //   console.log('User token', response.data.jwt)
+  //   setUserLog(response.data.user.username)
+  // })
+  // identifier: inputData.email,
+  // password: inputData.password,
+
+  // const loginCustomer = () => {
+  //   axios
+  //     .post(endpoint + 'api/auth/local', {
+  //       identifier: 'paulo@paulo.com',
+  //       password: 'paulo123',
+  //     })
+  //     .then((response: AxiosResponse<any, any>) => {
+  //       // Handle success.
+  //       console.log('User profile', response.data.user)
+  //       console.log('User token', response.data.jwt)
+  //       setUserLog(response.data.user.username)
+  //       console.log('response', response)
+  //     })
+  //     .catch((err: any) => {
+  //       console.log(err.response)
+  //       // Handle error.
+  //       // setMessage(err.response.data.message[0].messages[0].message)
+  //     })
+  // }
+
+  const loginCustomer = async () => {
+    setLoading(true)
+    const result = await signIn('credentials', {
+      ...inputData,
+      redirect: false,
+      callbackUrl: '/',
+    })
+
+    if (result?.error) {
+      setLoading(false)
+      console.error(result?.error)
+      setMessage(result?.error)
+    }
   }
 
   return (
@@ -127,7 +142,6 @@ const FormLogin = () => {
             <ErrorMessage
               bottom={'unset'}
               bottomMobile={'unset'}
-              top={'0'}
               topMobile={'58px'}
             >
               {message}
@@ -152,9 +166,14 @@ const FormLogin = () => {
           <S.Forgot href="#">Esqueceu a senha?</S.Forgot>
         </S.Field>
       </S.Form>
-      <div onClick={() => handleLogin()}>
-        <Button colorOne={'#facb37'} colorTwo={'#000'}>
-          Entrar
+      <div>
+        <Button
+          disabled={loading}
+          parentCallback={(e) => handleLogin(e)}
+          colorOne={'#facb37'}
+          colorTwo={'#000'}
+        >
+          {loading ? <S.Loading /> : 'Entrar'}
         </Button>
       </div>
     </>

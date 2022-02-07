@@ -50,7 +50,7 @@ export const List = styled.ul`
 `
 export const Item = styled.li`
   align-items: center;
-  border: 1px solid #2DA650;
+  border: 1px solid #2da650;
   display: flex;
   height: 70px;
   justify-content: center;
@@ -58,8 +58,8 @@ export const Item = styled.li`
   color: #2da650;
 
   &.active {
-    border: #EF8321 solid 1px;
-    color: #EF8321;
+    border: #ef8321 solid 1px;
+    color: #ef8321;
   }
 
   @media only screen and (min-width: 1024px) {
@@ -76,17 +76,16 @@ export const Item = styled.li`
     }
 
     &:hover {
-      border: #EF8321 solid 1px;
-      color: #EF8321;
+      border: #ef8321 solid 1px;
+      color: #ef8321;
     }
 
     &.active {
-      color: #FACB37;
-      border-image: linear-gradient( to right,yellow,rgba(0,0,0,0) ) 0 0 1 0%;
+      color: #facb37;
+      border-image: linear-gradient(to right, yellow, rgba(0, 0, 0, 0)) 0 0 1 0%;
       border-top: transparent;
     }
   }
-}
 `
 
 export const H1 = styled.h1`

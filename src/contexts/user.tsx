@@ -17,8 +17,8 @@ export function createCtx<ContextType>() {
 }
 
 type UserContextType = {
-  userLog: string
-  setUserLog: Dispatch<SetStateAction<string>>
+  userLog: string | null | undefined
+  setUserLog: Dispatch<SetStateAction<string | null | undefined>>
 }
 
 const [useUser, CtxProvider] = createCtx<UserContextType>()
@@ -28,7 +28,7 @@ type Props = {
 }
 
 const UserProvider = ({ children }: Props) => {
-  const [userLog, setUserLog] = useState('false')
+  const [userLog, setUserLog] = useState<string | null | undefined>('false')
 
   // React.useEffect(() => {
   //   const currentUser = false

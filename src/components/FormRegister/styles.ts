@@ -5,10 +5,6 @@ const show = keyframes`
  100% { opacity: 1; }
 `
 
-// type Props = {
-//   isValid: boolean
-// }
-
 export const Container = styled.div`
   padding: 0;
   z-index: 9;
@@ -74,9 +70,11 @@ export const SignUp = styled.div`
 
 export const Form = styled.form`
   width: 100%;
-  padding-top: 5rem;
+  height: 100%;
+  padding-top: 100px;
 
   @media only screen and (min-width: 1024px) {
+    height: unset;
     padding-top: 5rem;
   }
 `
@@ -87,7 +85,6 @@ export const Submit = styled.button`
 `
 
 export const Field = styled.fieldset`
-  // align-items: center;
   border: none;
   display: flex;
   flex-direction: column;
@@ -106,8 +103,6 @@ export const Legend = styled.legend`
   font-weight: 100;
   letter-spacing: 5px;
   margin-bottom: 30px;
-  transform: translateY(100%);
-  position: absolute;
   top: 0;
   width: calc(100% - 40px);
   z-index: 0;
@@ -171,21 +166,25 @@ export const Input = styled.input<{ isValid: boolean }>`
   }
 `
 
-export const Success = styled.h1`
+export const SuccessWrapper = styled.div`
   align-items: center;
-  background: #47311b;
-  color: #2da650;
   display: flex;
-  text-align: left;
-  font-size: 3rem;
-  font-weight: 100;
+  flex-direction: column;
+  justify-content: space-evenly;
   height: 100%;
+  padding: 30px;
+`
+
+export const SuccessText = styled.h5`
+  color: #facb37;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 100;
   letter-spacing: 5px;
   line-height: 1.5;
-  padding: 30px;
-  position: absolute;
-  width: 100%;
-  text-align: center;
+  top: 0;
+  z-index: 0;
 `
 
 export const PasswordAlert = styled.h1<{ isValid: boolean }>`
@@ -200,10 +199,11 @@ export const PasswordAlert = styled.h1<{ isValid: boolean }>`
   line-height: 1.5;
   opacity: ${(p) => (p.isValid ? 1 : 0)};
   padding: 9px 12px;
-  position: absolute;
+  /* position: absolute; */
   text-align: center;
   text-transform: uppercase;
   top: calc(267px + calc(4 * 2rem));
+  transform: translateY(15px);
   transition: 0.2s ease opacity;
   z-index: 1;
 
@@ -215,19 +215,25 @@ export const PasswordAlert = styled.h1<{ isValid: boolean }>`
     transform: rotate(45deg) translate(-10px, -10px);
     position: absolute;
     z-index: -1;
+
+    @media only screen and (min-width: 1024px) {
+      transform: rotate(45deg) translate(-10px, -15px);
+    }
   }
 
   @media only screen and (min-width: 1024px) {
-    position: unset;
+    transform: translateY(0);
   }
 `
 
-export const BtnSave = styled.div`
+export const BtnWrap = styled.div`
   align-self: flex-end;
   margin-top: 15px;
 
   @media only screen and (min-width: 1024px) {
     align-self: unset;
     margin-top: unset;
+    justify-content: center;
+    display: flex;
   }
 `

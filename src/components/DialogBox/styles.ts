@@ -13,6 +13,10 @@ export const Overlay = styled.div<{ isHidden: boolean; isDisplayed: boolean }>`
   flex-direction: column;
   justify-content: center;
   transition: all 0.4s;
+
+  @media only screen and (min-width: 1024px) {
+    top: 70px;
+  }
 `
 
 export const Wrap = styled.div<{ isOff: boolean }>`

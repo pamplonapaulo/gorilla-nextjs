@@ -9,7 +9,6 @@ import styled from 'styled-components'
 
 export const Error = styled.h1<{
   bottom: string
-  top: string
   bottomMobile: string
   topMobile: string
 }>`
@@ -33,6 +32,7 @@ export const Error = styled.h1<{
   // width: calc(100% - 30px);
   width: calc(100% - 38px);
   top: ${(p) => p.topMobile};
+  z-index: 0;
 
   @media only screen and (min-width: 1024px) {
     bottom: ${(p) => p.bottom};
@@ -41,7 +41,7 @@ export const Error = styled.h1<{
     margin-left: -25px;
     padding: 5px 15px;
     transform: translateY(50%);
-    top: ${(p) => p.top};
+    top: 5px;
     width: calc(20vw - 10px);
   }
 `

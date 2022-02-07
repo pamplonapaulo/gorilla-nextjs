@@ -24,13 +24,16 @@ const DialogBox = () => {
     const GET_FREE_DELIVERY_VALUE = gql`
       query GET_FREE_DELIVERY_VALUE {
         freeDelivery {
-          MinimumTicket
+          data {
+            attributes {
+              MinimumTicket
+            }
+          }
         }
       }
     `
     const { freeDelivery } = await client.request(GET_FREE_DELIVERY_VALUE)
-
-    setFreeDelivery(freeDelivery.MinimumTicket)
+    setFreeDelivery(freeDelivery.data.attributes.MinimumTicket)
   }
 
   useEffect(() => {

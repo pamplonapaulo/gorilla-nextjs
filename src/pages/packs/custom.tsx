@@ -79,23 +79,31 @@ const Custom = () => {
         {'Escolha os snacks do seu pack'}
       </T>
       <Wrapper>
-        {data.products.map((p: Product) => {
+        {data.products.data.map((p: Product) => {
           return (
             <Item key={p.id}>
               <SlugSnack
                 Quantity={getQuantity(p.id)}
-                Name={p.Name}
+                Name={p.attributes.Name}
                 ImageFile={
-                  '/uploads/small_' + p.Image1['hash'] + p.Image1['ext']
+                  '/uploads/small_' +
+                  p.attributes.Image.data.attributes['hash'] +
+                  p.attributes.Image.data.attributes['ext']
                 }
-                BaseValue={p.BaseValue}
-                NutritionFacts={p.NutritionFacts}
+                BaseValue={p.attributes.BaseValue}
+                NutritionFacts={p.attributes.NutritionFacts}
               />
-              <H>{'R$' + p.BaseValue}</H>
+              <H>{'R$' + p.attributes.BaseValue}</H>
               <BtnsWrapper>
                 <Input
                   idOfSnack={Number(p.id)}
-                  photoOfSnack={p.Image1['hash'] + p.Image1['ext']}
+                  // photoOfSnack={
+                  //   p.attributes.Image['hash'] + p.attributes.Image['ext']
+                  // }
+                  photoOfSnack={
+                    p.attributes.Image.data.attributes['hash'] +
+                    p.attributes.Image.data.attributes['ext']
+                  }
                   parentCallback={handleSnackOnPack}
                   scale={'1'}
                   value={0}
@@ -104,7 +112,7 @@ const Custom = () => {
               <Sum
                 isVisible={customPack.some((snk) => snk.id === Number(p.id))}
               >
-                <h1>{getPartial(p.id, p.BaseValue)}</h1>
+                <h1>{getPartial(p.id, p.attributes.BaseValue)}</h1>
               </Sum>
             </Item>
           )

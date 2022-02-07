@@ -14,3 +14,11 @@ export const Svg = styled.svg`
     }
   }
 `
+
+export const BtnBack = styled.div`
+  z-index: 9;
+  align-self: center;
+  /* @media only screen and (min-width: 1024px) {
+    align-self: unset;
+  } */
+`

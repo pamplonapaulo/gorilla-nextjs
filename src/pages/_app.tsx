@@ -1,32 +1,28 @@
 import NextNProgress from 'nextjs-progressbar'
+import { Provider as AuthProvider } from 'next-auth/client'
+
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import { ApolloProvider } from '@apollo/client'
 import { client } from 'lib/apollo/client'
 
-import {
-  MenuProvider,
-  // UserProvider,
-  OverlayProvider,
-  // BagOverlayProvider,
-  // BagProvider,
-} from 'contexts'
+import { UserProvider, OverlayProvider } from 'contexts'
 
 import styled from 'styled-components'
 import GlobalStyles from 'styles/global'
 
 import Header from 'components/Header'
-// import LoginOverlay from 'components/LoginOverlay'
+import LoginOverlay from 'components/LoginOverlay'
 import VideoBg from 'components/VideoBG'
 import Footer from 'components/Footer'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <AuthProvider session={pageProps.session}>
       <ApolloProvider client={client}>
         <Head>
-          <title>Gorilla Pack | Snacks irados de Niterói</title>
+          <title>Gorilla Pack Snacks</title>
           <link rel="shortcut icon" href="/img/icon-380.png" />
           <link rel="apple-touch-icon" href="/img/icon-380.png" />
           <meta
@@ -41,15 +37,12 @@ function App({ Component, pageProps }: AppProps) {
           stopDelayMs={200}
           height={3}
         />
-        <MenuProvider>
-          {/* <UserProvider>
-            <BagProvider> */}
+        <UserProvider>
           <OverlayProvider>
-            {/* <BagOverlayProvider> */}
             <ContainerOuter>
               <Header />
               <ContainerInner>
-                {/* <LoginOverlay /> */}
+                <LoginOverlay />
                 <VideoBg />
                 <ContainerExtra>
                   <Component {...pageProps} />
@@ -57,13 +50,10 @@ function App({ Component, pageProps }: AppProps) {
               </ContainerInner>
               <Footer />
             </ContainerOuter>
-            {/* </BagOverlayProvider> */}
           </OverlayProvider>
-          {/* </BagProvider>
-          </UserProvider> */}
-        </MenuProvider>
+        </UserProvider>
       </ApolloProvider>
-    </>
+    </AuthProvider>
   )
 }
 
@@ -88,9 +78,7 @@ const ContainerOuter = styled.div`
 `
 
 const ContainerInner = styled.main`
-  /* background: #ef8321; */
   background: 'transparent';
-  /* height: 100%; */
   height: unset;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -108,8 +96,9 @@ const ContainerInner = styled.main`
     width: 0 !important;
   }
   @media only screen and (min-width: 1024px) {
-    /* height: unset; */
+    /* min-height: 100vh; */
     min-height: calc(100vh - 70px);
+    margin-top: 70px;
   }
 `
 
@@ -119,10 +108,8 @@ const ContainerExtra = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  /* justify-content: center; */
   margin: auto;
   min-height: calc(100vh - 70px);
-  /* padding-top: 70px; */
   width: 100%;
   z-index: 0;
 
@@ -138,7 +125,8 @@ const ContainerExtra = styled.div`
   }
 
   @media only screen and (min-width: 1024px) {
-    padding-top: 70px;
+    justify-content: center;
+    /* padding-top: 70px; */
   }
 `
 

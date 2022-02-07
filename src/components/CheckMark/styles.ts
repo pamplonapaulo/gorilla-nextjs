@@ -7,7 +7,7 @@ export const Svg = styled.svg`
   margin: 0;
 
   @media only screen and (min-width: 1024px) {
-    float: right;
+    /* float: right; */
   }
 `
 

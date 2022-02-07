@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 import * as S from './styles'
 
@@ -18,6 +19,8 @@ import DeliveryCalc from 'components/DeliveryCalc'
 import Loader from 'components/Loader'
 import Arrow from 'components/Arrow'
 
+import { useUser, useOverlay } from 'contexts'
+
 const client = new GraphQLClient(endpoint + 'graphql')
 
 const PackPanel = ({ pack }: { pack: Snack[] }) => {
@@ -29,27 +32,33 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   const [deliveryReset, setDeliveryReset] = useState(false)
   const [forwardBtn, setForwardBtn] = useState(false)
   const [minimumValue, setMinimumValue] = useState(987654)
-
+  const { userLog } = useUser()
+  const { setOverlay } = useOverlay()
   const { loading, error, data } = useQuery(GET_PLANS)
+  const router = useRouter()
 
   const completeSnackDetails = async (s: Snack) => {
     const GET_PRODUCT = gql`
       query GET_PRODUCT {
         product(id: ${s.id}) {
-          Name
-          id
-          BaseValue
-          Weight
-          Height
-          Width
-          Length
+          data {
+            id
+            attributes {
+              Name
+              BaseValue
+              Weight
+              Height
+              Width
+              Length
+            }
+          }
         }
       }
     `
     const { product } = await client.request(GET_PRODUCT)
 
     product.photo = s.photo
-    product.TotalValue = s.quantity * product.BaseValue
+    product.TotalValue = s.quantity * product.data.attributes.BaseValue
     product.quantity = s.quantity
     return product
   }
@@ -70,12 +79,27 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     }
   }
 
+  const callCheckoutPage = () => {
+    console.log('userLog:', userLog)
+
+    if (userLog === 'false') {
+      setOverlay(true)
+    } else {
+      console.log('make route to checkout page...')
+      router.push('/checkout')
+    }
+  }
+
   const moveBackwards = () => {
     setMobilePanelStep(mobilePanelStep - 1)
     setForwardBtn(true)
   }
 
   const moveForward = () => {
+    console.log('forward button:', forwardBtn)
+
+    if (mobilePanelStep === 3) callCheckoutPage()
+
     if (forwardBtn) {
       setMobilePanelStep(mobilePanelStep + 1)
       setForwardBtn(false)
@@ -108,11 +132,6 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     if (mobilePanelStep === 0 && snacksCost >= 7) setForwardBtn(true)
     if (mobilePanelStep === 0 && snacksCost < 7) setForwardBtn(false)
   }, [snacksCost, mobilePanelStep])
-
-  useEffect(() => {
-    console.log('console.log(discount)')
-    console.log(discount)
-  }, [discount])
 
   const formatDiscount = (value: number) => (100 * value).toFixed(0)
 
@@ -148,13 +167,16 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       const GET_MINIMUM_VALUE = gql`
         query GET_MINIMUM_VALUE {
           minimumPackValue {
-            MinimumValue
+            data {
+              attributes {
+                MinimumValue
+              }
+            }
           }
         }
       `
       const { minimumPackValue } = await client.request(GET_MINIMUM_VALUE)
-
-      setMinimumValue(minimumPackValue.MinimumValue)
+      setMinimumValue(minimumPackValue.data.attributes.MinimumValue)
     }
 
     if (minimumValue === 987654) getMinimumValue()
@@ -226,16 +248,18 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         showOnMobile={mobilePanelStep === 1}
       >
         <S.Text shouldPulse={discount === -1}>Plano</S.Text>
-        {data.periodicidades.map((p: Plans) => (
+        {data.periods.data.map((p: Plans) => (
           <S.Items key={p.id}>
             <BtnRadio
-              item={p.Type}
+              item={p.attributes.Type}
               group={'plano'}
               parentCallback={planIsSet}
-              discount={p.Discount}
+              discount={p.attributes.Discount}
               neverClicked={discount === -1}
             />
-            <S.HoverContent>{formatDiscount(p.Discount)}% off</S.HoverContent>
+            <S.HoverContent>
+              {formatDiscount(p.attributes.Discount)}% off
+            </S.HoverContent>
           </S.Items>
         ))}
       </S.Content>
@@ -263,9 +287,8 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
           R$ {formatCurrency(finalPrice)}/<span> mês</span>
         </S.Text>
         <Btn
+          parentCallback={callCheckoutPage}
           displayMobile={'none'}
-          as={'/checkout'}
-          pathname={'/checkout'}
           text={'Avançar'}
         />
       </S.Content>

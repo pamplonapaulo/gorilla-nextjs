@@ -12,7 +12,7 @@ const Home = () => {
   const { loading, error, data } = useQuery(GET_PACKS)
 
   if (loading) return <Loader isHidden={false} />
-  if (error) return <p>Erro no carregamento dos packs do Gorilla</p>
+  if (error) return <p>Erro 2 no carregamento dos packs do Gorilla</p>
 
   return (
     <>
@@ -25,7 +25,7 @@ const Home = () => {
           text={'Customizar'}
         />
       </FlexCenter>
-      <Carousel packs={data.packs} />
+      <Carousel packs={data.packs.data} />
     </>
   )
 }

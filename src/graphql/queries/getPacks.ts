@@ -3,26 +3,60 @@ import { gql } from '@apollo/client'
 const GET_PACKS = gql`
   query GET_PACKS {
     packs {
-      id
-      Name
-      Benefits {
-        benefit {
-          id
-          Benefit
-        }
-      }
-      Item {
+      data {
         id
-        Quantity
-        product {
+        attributes {
           Name
-          BaseValue
+          Description
+          ExtraDiscount
+          Benefits {
+            id
+            benefits {
+              data {
+                id
+                attributes {
+                  Benefit
+                }
+              }
+            }
+          }
+          Item {
+            id
+            Quantity
+            product {
+              data {
+                id
+                attributes {
+                  Name
+                  BaseValue
+                }
+              }
+            }
+          }
         }
       }
-      Description
-      ExtraDiscount
     }
   }
 `
 
+// # packs {
+//   #   id
+//   #   Name
+//   #   Benefits {
+//   #     benefit {
+//   #       id
+//   #       Benefit
+//   #     }
+//   #   }
+//   #   Item {
+//   #     id
+//   #     Quantity
+//   #     product {
+//   #       Name
+//   #       BaseValue
+//   #     }
+//   #   }
+//   #   Description
+//   #   ExtraDiscount
+//   # }
 export default GET_PACKS

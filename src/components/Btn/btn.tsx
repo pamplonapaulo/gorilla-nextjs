@@ -8,22 +8,32 @@ type Props = {
   as?: string
   pathname?: string
   text: string
-  onClick?: () => void
+  parentCallback?: () => void
 }
 
-const Btn = ({ displayMobile, as, pathname, text }: Props) => (
-  <>
-    <Link
-      as={as}
-      href={{
-        pathname: pathname,
-      }}
-    >
-      <S.Wrap displayMobile={displayMobile}>
-        <S.Btn>{text}</S.Btn>
-      </S.Wrap>
-    </Link>
-  </>
-)
+const Btn = ({ displayMobile, as, pathname, text, parentCallback }: Props) => {
+  if (parentCallback && !as && !pathname) {
+    return (
+      <div onClick={parentCallback}>
+        <S.Wrap displayMobile={displayMobile}>
+          <S.Btn>{text}</S.Btn>
+        </S.Wrap>
+      </div>
+    )
+  } else {
+    return (
+      <Link
+        as={as}
+        href={{
+          pathname: pathname,
+        }}
+      >
+        <S.Wrap displayMobile={displayMobile}>
+          <S.Btn>{text}</S.Btn>
+        </S.Wrap>
+      </Link>
+    )
+  }
+}
 
 export default Btn

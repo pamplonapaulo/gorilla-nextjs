@@ -38,9 +38,11 @@ export type ProductFull = {
 
 export type Plans = {
   id: string
-  Type: string
-  Multiplier: number
-  Discount: number
+  attributes: {
+    Type: string
+    Multiplier: number
+    Discount: number
+  }
 }
 
 export type ProductNameProps = {
@@ -56,27 +58,88 @@ export type Snack = {
   photo: string
 }
 
+// export type Pack = {
+//   id: string
+//   attributes: {
+//     Name: string
+//     Item: {
+//       id: string
+//       Quantity: number
+//       product: {
+//         data: {
+//           id: string
+//           attribute: {
+//             Name: string
+//             BaseValue: number
+//           }
+//         }
+//       }
+//     }
+//     Description: string
+//     ExtraDiscount: number
+//     Benefits: {
+//       id: string
+//       benefits: {
+//         data: Benefit[]
+//       }
+//     }
+//   }
+// }
+
 export type Pack = {
   id: string
-  Name: string
-  Item: PackItem[]
-  Description: string
-  Benefits: Benefit[]
+  attributes: {
+    Name: string
+    Description: string
+    ExtraDiscount: number
+    Item: PackItem[]
+    Benefits: BenefitArray[]
+  }
 }
+
+export type BenefitArray = {
+  id: string
+  benefits: {
+    data: Benefit[]
+  }
+}
+
+// export type Pack = {
+//   id: string
+//   Name: string
+//   Item: PackItem[]
+//   Description: string
+//   Benefits: Benefit[]
+// }
 
 export type Benefit = {
-  benefit: benefit
+  id: string
+  attributes: {
+    Benefit: string
+  }
 }
 
-export type benefit = {
-  id: string
-  Benefit: string
-}
+// export type Benefit = {
+//   benefit: benefit
+// }
+
+// export type benefit = {
+//   id: string
+//   Benefit: string
+// }
+
+// export type PackItem = {
+//   Quantity: number
+//   id: string
+//   product: Product
+// }
 
 export type PackItem = {
-  Quantity: number
   id: string
-  product: Product
+  Quantity: number
+  product: {
+    data: Product
+  }
 }
 
 export type ProductsCollection = {
@@ -85,22 +148,25 @@ export type ProductsCollection = {
 
 export type Product = {
   id: string
-  Name: string
-  BaseValue: number
-  Weight: number
-  Description: string
-  HasStockController: boolean
-  AmountInStock: number
-  IsActive: boolean
-  NutritionFacts: NutritionFacts
-  Image1: Image
-  Image2: null | Image
+  attributes: {
+    Name: string
+    BaseValue: number
+    Weight: number
+    Height: number
+    Length: number
+    Image: Image
+    NutritionFacts: NutritionFacts
+  }
 }
 
 export type Image = {
-  url: string
-  ext: string
-  hash: string
+  data: {
+    attributes: {
+      url: string
+      ext: string
+      hash: string
+    }
+  }
 }
 
 export type NutritionFacts = {

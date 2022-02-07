@@ -21,6 +21,7 @@ const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
 
   useEffect(() => {
     if (forceReset) {
+      console.log('forceReset: ', forceReset)
       setPostcode('')
       // setFullPostcode('')
     }
@@ -29,7 +30,7 @@ const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
   useEffect(() => {
     if (fullPostcode != '') {
       axios
-        .post(endpoint + 'delivery-costs/create-estimation', {
+        .post(endpoint + 'api/deliveryFee', {
           dropOffPostCode: fullPostcode,
           pack: pack,
         })

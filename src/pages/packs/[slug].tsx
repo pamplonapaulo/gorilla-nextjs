@@ -6,10 +6,10 @@ import { gql, GraphQLClient } from 'graphql-request'
 import { endpoint } from 'lib/apollo/client'
 import GET_PACKS from 'graphql/queries/getPacks'
 
-import { Pack, Params, PackItem, Snack, benefit } from 'types/api'
+import { Pack, Params, PackItem, Snack, Benefit } from 'types/api'
 
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
-import { sortBenefitsById } from 'utils/sortBenefitsById'
+// import { sortBenefitsById } from 'utils/sortBenefitsById'
 
 import styled from 'styled-components'
 import SlugSnack from 'components/SlugSnack'
@@ -21,34 +21,34 @@ const client = new GraphQLClient(endpoint + 'graphql')
 type ComplexPack = {
   pack: Pack
   currentPack: Snack[]
-  benefits: benefit[]
+  benefits: Benefit[]
 }
 
 export default function Pacote({ ...complexPack }: ComplexPack) {
   return (
     <>
-      <T>{'Pack ' + complexPack.pack.Name}</T>
+      <T>{'Pack ' + complexPack.pack.attributes.Name}</T>
       <Wrapper>
-        {complexPack.pack.Item.map((p: PackItem) => {
+        {complexPack.pack.attributes.Item.map((p: PackItem) => {
           return (
             <SlugSnack
               key={p.id}
               Quantity={p.Quantity}
-              Name={p.product.Name}
+              Name={p.product.data.attributes.Name}
               ImageFile={
                 '/uploads/small_' +
-                p.product.Image1['hash'] +
-                p.product.Image1['ext']
+                p.product.data.attributes.Image.data.attributes['hash'] +
+                p.product.data.attributes.Image.data.attributes['ext']
               }
-              NutritionFacts={p.product.NutritionFacts}
+              NutritionFacts={p.product.data.attributes.NutritionFacts}
             />
           )
         })}
       </Wrapper>
       <Wrapper>
-        <T>{complexPack.pack.Description}</T>
+        <T>{complexPack.pack.attributes.Description}</T>
         <Benefits
-          packBenefits={sortBenefitsById(complexPack.pack.Benefits)}
+          packBenefits={complexPack.pack.attributes.Benefits[0].benefits.data}
           generalBenefits={complexPack.benefits}
           isHome={false}
         />
@@ -118,10 +118,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { packs } = await client.request(GET_PACKS)
 
   return {
-    paths: packs.map((p: Pack) => {
+    paths: packs.data.map((p: Pack) => {
       return {
         params: {
-          slug: replaceSpecialChars(p.Name),
+          slug: replaceSpecialChars(p.attributes.Name),
         },
       }
     }),
@@ -134,68 +134,92 @@ export const getStaticProps = async ({ params }: Params) => {
   const { packs } = await client.request(GET_PACKS)
 
   function matchSlug(p: Pack) {
-    return slug === replaceSpecialChars(p.Name)
+    return slug === replaceSpecialChars(p.attributes.Name)
   }
-
-  const packId = packs.filter(matchSlug)[0].id
+  const packId = packs.data.filter(matchSlug)[0].id
 
   const GET_PACK = gql`
     query GET_PACK {
       pack(id: ${packId}) {
-        id
-        Name
-        Benefits {
-          benefit {
-            id
-            Benefit
-          }
-        }
-        Description
-        Item {
+        data {
           id
-          Quantity
-          product {
-            id
+          attributes {
             Name
-            Image1 {
-              ext
-              hash
+            Description
+            ExtraDiscount
+            Benefits {
+              id
+              benefits {
+                data {
+                  id
+                  attributes {
+                    Benefit
+                  }
+                }
+              }
             }
-            NutritionFacts {
-              Portion
-              TotalFat
-              SaturatedFat
-              TransFat
-              EnergeticValue
-              Carbohydrates
-              Sodium
-              Proteins
+            Item {
+              id
+              Quantity
+              product {
+                data {
+                  id
+                  attributes {
+                    Name
+                    Image {
+                      data {
+                        attributes {
+                          ext
+                          url
+                          hash
+                        }
+                      }
+                    }
+                    NutritionFacts {
+                      Portion
+                      TotalFat
+                      SaturatedFat
+                      TransFat
+                      EnergeticValue
+                      Carbohydrates
+                      Sodium
+                      Proteins
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
       benefits {
-        id
-        Benefit
+        data {
+          id
+          attributes {
+            Benefit
+          }
+        }
       }
     }
   `
   const { pack, benefits } = await client.request(GET_PACK)
 
   const currentPack: Snack[] = []
-  pack.Item.map((p: PackItem) => {
+  pack.data.attributes.Item.map((p: PackItem) => {
     const snack = {
-      id: parseInt(p.product.id),
+      id: parseInt(p.product.data.id),
       quantity: p.Quantity,
-      photo: p.product.Image1['hash'] + p.product.Image1['ext'],
+      photo:
+        p.product.data.attributes.Image.data.attributes['hash'] +
+        p.product.data.attributes.Image.data.attributes['ext'],
     }
     currentPack.push(snack)
   })
 
   const complexPack = {
-    pack: { ...pack },
+    pack: { ...pack.data },
     currentPack: [...currentPack],
-    benefits: [...benefits],
+    benefits: [...benefits.data],
   }
 
   return {
