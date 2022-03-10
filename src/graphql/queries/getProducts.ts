@@ -30,7 +30,17 @@ const GET_PRODUCTS = gql`
         }
       }
     }
+    periods {
+      data {
+        id
+        attributes {
+          Type
+          Multiplier
+          Discount
+        }
+      }
+    }
   }
 `
 
-export default GET_PRODUCTS
+export { GET_PRODUCTS }

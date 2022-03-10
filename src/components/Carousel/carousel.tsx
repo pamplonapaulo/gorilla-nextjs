@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useCallback, useState, useRef } from 'react'
 
 import { useQuery } from '@apollo/client'
-import GET_BENEFITS from 'graphql/queries/getBenefits'
+import { GET_BENEFITS } from 'graphql/queries'
 import Loader from 'components/Loader'
 
 import * as S from './styles'
@@ -90,7 +90,9 @@ const Carousel = ({ packs }: Props) => {
                 />
                 <S.FlexCenter>
                   <BtnLittle
-                    as={`/packs/${replaceSpecialChars(p.attributes.Name)}`}
+                    as={`/packs/${
+                      p.id + '-' + replaceSpecialChars(p.attributes.Name)
+                    }`}
                     pathname={'/packs/[slug]'}
                     text={'Selecionar'}
                   />

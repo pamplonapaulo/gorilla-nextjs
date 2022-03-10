@@ -3,27 +3,28 @@ import { useRouter } from 'next/router'
 
 import * as S from './styles'
 
-import { useQuery } from '@apollo/client'
-import GET_PLANS from 'graphql/queries/getPlans'
+import { initializeApollo } from 'utils/apollo'
+import { GET_PRODUCT, GET_MINIMUM_VALUE } from 'graphql/queries'
 
 import { formatCurrency } from 'utils/formatCurrency'
 
 import { Snack, Plans, ProductFull } from 'types/api'
 
-import { gql, GraphQLClient } from 'graphql-request'
-import { endpoint } from 'lib/apollo/client'
-
 import Btn from 'components/Btn'
 import BtnRadio from 'components/BtnRadio'
 import DeliveryCalc from 'components/DeliveryCalc'
-import Loader from 'components/Loader'
 import Arrow from 'components/Arrow'
 
 import { useUser, useOverlay } from 'contexts'
 
-const client = new GraphQLClient(endpoint + 'graphql')
+// const apolloClient = initializeApollo()
 
-const PackPanel = ({ pack }: { pack: Snack[] }) => {
+type PanelData = {
+  pack: Snack[]
+  plans: Plans[]
+}
+
+const PackPanel = ({ ...panelData }: PanelData) => {
   const [snacksCost, setSnacksCost] = useState<boolean | number>(false)
   const [discount, setDiscount] = useState<number>(-1)
   const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
@@ -34,34 +35,53 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
   const [minimumValue, setMinimumValue] = useState(987654)
   const { userLog } = useUser()
   const { setOverlay } = useOverlay()
-  const { loading, error, data } = useQuery(GET_PLANS)
+
   const router = useRouter()
 
   const completeSnackDetails = async (s: Snack) => {
-    const GET_PRODUCT = gql`
-      query GET_PRODUCT {
-        product(id: ${s.id}) {
-          data {
-            id
-            attributes {
-              Name
-              BaseValue
-              Weight
-              Height
-              Width
-              Length
-            }
-          }
-        }
-      }
-    `
-    const { product } = await client.request(GET_PRODUCT)
+    const apolloClient = initializeApollo()
 
-    product.photo = s.photo
-    product.TotalValue = s.quantity * product.data.attributes.BaseValue
-    product.quantity = s.quantity
-    return product
+    const { data } = await apolloClient.query({
+      query: GET_PRODUCT,
+      variables: { id: `${s.id}` },
+    })
+
+    const snack = {
+      ...data,
+      product: {
+        photo: s.photo,
+        quantity: s.quantity,
+        TotalValue: s.quantity * data.product.data.attributes.BaseValue,
+      },
+    }
+
+    return snack.product
   }
+  // const completeSnackDetails = async (s: Snack) => {
+  //   const GET_PRODUCT = gql`
+  //     query GET_PRODUCT {
+  //       product(id: ${s.id}) {
+  //         data {
+  //           id
+  //           attributes {
+  //             Name
+  //             BaseValue
+  //             Weight
+  //             Height
+  //             Width
+  //             Length
+  //           }
+  //         }
+  //       }
+  //     }
+  //   `
+  //   const { product } = await client.request(GET_PRODUCT)
+
+  //   product.photo = s.photo
+  //   product.TotalValue = s.quantity * product.BaseValue
+  //   product.quantity = s.quantity
+  //   return product
+  // }
 
   const planIsSet = (upcomingDiscount: number) => {
     setDiscount(upcomingDiscount)
@@ -140,7 +160,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
 
   useEffect(() => {
     const asyncRes = Promise.all(
-      pack.map(async (s: Snack) => await completeSnackDetails(s))
+      panelData.pack.map(async (s: Snack) => await completeSnackDetails(s))
     )
     asyncRes.then(function (result) {
       let partialPrice = 0
@@ -149,7 +169,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
       )
       setSnacksCost(partialPrice)
     })
-  }, [pack])
+  }, [panelData])
 
   useEffect(() => {
     const isCustomPack = () => {
@@ -163,20 +183,12 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         setMinimumValue(0)
         return
       }
+      const apolloClient = initializeApollo()
+      const { data } = await apolloClient.query({
+        query: GET_MINIMUM_VALUE,
+      })
 
-      const GET_MINIMUM_VALUE = gql`
-        query GET_MINIMUM_VALUE {
-          minimumPackValue {
-            data {
-              attributes {
-                MinimumValue
-              }
-            }
-          }
-        }
-      `
-      const { minimumPackValue } = await client.request(GET_MINIMUM_VALUE)
-      setMinimumValue(minimumPackValue.data.attributes.MinimumValue)
+      setMinimumValue(data.minimumPackValue.data.attributes.MinimumValue)
     }
 
     if (minimumValue === 987654) getMinimumValue()
@@ -185,11 +197,15 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
     else setForwardBtn(false)
   }, [minimumValue, snacksCost])
 
-  if (loading) return <Loader isHidden={false} />
-  if (error) return <p>Error :(</p>
+  useEffect(() => {
+    console.log('minimum value:', minimumValue)
+  }, [minimumValue])
 
   return (
-    <S.PackPanel isVisible={pack.length > 0} showOnMobile={mobilePanelStep > 0}>
+    <S.PackPanel
+      isVisible={panelData.pack.length > 0}
+      showOnMobile={mobilePanelStep > 0}
+    >
       <S.MobileBtnWrapper>
         <S.UnderLimitMessage
           isVisible={mobilePanelStep === 0 && minimumValue !== 0}
@@ -225,10 +241,10 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         </S.ActionBtn>
       </S.MobileBtnWrapper>
 
-      <S.Content isVisible={pack.length > 0}>
+      <S.Content isVisible={panelData.pack.length > 0}>
         <S.Text shouldPulse={false}>Pack</S.Text>
         <S.Items>
-          {pack.map((s: Snack) => (
+          {panelData.pack.map((s: Snack) => (
             <S.Snack key={s.id}>
               <S.Icon
                 src={'https://via.placeholder.com/113x156.png/'}
@@ -248,7 +264,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         showOnMobile={mobilePanelStep === 1}
       >
         <S.Text shouldPulse={discount === -1}>Plano</S.Text>
-        {data.periods.data.map((p: Plans) => (
+        {panelData.plans.map((p: Plans) => (
           <S.Items key={p.id}>
             <BtnRadio
               item={p.attributes.Type}
@@ -271,7 +287,7 @@ const PackPanel = ({ pack }: { pack: Snack[] }) => {
         <S.Items>
           <DeliveryCalc
             forceReset={deliveryReset}
-            pack={pack}
+            pack={panelData.pack}
             parentCallback={handleDeliveryFeeDisplay}
           />
         </S.Items>

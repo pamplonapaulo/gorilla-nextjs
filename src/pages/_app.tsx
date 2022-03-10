@@ -1,3 +1,4 @@
+import React from 'react'
 import NextNProgress from 'nextjs-progressbar'
 import { Provider as AuthProvider } from 'next-auth/client'
 
@@ -5,9 +6,10 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import { ApolloProvider } from '@apollo/client'
-import { client } from 'lib/apollo/client'
 
-import { UserProvider, OverlayProvider } from 'contexts'
+// import { client } from 'lib/apollo/client'
+
+import { PacksProvider, UserProvider, OverlayProvider } from 'contexts'
 
 import styled from 'styled-components'
 import GlobalStyles from 'styles/global'
@@ -16,8 +18,10 @@ import Header from 'components/Header'
 import LoginOverlay from 'components/LoginOverlay'
 import VideoBg from 'components/VideoBG'
 import Footer from 'components/Footer'
+import { useApollo } from 'utils/apollo'
 
 function App({ Component, pageProps }: AppProps) {
+  const client = useApollo(pageProps.initialApoloState)
   return (
     <AuthProvider session={pageProps.session}>
       <ApolloProvider client={client}>
@@ -37,21 +41,23 @@ function App({ Component, pageProps }: AppProps) {
           stopDelayMs={200}
           height={3}
         />
-        <UserProvider>
-          <OverlayProvider>
-            <ContainerOuter>
-              <Header />
-              <ContainerInner>
-                <LoginOverlay />
-                <VideoBg />
-                <ContainerExtra>
-                  <Component {...pageProps} />
-                </ContainerExtra>
-              </ContainerInner>
-              <Footer />
-            </ContainerOuter>
-          </OverlayProvider>
-        </UserProvider>
+        <PacksProvider>
+          <UserProvider>
+            <OverlayProvider>
+              <ContainerOuter>
+                <Header />
+                <ContainerInner>
+                  <LoginOverlay />
+                  <VideoBg />
+                  <ContainerExtra>
+                    <Component {...pageProps} />
+                  </ContainerExtra>
+                </ContainerInner>
+                <Footer />
+              </ContainerOuter>
+            </OverlayProvider>
+          </UserProvider>
+        </PacksProvider>
       </ApolloProvider>
     </AuthProvider>
   )

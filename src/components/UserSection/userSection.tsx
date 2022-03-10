@@ -23,17 +23,10 @@ const UserSection = () => {
   const [dropDownVisibility, setDropDownVisibility] = useState(false)
 
   useEffect(() => {
-    console.log('session')
-    console.log(session)
-
     if (typeof session?.user?.name === 'string') {
       setUserLog(session?.user?.name)
     }
   }, [session, setUserLog])
-
-  useEffect(() => {
-    console.log('dropDown Visibility:', dropDownVisibility)
-  }, [dropDownVisibility])
 
   // const { bag } = useBag()
   // const { setBagOverlay } = useBagOverlay()

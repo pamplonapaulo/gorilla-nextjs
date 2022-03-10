@@ -5,7 +5,7 @@ import * as S from './styles'
 
 const Logotype = () => (
   <S.Container>
-    <Link href={'/home'}>
+    <Link href={'/'}>
       <S.Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272.957 179.586">
         <g
           id="Group_646"

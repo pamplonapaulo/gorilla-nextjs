@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 const GET_PACKS = gql`
   query GET_PACKS {
-    packs {
+    packs(sort: "id:asc") {
       data {
         id
         attributes {
@@ -39,24 +39,4 @@ const GET_PACKS = gql`
   }
 `
 
-// # packs {
-//   #   id
-//   #   Name
-//   #   Benefits {
-//   #     benefit {
-//   #       id
-//   #       Benefit
-//   #     }
-//   #   }
-//   #   Item {
-//   #     id
-//   #     Quantity
-//   #     product {
-//   #       Name
-//   #       BaseValue
-//   #     }
-//   #   }
-//   #   Description
-//   #   ExtraDiscount
-//   # }
-export default GET_PACKS
+export { GET_PACKS }

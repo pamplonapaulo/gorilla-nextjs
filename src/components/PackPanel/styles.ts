@@ -386,4 +386,9 @@ export const PackPanel = styled.div<{
     width: 80%;
     padding: 9rem 3rem 3rem;
   }
+
+  @media only screen and (min-width: 1320px) {
+    width: 100%;
+    max-width: 1320px;
+  }
 `

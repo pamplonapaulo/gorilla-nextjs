@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 
 import * as S from './styles'
 
+import { initializeApollo } from 'utils/apollo'
+import { GET_FREE_DELIVERY_VALUE } from 'graphql/queries'
 import BtnLittle from 'components/BtnLittle'
 
-import { gql, GraphQLClient } from 'graphql-request'
-import { endpoint } from 'lib/apollo/client'
-const client = new GraphQLClient(endpoint + 'graphql')
+const apolloClient = initializeApollo()
 
 const DialogBox = () => {
   const [visibility, setVisibility] = useState(false)
@@ -21,19 +21,10 @@ const DialogBox = () => {
   }
 
   const getFreeDeliveryValue = async () => {
-    const GET_FREE_DELIVERY_VALUE = gql`
-      query GET_FREE_DELIVERY_VALUE {
-        freeDelivery {
-          data {
-            attributes {
-              MinimumTicket
-            }
-          }
-        }
-      }
-    `
-    const { freeDelivery } = await client.request(GET_FREE_DELIVERY_VALUE)
-    setFreeDelivery(freeDelivery.data.attributes.MinimumTicket)
+    const { data } = await apolloClient.query({
+      query: GET_FREE_DELIVERY_VALUE,
+    })
+    setFreeDelivery(data.freeDelivery.data.attributes.MinimumTicket)
   }
 
   useEffect(() => {

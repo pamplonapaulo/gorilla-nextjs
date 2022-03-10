@@ -17,6 +17,13 @@ export const Container = styled.div`
       transform: scale(0.85);
     }
   }
+
+  @media only screen and (min-width: 1320px) {
+    padding: 0;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+  }
 `
 
 export const Svg = styled.svg`

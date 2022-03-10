@@ -1,36 +1,11 @@
-import { useQuery } from '@apollo/client'
-import GET_PACKS from 'graphql/queries/getPacks'
-
-import Loader from 'components/Loader'
-import Carousel from 'components/Carousel'
-import BtnArrow from 'components/BtnArrow'
-import DialogBox from 'components/DialogBox'
-
 import styled from 'styled-components'
 
-const Home = () => {
-  const { loading, error, data } = useQuery(GET_PACKS)
+export const Wrapper = styled.main`
+  background: red;
+  display: flex;
+`
 
-  if (loading) return <Loader isHidden={false} />
-  if (error) return <p>Erro 2 no carregamento dos packs do Gorilla</p>
-
-  return (
-    <>
-      <DialogBox />
-      <FlexCenter>
-        <T>{'Qual o melhor pack para você?'}</T>
-        <BtnArrow
-          as={'/packs/custom'}
-          pathname={'/packs/custom'}
-          text={'Customizar'}
-        />
-      </FlexCenter>
-      <Carousel packs={data.packs.data} />
-    </>
-  )
-}
-
-const T = styled.h1`
+export const T = styled.h1`
   color: #fbc822;
   font-weight: 700;
   font-style: italic;
@@ -47,7 +22,7 @@ const T = styled.h1`
   }
 `
 
-const FlexCenter = styled.div`
+export const FlexCenter = styled.div`
   display: flex;
   overflow: visible;
   justify-content: space-between;
@@ -88,5 +63,3 @@ const FlexCenter = styled.div`
     width: 1260px;
   }
 `
-
-export default Home

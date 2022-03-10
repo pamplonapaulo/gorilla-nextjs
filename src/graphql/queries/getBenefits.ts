@@ -13,12 +13,4 @@ const GET_BENEFITS = gql`
   }
 `
 
-export default GET_BENEFITS
-// const GET_BENEFITS = gql`
-//   query GET_BENEFITS {
-//     benefits {
-//       id
-//       Benefit
-//     }
-//   }
-// `
+export { GET_BENEFITS }

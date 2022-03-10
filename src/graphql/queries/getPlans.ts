@@ -15,4 +15,4 @@ const GET_PLANS = gql`
   }
 `
 
-export default GET_PLANS
+export { GET_PLANS }
