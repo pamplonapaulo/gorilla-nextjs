@@ -11,7 +11,7 @@
     "test": "jest",
     "test:watch": "yarn test --watch",
     "schema:download": "apollo client:download-schema --endpoint=http://localhost:1337/graphql schema-types.gql",
-    "codegen": "apollo codegen:generate --target typescript --excludes=node_modules/ --includes=src/graphql/**/*.ts --localSchemaFile schema-types.gql --tagName=gql --outputFlat src/graphql/generated",
+    "codegen": "apollo codegen:generate --target typescript --globalTypesFile false --excludes=node_modules/ --includes=src/graphql/**/*.ts --localSchemaFile schema-types.gql --tagName=gql --outputFlat src/graphql/generated",
     "generate": "yarn plop --plopfile generators/plopfile.js"
   },
   "lint-staged": {

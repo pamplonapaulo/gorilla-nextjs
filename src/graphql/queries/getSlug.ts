@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 const GET_SLUG = gql`
-  query QuerySlugBySId($id: ID!) {
+  query GET_SLUG($id: ID!) {
     pack(id: $id) {
       data {
         id
