@@ -5,7 +5,8 @@ export default new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        games: concatPagination(['where', 'sort']),
+        packs: concatPagination(['where', 'sort']),
+        benefits: concatPagination(['where', 'sort']),
       },
     },
   },

@@ -197,10 +197,6 @@ const PackPanel = ({ ...panelData }: PanelData) => {
     else setForwardBtn(false)
   }, [minimumValue, snacksCost])
 
-  useEffect(() => {
-    console.log('minimum value:', minimumValue)
-  }, [minimumValue])
-
   return (
     <S.PackPanel
       isVisible={panelData.pack.length > 0}

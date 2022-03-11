@@ -1,4 +1,4 @@
-import Custom from 'templates/custom'
+import CustomTemplate from 'templates/custom'
 import { initializeApollo } from 'utils/apollo'
 import { GET_PRODUCTS } from 'graphql/queries'
 import { Product, Plans } from 'types/api'
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function Index(props: Props) {
-  return <Custom {...props} />
+  return <CustomTemplate {...props} />
 }
 
 export const getServerSideProps = async () => {

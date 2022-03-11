@@ -9,7 +9,7 @@ import { Pack, Params, PackItem, Plans, Snack, Benefit } from 'types/api'
 
 import { replaceSpecialChars } from 'utils/replaceSpecialChars'
 
-import PackPage from 'templates/pack'
+import PackTemplate from 'templates/pack'
 
 import Loader from 'components/Loader'
 import PackPanel from 'components/PackPanel'
@@ -44,7 +44,7 @@ export default function Pacote({ ...slugProps }: ComplexPack) {
 
   return (
     <>
-      <PackPage {...pageData} />
+      <PackTemplate {...pageData} />
       <PackPanel {...panelData} />
     </>
   )

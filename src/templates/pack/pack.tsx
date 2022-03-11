@@ -10,7 +10,7 @@ type PackData = {
   benefits: Benefit[]
 }
 
-const PackPage = ({ ...packData }: PackData) => (
+const PackTemplate = ({ ...packData }: PackData) => (
   <>
     <S.T>{'Pack ' + packData.pack.attributes.Name}</S.T>
     <S.Wrapper>
@@ -41,4 +41,4 @@ const PackPage = ({ ...packData }: PackData) => (
   </>
 )
 
-export default PackPage
+export default PackTemplate

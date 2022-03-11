@@ -13,7 +13,7 @@ type Props = {
   plans: Plans[]
 }
 
-const Custom = ({ ...customProps }: Props) => {
+const CustomTemplate = ({ ...customProps }: Props) => {
   type Snack = {
     id: number
     quantity: number
@@ -125,4 +125,4 @@ const Custom = ({ ...customProps }: Props) => {
   )
 }
 
-export default Custom
+export default CustomTemplate

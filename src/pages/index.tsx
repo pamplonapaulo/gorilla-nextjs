@@ -1,32 +1,30 @@
-import Home from 'templates/home'
+import HomeTemplate from 'templates/home'
 import { initializeApollo } from 'utils/apollo'
 
 import { GET_PACKS } from 'graphql/queries'
 import { GetPacks } from 'graphql/generated/GetPacks'
-import { Pack } from 'types/api'
 
-type ComplexPack = {
-  packs: Pack[]
-}
+import { GET_BENEFITS } from 'graphql/queries'
+import { GetBenefits } from 'graphql/generated/GetBenefits'
 
-export default function Index(props: ComplexPack) {
-  return <Home {...props} />
+export default function Index() {
+  return <HomeTemplate />
 }
 
 export const getStaticProps = async () => {
   const apolloClient = initializeApollo()
-  const { data } = await apolloClient.query<GetPacks>({
+
+  await apolloClient.query<GetPacks>({
     query: GET_PACKS,
   })
 
-  const complexPack = {
-    packs: data.packs?.data,
-  }
+  await apolloClient.query<GetBenefits>({
+    query: GET_BENEFITS,
+  })
 
   return {
     props: {
       revalidate: 60,
-      ...complexPack,
       initialApolloState: apolloClient.cache.extract(),
     },
   }
