@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 const GET_MINIMUM_VALUE = gql`
-  query GET_MINIMUM_VALUE {
+  query GetMinimumValue {
     minimumPackValue {
       data {
         attributes {

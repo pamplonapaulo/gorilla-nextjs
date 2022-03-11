@@ -4,25 +4,25 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GET_BENEFITS
+// GraphQL query operation: GetBenefits
 // ====================================================
 
-export interface GET_BENEFITS_benefits_data_attributes {
+export interface GetBenefits_benefits_data_attributes {
   __typename: "Benefit";
   Benefit: string;
 }
 
-export interface GET_BENEFITS_benefits_data {
+export interface GetBenefits_benefits_data {
   __typename: "BenefitEntity";
   id: string | null;
-  attributes: GET_BENEFITS_benefits_data_attributes | null;
+  attributes: GetBenefits_benefits_data_attributes | null;
 }
 
-export interface GET_BENEFITS_benefits {
+export interface GetBenefits_benefits {
   __typename: "BenefitEntityResponseCollection";
-  data: GET_BENEFITS_benefits_data[];
+  data: GetBenefits_benefits_data[];
 }
 
-export interface GET_BENEFITS {
-  benefits: GET_BENEFITS_benefits | null;
+export interface GetBenefits {
+  benefits: GetBenefits_benefits | null;
 }

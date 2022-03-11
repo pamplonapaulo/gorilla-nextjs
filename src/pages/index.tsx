@@ -2,6 +2,7 @@ import Home from 'templates/home'
 import { initializeApollo } from 'utils/apollo'
 
 import { GET_PACKS } from 'graphql/queries'
+import { GetPacks } from 'graphql/generated/GetPacks'
 import { Pack } from 'types/api'
 
 type ComplexPack = {
@@ -14,12 +15,12 @@ export default function Index(props: ComplexPack) {
 
 export const getStaticProps = async () => {
   const apolloClient = initializeApollo()
-  const { data } = await apolloClient.query({
+  const { data } = await apolloClient.query<GetPacks>({
     query: GET_PACKS,
   })
 
   const complexPack = {
-    packs: data.packs.data,
+    packs: data.packs?.data,
   }
 
   return {

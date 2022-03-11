@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 const GET_PLANS = gql`
-  query GET_PLANS {
+  query GetPlans {
     periods {
       data {
         id

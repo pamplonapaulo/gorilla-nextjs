@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 const GET_PACKS = gql`
-  query GET_PACKS {
+  query GetPacks {
     packs(sort: "id:asc") {
       data {
         id

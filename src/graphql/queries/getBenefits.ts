@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 const GET_BENEFITS = gql`
-  query GET_BENEFITS {
+  query GetBenefits {
     benefits {
       data {
         id
