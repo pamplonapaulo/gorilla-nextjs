@@ -88,7 +88,7 @@ export interface GET_SLUG_pack_data_attributes {
   Name: string;
   Description: string;
   ExtraDiscount: number;
-  Benefits: (GET_SLUG_pack_data_attributes_Benefits | null)[] | null;
+  Benefits: GET_SLUG_pack_data_attributes_Benefits[];
   Item: (GET_SLUG_pack_data_attributes_Item | null)[];
 }
 

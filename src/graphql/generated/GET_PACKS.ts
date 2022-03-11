@@ -58,7 +58,7 @@ export interface GET_PACKS_packs_data_attributes {
   Name: string;
   Description: string;
   ExtraDiscount: number;
-  Benefits: (GET_PACKS_packs_data_attributes_Benefits | null)[] | null;
+  Benefits: GET_PACKS_packs_data_attributes_Benefits[];
   Item: (GET_PACKS_packs_data_attributes_Item | null)[];
 }
 
