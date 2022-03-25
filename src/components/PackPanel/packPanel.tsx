@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import axios, { AxiosResponse } from 'axios'
 
 import * as S from './styles'
 
@@ -17,8 +18,6 @@ import Arrow from 'components/Arrow'
 
 import { useUser, useOverlay } from 'contexts'
 
-// const apolloClient = initializeApollo()
-
 type PanelData = {
   pack: Snack[]
   plans: Plans[]
@@ -27,13 +26,16 @@ type PanelData = {
 const PackPanel = ({ ...panelData }: PanelData) => {
   const [snacksCost, setSnacksCost] = useState<boolean | number>(false)
   const [discount, setDiscount] = useState<number>(-1)
+  const [planId, setPlanId] = useState<number | null>(null)
   const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
+  const [postCode, setPostCode] = useState('')
   const [finalPrice, setFinalPrice] = useState(0)
   const [mobilePanelStep, setMobilePanelStep] = useState(0)
   const [deliveryReset, setDeliveryReset] = useState(false)
   const [forwardBtn, setForwardBtn] = useState(false)
   const [minimumValue, setMinimumValue] = useState(987654)
   const { userLog } = useUser()
+  const [checkoutBtn, setCheckoutBtn] = useState('Avançar')
   const { setOverlay } = useOverlay()
 
   const router = useRouter()
@@ -50,44 +52,24 @@ const PackPanel = ({ ...panelData }: PanelData) => {
       ...data,
       product: {
         photo: s.photo,
-        quantity: s.quantity,
-        TotalValue: s.quantity * data.product.data.attributes.BaseValue,
+        quantity: s.Quantity,
+        TotalValue: s.Quantity * data.product.data.attributes.BaseValue,
       },
     }
 
     return snack.product
   }
-  // const completeSnackDetails = async (s: Snack) => {
-  //   const GET_PRODUCT = gql`
-  //     query GET_PRODUCT {
-  //       product(id: ${s.id}) {
-  //         data {
-  //           id
-  //           attributes {
-  //             Name
-  //             BaseValue
-  //             Weight
-  //             Height
-  //             Width
-  //             Length
-  //           }
-  //         }
-  //       }
-  //     }
-  //   `
-  //   const { product } = await client.request(GET_PRODUCT)
 
-  //   product.photo = s.photo
-  //   product.TotalValue = s.quantity * product.BaseValue
-  //   product.quantity = s.quantity
-  //   return product
-  // }
-
-  const planIsSet = (upcomingDiscount: number) => {
+  const planIsSet = (upcomingDiscount: number, planId: number) => {
+    setPlanId(planId)
     setDiscount(upcomingDiscount)
   }
 
-  const handleDeliveryFeeDisplay = (bool: boolean, deliveryFee: number) => {
+  const handleDeliveryFeeDisplay = (
+    bool: boolean,
+    deliveryFee: number,
+    postCode: string
+  ) => {
     if (!bool) {
       setDeliveryReset(true)
       setDeliveryFee(false)
@@ -95,18 +77,41 @@ const PackPanel = ({ ...panelData }: PanelData) => {
     }
 
     if (bool) {
+      setPostCode(postCode)
       setDeliveryFee(deliveryFee)
     }
   }
 
-  const callCheckoutPage = () => {
-    console.log('userLog:', userLog)
+  const postOrderIntent = async () => {
+    const order = {
+      period: planId,
+      users_permissions_user: 2,
+      snack: panelData.pack,
+      postCode: postCode,
+    }
+    console.log('order')
+    console.log(order)
 
+    axios
+      .post(process.env.NEXT_PUBLIC_API_URL + '/orderIntent', {
+        ...order,
+      })
+      .then((response: AxiosResponse<unknown>) => {
+        console.log(response.data)
+        router.push('/checkout')
+      })
+      .catch((error) => {
+        console.log(error)
+        setCheckoutBtn('Erro :(')
+      })
+  }
+
+  const callCheckoutPage = () => {
     if (userLog === 'false') {
       setOverlay(true)
     } else {
-      console.log('make route to checkout page...')
-      router.push('/checkout')
+      setCheckoutBtn('saving')
+      postOrderIntent()
     }
   }
 
@@ -116,8 +121,6 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   }
 
   const moveForward = () => {
-    console.log('forward button:', forwardBtn)
-
     if (mobilePanelStep === 3) callCheckoutPage()
 
     if (forwardBtn) {
@@ -249,7 +252,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
               />
               <S.Quantity>
                 <span>{'x'}</span>
-                {s.quantity}
+                {s.Quantity}
               </S.Quantity>
             </S.Snack>
           ))}
@@ -263,6 +266,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         {panelData.plans.map((p: Plans) => (
           <S.Items key={p.id}>
             <BtnRadio
+              id={Number(p.id)}
               item={p.attributes.Type}
               group={'plano'}
               parentCallback={planIsSet}
@@ -298,11 +302,13 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         <S.Text shouldPulse={false}>
           R$ {formatCurrency(finalPrice)}/<span> mês</span>
         </S.Text>
+
         <Btn
           parentCallback={callCheckoutPage}
-          displayMobile={'none'}
-          text={'Avançar'}
-        />
+          isDisable={checkoutBtn === 'saving'}
+        >
+          {checkoutBtn === 'saving' ? <S.Loading /> : checkoutBtn}
+        </Btn>
       </S.Content>
     </S.PackPanel>
   )

@@ -11,7 +11,7 @@ import { Snack } from 'types/api'
 type Props = {
   forceReset: boolean
   pack: Snack[]
-  parentCallback: (bool: boolean, num: number) => void
+  parentCallback: (bool: boolean, num: number, cep: string) => void
 }
 
 const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
@@ -29,19 +29,54 @@ const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
 
   useEffect(() => {
     if (fullPostcode != '') {
+      interface ServerData {
+        quotation: Quotation
+        address: Address
+      }
+
+      interface Address {
+        cep: string
+        logradouro: string
+        bairro: string
+        municipio: string
+        uf: string
+      }
+      interface Quotation {
+        fee: number
+        expectedTravelingDays: number
+        company: string
+        packingDetails: PackingDetails[]
+      }
+      interface PackingDetails {
+        format: string
+        dimensions: {
+          height: number
+          width: number
+          length: number
+        }
+        weight: string
+        insurance_value: string
+        products: PackingDetailsProduct[]
+      }
+
+      interface PackingDetailsProduct {
+        id: string
+        quantity: number
+      }
+
       axios
-        .post(endpoint + 'api/deliveryFee', {
+        .post<ServerData>(endpoint + 'api/delivery', {
           dropOffPostCode: fullPostcode,
           pack: pack,
         })
-        .then((response: AxiosResponse<unknown>) => {
-          if (typeof response.data === 'number') {
-            setDeliveryFee(response.data)
-            parentCallback(true, response.data)
+        .then((response: AxiosResponse<ServerData>) => {
+          if (response?.data?.quotation) {
+            setDeliveryFee(response.data.quotation.fee)
+            parentCallback(true, response.data.quotation.fee, fullPostcode)
           }
         })
         .catch((error: { response: unknown }) => {
-          console.log('we still must format an error display: ', error)
+          console.log('Error: ', error)
         })
     }
   }, [pack, fullPostcode, parentCallback])
@@ -62,7 +97,7 @@ const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
     if (postcode.length > 8 && postCodeMask(e.target.value).length < 9) {
       setFullPostcode('')
       setDeliveryFee(false)
-      parentCallback(false, 0)
+      parentCallback(false, 0, fullPostcode)
     }
   }
 

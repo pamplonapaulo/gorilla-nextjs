@@ -16,8 +16,8 @@ type Props = {
 const CustomTemplate = ({ ...customProps }: Props) => {
   type Snack = {
     id: number
-    quantity: number
-    photo: string
+    Quantity: number
+    photo?: string
   }
   const [customPack, setCustomPack] = useState<Snack[]>([])
 
@@ -39,14 +39,14 @@ const CustomTemplate = ({ ...customProps }: Props) => {
       let pack = [...customPack]
       const snack = {
         id: snackId,
-        quantity: shouldIncrement ? total + 1 : total - 1,
+        Quantity: shouldIncrement ? total + 1 : total - 1,
         photo: photoOfSnack,
       }
 
       if (pack.some((snk) => snk.id === snackId))
         pack = pack.filter((snk) => snk.id !== snackId)
 
-      if (snack.quantity >= 1) pack.push(snack)
+      if (snack.Quantity >= 1) pack.push(snack)
 
       setCustomPack([...pack])
     }
@@ -58,7 +58,7 @@ const CustomTemplate = ({ ...customProps }: Props) => {
   const getQuantity = (id: string) => {
     const items = getItem(id)
     if (items.length === 1) {
-      return items[0].quantity
+      return items[0].Quantity
     } else {
       return 0
     }
@@ -68,7 +68,7 @@ const CustomTemplate = ({ ...customProps }: Props) => {
     const items = getItem(id)
 
     if (items.length > 0) {
-      return 'R$' + items[0].quantity * baseValue
+      return 'R$' + items[0].Quantity * baseValue
     } else {
       return ''
     }

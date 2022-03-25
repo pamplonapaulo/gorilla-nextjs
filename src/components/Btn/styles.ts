@@ -12,7 +12,7 @@ export const Wrap = styled.div<{ displayMobile: string }>`
   }
 `
 
-export const Btn = styled.button`
+export const Btn = styled.button<{ isDisable: boolean }>`
   background: rgba(0, 0, 0, 0.4);
   border: solid 1px #fff;
   border-radius: 0;
@@ -55,13 +55,16 @@ export const Btn = styled.button`
     }
 
     &:hover {
-      background: rgba(0, 0, 0, 0);
-      color: #2da650;
-      border-color: #2da650;
-      text-shadow: 0px 1px 1px transparent;
+      background: ${(p) =>
+        p.isDisable ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0)'};
+      color: ${(p) => (p.isDisable ? '#fff' : '#2da650')};
+      cursor: ${(p) => (p.isDisable ? 'default' : 'pointer')};
+      border-color: ${(p) => (p.isDisable ? '#fff' : '#2da650')};
+      text-shadow: ${(p) =>
+        p.isDisable ? 'unset' : '0px 1px 1px transparent'};
 
       &&:before {
-        width: 100%;
+        width: ${(p) => (p.isDisable ? '0%' : '100%')};
       }
     }
   }

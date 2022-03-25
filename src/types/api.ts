@@ -54,8 +54,8 @@ export type ProductNameProps = {
 
 export type Snack = {
   id: number
-  quantity: number
-  photo: string
+  Quantity: number
+  photo?: string
 }
 
 // export type Pack = {

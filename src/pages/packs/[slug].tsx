@@ -90,7 +90,7 @@ export const getStaticProps = async ({ params }: Params) => {
   pack.pack.data.attributes.Item.map((p: PackItem) => {
     const snack = {
       id: parseInt(p.product.data.id),
-      quantity: p.Quantity,
+      Quantity: p.Quantity,
       photo:
         p.product.data.attributes.Image.data.attributes['hash'] +
         p.product.data.attributes.Image.data.attributes['ext'],

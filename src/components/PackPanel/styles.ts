@@ -56,6 +56,13 @@ const hide = keyframes`
   100% { transform: scale(1,1) translateY(-115%); }
 `
 
+export const Loading = styled.img.attrs(() => ({
+  src: '/img/dots.svg',
+  alt: 'Carrregando...',
+}))`
+  width: 4rem;
+`
+
 export const UnderLimitMessage = styled.h1<{ isVisible: boolean }>`
   font-size: 1rem;
   margin: 15px;

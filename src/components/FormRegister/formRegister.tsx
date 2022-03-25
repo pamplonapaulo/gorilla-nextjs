@@ -27,10 +27,10 @@ const FormRegister = () => {
 
   const [inputData, setInputData] = useState({
     username: '',
-    postCode: '',
-    phone: '',
     email: '',
     password: '',
+    postCode: '',
+    phone: '',
   })
 
   const handleFocusIn = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -189,6 +189,7 @@ const FormRegister = () => {
         ...inputData,
       },
     }
+
     axios
       .post(process.env.NEXT_PUBLIC_API_URL + '/auth/local/register', {
         username: variables.data.username,
@@ -198,19 +199,13 @@ const FormRegister = () => {
         phone: variables.data.phone,
       })
       .then((response: AxiosResponse<unknown>) => {
-        console.log('then...')
         console.log(response)
-        // console.log('User profile', response.data.user)
-        // console.log('User token', response.data.jwt)
         setForm(!form)
         setTimeout(() => {
           setOverlay(!overlay)
         }, 6000)
       })
       .catch((error: { response: any }) => {
-        console.log('error.response')
-        console.log(error.response)
-        // console.log(error.response.data.message[0].messages[0].message)
         setMessage(error.response.data.message[0].messages[0].message)
       })
   }
