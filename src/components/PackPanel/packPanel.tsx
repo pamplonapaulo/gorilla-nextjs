@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios, { AxiosResponse } from 'axios'
+import { useSession } from 'next-auth/client'
 
 import * as S from './styles'
 
@@ -16,7 +17,7 @@ import BtnRadio from 'components/BtnRadio'
 import DeliveryCalc from 'components/DeliveryCalc'
 import Arrow from 'components/Arrow'
 
-import { useUser, useOverlay } from 'contexts'
+import { useOverlay } from 'contexts'
 
 type PanelData = {
   pack: Snack[]
@@ -34,11 +35,11 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   const [deliveryReset, setDeliveryReset] = useState(false)
   const [forwardBtn, setForwardBtn] = useState(false)
   const [minimumValue, setMinimumValue] = useState(987654)
-  const { userLog } = useUser()
   const [checkoutBtn, setCheckoutBtn] = useState('Avançar')
   const { setOverlay } = useOverlay()
 
   const router = useRouter()
+  const [session] = useSession()
 
   const completeSnackDetails = async (s: Snack) => {
     const apolloClient = initializeApollo()
@@ -85,17 +86,33 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   const postOrderIntent = async () => {
     const order = {
       period: planId,
-      users_permissions_user: 2,
+      users_permissions_user: session?.id,
       snack: panelData.pack,
       postCode: postCode,
     }
-    console.log('order')
-    console.log(order)
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + session?.jwt,
+    }
 
     axios
-      .post(process.env.NEXT_PUBLIC_API_URL + '/orderIntent', {
-        ...order,
-      })
+      .post(
+        process.env.NEXT_PUBLIC_API_URL + '/orderIntent',
+        {
+          ...order,
+        },
+        {
+          headers,
+          onDownloadProgress: (event) => {
+            const progress: number = Math.round(
+              (event.loaded * 100) / event.total
+            )
+
+            console.log(`Processamento: ${progress}% carregado... `)
+          },
+        }
+      )
       .then((response: AxiosResponse<unknown>) => {
         console.log(response.data)
         router.push('/checkout')
@@ -107,11 +124,11 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   }
 
   const callCheckoutPage = () => {
-    if (userLog === 'false') {
-      setOverlay(true)
-    } else {
+    if (session) {
       setCheckoutBtn('saving')
       postOrderIntent()
+    } else {
+      setOverlay(true)
     }
   }
 

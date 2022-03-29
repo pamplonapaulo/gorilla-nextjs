@@ -6,7 +6,7 @@ module.exports = {
     deviceSizes: [320, 420, 768, 1024, 1200],
     iconSizes: [],
     domains: [
-      'https://gorillapack-admin.herokuapp.com/',
+      'https://gorillapack.herokuapp.com/',
       '127.0.0.1',
       '127.0.0.1:1337',
       'localhost',

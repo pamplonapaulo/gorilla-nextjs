@@ -8,7 +8,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
 function createApolloClient(session?: Session | null) {
   const httpLink = new HttpLink({
-    uri: `http://127.0.0.1:1337/graphql`,
+    uri: `https://gorillapack.herokuapp.com/graphql`,
     // uri: `${process.env.DB_HOST}/graphql`,
   })
 
