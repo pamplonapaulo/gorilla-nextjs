@@ -208,6 +208,9 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         query: GET_MINIMUM_VALUE,
       })
 
+      console.log('minimumPackValue.data.attributes.MinimumValue')
+      console.log(data)
+
       setMinimumValue(data.minimumPackValue.data.attributes.MinimumValue)
     }
 
