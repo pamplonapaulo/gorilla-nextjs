@@ -24,7 +24,6 @@ const DialogBox = () => {
     const { data } = await apolloClient.query({
       query: GET_FREE_DELIVERY_VALUE,
     })
-    console.log(data)
     setFreeDelivery(data?.freeDelivery.data.attributes.MinimumTicket)
   }
 

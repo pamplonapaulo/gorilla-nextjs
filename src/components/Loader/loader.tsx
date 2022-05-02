@@ -16,7 +16,7 @@ const Loader = ({ isHidden }: Props) => (
             fill="none"
             stroke-width="4"
             stroke-miterlimit="10"
-          ></S.Circle>
+          />
         </S.Svg>
       </S.Loader>
     </S.Wrapper>
