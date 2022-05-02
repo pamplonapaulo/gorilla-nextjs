@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useCallback, useState, useRef } from 'react'
+import React, { useEffect, useCallback, useState, useRef } from 'react'
 
 import { useQuery } from '@apollo/client'
 import { GET_BENEFITS } from 'graphql/queries'
@@ -26,7 +26,7 @@ const Carousel = ({ packs }: Props) => {
 
   const { loading, error, data } = useQuery(GET_BENEFITS)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const updateSize = () => {
       if (window.innerWidth < 480) setPageLength(1)
       if (window.innerWidth < 1024 && window.innerWidth >= 480) setPageLength(2)
@@ -37,7 +37,7 @@ const Carousel = ({ packs }: Props) => {
     window.addEventListener('resize', updateSize)
     updateSize()
     return () => window.removeEventListener('resize', updateSize)
-  })
+  }, [])
 
   const moveCarousel = (dir: string | null) => {
     const el: HTMLDivElement | null = refItem.current

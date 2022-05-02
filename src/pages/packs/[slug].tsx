@@ -21,6 +21,7 @@ type ComplexPack = {
   currentPack: Snack[]
   benefits: Benefit[]
   plans: Plans[]
+  id: string[]
 }
 
 const portfolio: Pack[] = []
@@ -36,6 +37,7 @@ export default function Pacote({ ...slugProps }: ComplexPack) {
   const panelData = {
     pack: slugProps.currentPack,
     plans: slugProps.plans,
+    packId: slugProps.id[0],
   }
 
   if (router.isFallback) {
@@ -103,6 +105,7 @@ export const getStaticProps = async ({ params }: Params) => {
     currentPack: [...currentPack],
     benefits: [...benefits.benefits.data],
     plans: [...periods.periods.data],
+    id,
   }
 
   return {

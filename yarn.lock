@@ -2839,16 +2839,16 @@ camelize@^1.0.0:
   integrity sha1-FkpUg+Yw+kMh5a8HAg5TGDGyYJs=
 
 caniuse-lite@^1.0.30001202, caniuse-lite@^1.0.30001219, caniuse-lite@^1.0.30001228:
-  version "1.0.30001260"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001260.tgz#e3be3f34ddad735ca4a2736fa9e768ef34316270"
+  version "1.0.30001334"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001334.tgz"
   integrity sha512-Fhjc/k8725ItmrvW5QomzxLeojewxvqiYCKeFcfFEhut28IVLdpHU19dneOmltZQIE5HNbawj1HYD+1f2bM1Dg==
   dependencies:
     nanocolors "^0.1.0"
 
 caniuse-lite@^1.0.30001264:
-  version "1.0.30001264"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001264.tgz#88f625a60efb6724c7c62ac698bc8dbd9757e55b"
-  integrity sha512-Ftfqqfcs/ePiUmyaySsQ4PUsdcYyXG2rfoBVsk3iY1ahHaJEw65vfb7Suzqm+cEkwwPIv/XWkg27iCpRavH4zA==
+  version "1.0.30001334"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001334.tgz"
+  integrity sha512-kbaCEBRRVSoeNs74sCuq92MJyGrMtjWVfhltoHUCW4t4pXFvGjUBrfo47weBRViHkiV3eBYyIsfl956NtHGazw==
 
 capital-case@^1.0.4:
   version "1.0.4"

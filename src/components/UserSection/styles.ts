@@ -114,7 +114,7 @@ export const DropDown = styled.nav`
 
       p {
         border-color: #ef8321;
-        box-shadow: 0 1px 0px 0px rgb(0 0 0 / 25%);
+        /* box-shadow: 0 1px 0px 0px rgb(0 0 0 / 25%); */
       }
     }
   }

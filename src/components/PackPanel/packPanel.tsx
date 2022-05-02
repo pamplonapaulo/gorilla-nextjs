@@ -22,6 +22,7 @@ import { useOverlay } from 'contexts'
 type PanelData = {
   pack: Snack[]
   plans: Plans[]
+  packId?: string
 }
 
 const PackPanel = ({ ...panelData }: PanelData) => {
@@ -40,6 +41,11 @@ const PackPanel = ({ ...panelData }: PanelData) => {
 
   const router = useRouter()
   const [session] = useSession()
+
+  console.log(
+    'process.env.NEXT_PUBLIC_API_URL: ',
+    process.env.NEXT_PUBLIC_API_URL
+  )
 
   const completeSnackDetails = async (s: Snack) => {
     const apolloClient = initializeApollo()
@@ -87,7 +93,8 @@ const PackPanel = ({ ...panelData }: PanelData) => {
     const order = {
       period: planId,
       users_permissions_user: session?.id,
-      snack: panelData.pack,
+      snack: panelData.packId ? undefined : panelData.pack,
+      pack: panelData.packId,
       postCode: postCode,
     }
 
@@ -192,14 +199,15 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   }, [panelData])
 
   useEffect(() => {
-    const isCustomPack = () => {
-      const text = window.location.href
-      const pattern = /packs\/custom/
-      return pattern.test(text)
-    }
+    // const isCustomPack = () => {
+    //   const text = window.location.href
+    //   const pattern = /packs\/custom/
+    //   return pattern.test(text)
+    // }
 
     const getMinimumValue = async () => {
-      if (!isCustomPack()) {
+      // if (!isCustomPack()) {
+      if (panelData.packId) {
         setMinimumValue(0)
         return
       }
@@ -208,9 +216,6 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         query: GET_MINIMUM_VALUE,
       })
 
-      console.log('minimumPackValue.data.attributes.MinimumValue')
-      console.log(data)
-
       setMinimumValue(data.minimumPackValue.data.attributes.MinimumValue)
     }
 
@@ -218,7 +223,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
 
     if (minimumValue <= snacksCost) setForwardBtn(true)
     else setForwardBtn(false)
-  }, [minimumValue, snacksCost])
+  }, [minimumValue, snacksCost, panelData.packId])
 
   return (
     <S.PackPanel
