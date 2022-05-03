@@ -1,12 +1,12 @@
 import UserSection from 'components/UserSection'
-import Logotype from 'components/Logotype'
+import Logo from 'components/Logo'
 
 import * as S from './styles'
 
 const Header = () => (
   <S.TopBar>
     <S.Container>
-      <Logotype />
+      <Logo />
       <S.Wrapper>
         <UserSection />
       </S.Wrapper>
