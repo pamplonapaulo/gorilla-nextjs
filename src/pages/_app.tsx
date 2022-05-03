@@ -27,8 +27,8 @@ function App({ Component, pageProps }: AppProps) {
       <ApolloProvider client={client}>
         <Head>
           <title>Gorilla Pack Snacks</title>
-          <link rel="shortcut icon" href="/img/icon-380.png" />
-          <link rel="apple-touch-icon" href="/img/icon-380.png" />
+          <link rel="shortcut icon" href="/img/favicon.png" />
+          <link rel="apple-touch-icon" href="/img/favicon.png" />
           <meta
             name="description"
             content="Gorilla Pack, O seu e-commerce favorito de bananas desidratadas"
