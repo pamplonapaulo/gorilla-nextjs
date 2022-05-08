@@ -1,6 +1,3 @@
-import { useQuery } from '@apollo/client'
-import { GET_PACKS } from 'graphql/queries'
-
 import * as S from './styles'
 
 import Loader from 'components/Loader'
@@ -9,29 +6,39 @@ import DeliveryAddress from 'components/DeliveryAddress'
 import Billing from 'components/Billing'
 import Payment from 'components/Payment'
 
-const CheckoutTemplate = () => {
-  const { data, loading, error } = useQuery(GET_PACKS)
-  if (loading) return <Loader isHidden={false} />
-  if (error) return <p>Erro no carregamento dos dados</p>
+import { Order } from 'types/api'
 
-  console.log(data)
+const CheckoutTemplate = ({ ...order }: Order) => {
+  if (!order) return <Loader isHidden={false} />
 
   return (
     <>
       <S.FlexCenter>
         <S.Text step="1">Resumo da assinatura</S.Text>
         <S.Content>
-          <OrderSummary />
+          <OrderSummary
+            title={order.Title}
+            snacks={order.snack}
+            plans={order.period.data}
+            toPay={order.expectedPayments}
+          />
         </S.Content>
 
         <S.Text step="2">Contato & endereço</S.Text>
         <S.Content>
-          <DeliveryAddress />
+          <DeliveryAddress
+            address={order.address}
+            delivery={order.deliveries}
+            customer={order.users_permissions_user.data.attributes}
+          />
         </S.Content>
 
         <S.Text step="3">Cupons & Fatura</S.Text>
         <S.Content>
-          <Billing />
+          <Billing
+            deliveryFee={order.deliveries.fee}
+            otherValues={order.expectedPayments}
+          />
         </S.Content>
 
         <S.Text step="4">Pagamento</S.Text>

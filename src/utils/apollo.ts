@@ -8,8 +8,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
 function createApolloClient(session?: Session | null) {
   const httpLink = new HttpLink({
-    uri: `https://gorillapack.herokuapp.com/graphql`,
-    // uri: `${process.env.DB_HOST}/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_GRAPHQL}`,
   })
 
   const authLink = setContext((_, { headers, session: clientSession }) => {
@@ -29,18 +28,17 @@ export function initializeApollo(
   initialState = null,
   session?: Session | null
 ) {
-  // serve para verificar se já existe uma instância, para não criar outra
+  // verifica se já existe uma instância, para não criar outra:
   const apolloClientGlobal = apolloClient ?? createApolloClient(session)
 
-  // se a página usar o apolloClient no lado client
-  // hidratamos o estado inicial aqui
+  // se a página usar o apolloClient no lado client hidratamos o estado inicial:
   if (initialState) {
     apolloClientGlobal.cache.restore(initialState)
   }
 
-  // sempre inicializando no SSR com cache limpo
+  // inicializando no SSR com cache limpo:
   if (typeof window === 'undefined') return apolloClientGlobal
-  // cria o apolloClient se estiver no client side
+  // cria o apolloClient se estiver no client side:
   apolloClient = apolloClient ?? apolloClientGlobal
 
   return apolloClient

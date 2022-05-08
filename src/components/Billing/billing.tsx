@@ -3,7 +3,14 @@ import Button from 'components/Button'
 
 import * as S from './styles'
 
-const Billing = () => {
+import { ExpectedPayments } from 'types/api'
+
+type Billing = {
+  otherValues: ExpectedPayments
+  deliveryFee: number
+}
+
+const Billing = ({ ...billing }: Billing) => {
   const [loading] = useState(false)
 
   const handleCupon = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -42,11 +49,11 @@ const Billing = () => {
         <S.Column>
           <S.LittleText>
             <span>Pack:</span>
-            <span>+ R$ 125,00</span>
+            <span>+ R$ {billing.otherValues.contentCostBeforeDiscount}</span>
           </S.LittleText>
           <S.LittleText>
             <span>Assinatura:</span>
-            <span>- R$ 12,50</span>
+            <span>- R$ {billing.otherValues.absoluteDiscountApplied}</span>
           </S.LittleText>
           <S.LittleText>
             <span>Cupom:</span>
@@ -54,11 +61,11 @@ const Billing = () => {
           </S.LittleText>
           <S.LittleText>
             <span>Frete:</span>
-            <span>+ R$ 55,00</span>
+            <span>+ R$ {billing.deliveryFee}</span>
           </S.LittleText>
           <S.LittleText>
             <span>Total por mês:</span>
-            <span>R$ 125,00</span>
+            <span>R$ {billing.otherValues.finalValueInCentavos / 100}</span>
           </S.LittleText>
         </S.Column>
       </S.Prices>

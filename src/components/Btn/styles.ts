@@ -33,6 +33,7 @@ export const Btn = styled.button<{ isDisable: boolean }>`
   width: 80px;
   font-weight: 600;
   position: absolute;
+  outline: none;
   overflow: hidden;
   z-index: 0;
 

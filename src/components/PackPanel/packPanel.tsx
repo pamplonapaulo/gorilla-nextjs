@@ -42,11 +42,6 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   const router = useRouter()
   const [session] = useSession()
 
-  console.log(
-    'process.env.NEXT_PUBLIC_API_URL: ',
-    process.env.NEXT_PUBLIC_API_URL
-  )
-
   const completeSnackDetails = async (s: Snack) => {
     const apolloClient = initializeApollo()
 
@@ -115,14 +110,12 @@ const PackPanel = ({ ...panelData }: PanelData) => {
             const progress: number = Math.round(
               (event.loaded * 100) / event.total
             )
-
             console.log(`Processamento: ${progress}% carregado... `)
           },
         }
       )
       .then((response: AxiosResponse<unknown>) => {
-        console.log(response.data)
-        router.push('/checkout')
+        router.push(`/checkout#${response.data}`)
       })
       .catch((error) => {
         console.log(error)
@@ -199,12 +192,6 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   }, [panelData])
 
   useEffect(() => {
-    // const isCustomPack = () => {
-    //   const text = window.location.href
-    //   const pattern = /packs\/custom/
-    //   return pattern.test(text)
-    // }
-
     const getMinimumValue = async () => {
       // if (!isCustomPack()) {
       if (panelData.packId) {

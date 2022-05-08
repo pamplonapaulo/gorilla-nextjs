@@ -1,28 +1,3 @@
-// export type Data = {
-//   jwt: string
-//   user: User
-// }
-
-// export type User = {
-//   blocked: null | boolean
-//   confirmed: boolean
-//   created_at: string
-//   email: string
-//   id: number
-//   provider: string
-//   role: Role
-//   updated_at: string
-//   '[[Prototype]]': Object
-//   username: string
-// }
-
-// export type Role = {
-//   description: string
-//   id: number
-//   name: string
-//   type: string
-// }
-
 export type ProductFull = {
   Name: string
   id: string
@@ -58,34 +33,6 @@ export type Snack = {
   photo?: string
 }
 
-// export type Pack = {
-//   id: string
-//   attributes: {
-//     Name: string
-//     Item: {
-//       id: string
-//       Quantity: number
-//       product: {
-//         data: {
-//           id: string
-//           attribute: {
-//             Name: string
-//             BaseValue: number
-//           }
-//         }
-//       }
-//     }
-//     Description: string
-//     ExtraDiscount: number
-//     Benefits: {
-//       id: string
-//       benefits: {
-//         data: Benefit[]
-//       }
-//     }
-//   }
-// }
-
 export type Pack = {
   id: string
   attributes: {
@@ -104,35 +51,12 @@ export type BenefitArray = {
   }
 }
 
-// export type Pack = {
-//   id: string
-//   Name: string
-//   Item: PackItem[]
-//   Description: string
-//   Benefits: Benefit[]
-// }
-
 export type Benefit = {
   id: string
   attributes: {
     Benefit: string
   }
 }
-
-// export type Benefit = {
-//   benefit: benefit
-// }
-
-// export type benefit = {
-//   id: string
-//   Benefit: string
-// }
-
-// export type PackItem = {
-//   Quantity: number
-//   id: string
-//   product: Product
-// }
 
 export type PackItem = {
   id: string
@@ -205,5 +129,69 @@ export type BagItem = {
 export type Params = {
   params: {
     slug: string
+  }
+}
+
+export type OrderSnack = {
+  id: string
+  Quantity: number
+  product: {
+    data: {
+      id: string
+      attributes: {
+        Name: string
+      }
+    }
+  }
+}
+
+export type ExpectedArrivalDay = {
+  date: string
+}
+
+export type ExpectedPayments = {
+  contentCostBeforeDiscount: number
+  monthsMultiplier: number
+  finalValueInCentavos: number
+  absoluteDiscountApplied: number
+}
+
+export type Address = {
+  bairro: string
+  cep: string
+  complemento: null | string
+  logradouro: string
+  municipio: string
+  nome: string
+  numero: null | string
+  uf: string
+}
+
+export type Deliveries = {
+  company: string
+  expectedArrivalDays: ExpectedArrivalDay[]
+  fee: number
+}
+
+export type Customer = {
+  email: string
+  phone: string
+  username: string
+}
+
+export type Order = {
+  Title: string
+  address: Address
+  createdAt: string
+  deliveries: Deliveries
+  expectedPayments: ExpectedPayments
+  period: {
+    data: Plans
+  }
+  snack: OrderSnack[]
+  users_permissions_user: {
+    data: {
+      attributes: Customer
+    }
   }
 }

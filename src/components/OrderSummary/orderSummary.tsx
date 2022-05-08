@@ -2,52 +2,64 @@ import React from 'react'
 
 import * as S from './styles'
 
-const OrderSummary = () => (
+import { OrderSnack, Plans, ExpectedPayments } from 'types/api'
+
+type Summary = {
+  title: string
+  snacks: OrderSnack[]
+  plans: Plans
+  toPay: ExpectedPayments
+}
+
+const OrderSummary = ({ ...summary }: Summary) => (
   <>
     <S.Row>
       <S.Column>
-        <S.Text>Pack Custom</S.Text>
+        <S.Text>Pack: {summary.title}</S.Text>
         <S.Items>
-          <S.Snack>
-            <S.Icon
-              src={'https://via.placeholder.com/113x156.png/'}
-              // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
-              alt={'teste'}
-            />
-            <S.Quantity>{'5'}</S.Quantity>
-          </S.Snack>
-          <S.Snack>
-            <S.Icon
-              src={'https://via.placeholder.com/113x156.png/'}
-              // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
-              alt={'teste'}
-            />
-            <S.Quantity>{'15'}</S.Quantity>
-          </S.Snack>
-          <S.Snack>
-            <S.Icon
-              src={'https://via.placeholder.com/113x156.png/'}
-              // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
-              alt={'teste'}
-            />
-            <S.Quantity>{'5'}</S.Quantity>
-          </S.Snack>
+          {summary.snacks?.map((s: OrderSnack) => (
+            <S.Snack key={s.product.data.id}>
+              <S.Icon
+                src={`https://via.placeholder.com/113x156/CCC/00000?text=${s.product.data.attributes.Name}`}
+                // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
+                alt={s.product.data.attributes.Name}
+              />
+              <S.Quantity>{s.Quantity}</S.Quantity>
+            </S.Snack>
+          ))}
         </S.Items>
       </S.Column>
     </S.Row>
-
     <S.Prices>
       <S.Column>
         <S.Text>Valor do pack</S.Text>
-        <S.LittleText>R$ 125,00</S.LittleText>
+        <S.LittleText>
+          <span>
+            R${' '}
+            {summary.toPay?.finalValueInCentavos
+              ? summary.toPay?.finalValueInCentavos / 100
+              : 'erro'}
+          </span>
+
+          <span>
+            {summary.toPay?.monthsMultiplier === 1
+              ? ' (recorrente)'
+              : ' x ' + summary.toPay?.monthsMultiplier}
+          </span>
+        </S.LittleText>
       </S.Column>
 
       <S.Column>
         <S.Text>Assinatura</S.Text>
-        <S.LittleText>Trimestral</S.LittleText>
+        <S.LittleText>{summary.plans?.attributes.Type}</S.LittleText>
         <S.LittleText>
-          <span>10% off:</span>
-          <span>- R$ 12,50</span>
+          <span>
+            {summary.plans?.attributes.Discount
+              ? summary.plans?.attributes.Discount * 10
+              : ''}
+            0% off
+          </span>
+          <span>- R$ {summary.toPay.absoluteDiscountApplied}</span>
         </S.LittleText>
       </S.Column>
     </S.Prices>

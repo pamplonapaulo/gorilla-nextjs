@@ -2,74 +2,89 @@ import React from 'react'
 
 import * as S from './styles'
 
-const DeliveryAddress = () => (
+import { Address, Deliveries, Customer } from 'types/api'
+
+type Delivery = {
+  address: Address
+  delivery: Deliveries
+  customer: Customer
+}
+
+const DeliveryAddress = ({ ...delivery }: Delivery) => (
   <>
     <S.Row>
       <S.Column>
         <S.Wrap>
           <S.Label>Nome</S.Label>
-          <S.Input readOnly value="Ronaldo Nazário Fenômeno" width="300px" />
+          <S.Input readOnly value={delivery.customer.username} width="300px" />
         </S.Wrap>
 
         <S.Wrap>
           <S.Label>E-mail</S.Label>
-          <S.Input readOnly value="emailteste@gmail.com" width="300px" />
+          <S.Input readOnly value={delivery.customer.email} width="300px" />
         </S.Wrap>
 
         <S.Wrap>
           <S.Label>Telefone</S.Label>
-          <S.Input readOnly value="(21)99999-0000" width="160px" />
+          <S.Input readOnly value={delivery.customer.phone} width="165px" />
         </S.Wrap>
       </S.Column>
 
       <S.Column>
         <S.Wrap>
           <S.Label>Logradouro</S.Label>
-          <S.Input readOnly value="Av. Rio Branco" width="300px" />
+          <S.Input readOnly value={delivery.address.logradouro} width="300px" />
         </S.Wrap>
 
         <S.Row>
           <S.Wrap>
             <S.Label>Número</S.Label>
-            <S.Input defaultValue="69" width="100px" />
+            <S.Input width="100px" />
           </S.Wrap>
 
           <S.Wrap>
             <S.Label>Complemento</S.Label>
-            <S.Input defaultValue="apt 666" width="100px" />
+            <S.Input width="100px" />
           </S.Wrap>
         </S.Row>
 
         <S.Row>
           <S.Wrap>
             <S.Label>Bairro</S.Label>
-            <S.Input readOnly value="Centro" width="150px" />
+            <S.Input readOnly value={delivery.address.bairro} width="150px" />
           </S.Wrap>
 
           <S.Wrap>
             <S.Label>CEP</S.Label>
-            <S.Input readOnly value="00000-000" width="120px" />
+            <S.Input readOnly value={delivery.address.cep} width="120px" />
           </S.Wrap>
         </S.Row>
 
         <S.Row>
           <S.Wrap>
             <S.Label>Município</S.Label>
-            <S.Input readOnly value="Rio de Janeiro" width="220px" />
+            <S.Input
+              readOnly
+              value={delivery.address.municipio}
+              width="220px"
+            />
           </S.Wrap>
           <S.Wrap>
             <S.Label>UF</S.Label>
-            <S.Input readOnly value="RJ" width="50px" />
+            <S.Input readOnly value={delivery.address.uf} width="50px" />
           </S.Wrap>
         </S.Row>
       </S.Column>
     </S.Row>
     <S.Column>
       <S.Text>valor do frete</S.Text>
-      <S.LittleText>R$ 125,00</S.LittleText>
+      <S.LittleText>R$ {delivery.delivery.fee}</S.LittleText>
 
       <S.Text>Entregas</S.Text>
-      <S.LittleText>Sempre até o dia 23</S.LittleText>
+      <S.LittleText>
+        Sempre até o dia{' '}
+        {delivery.delivery.expectedArrivalDays[0].date.slice(-2)}
+      </S.LittleText>
     </S.Column>
   </>
 )
