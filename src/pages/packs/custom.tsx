@@ -12,10 +12,6 @@ type Props = {
 }
 
 export default function CustomPackPage(props: Props) {
-  console.log(' ')
-  console.log(props)
-  console.log(' ')
-
   return <CustomTemplate {...props} />
 }
 

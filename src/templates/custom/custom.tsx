@@ -14,9 +14,6 @@ type Props = {
 }
 
 const CustomTemplate = ({ ...customProps }: Props) => {
-  console.log('customProps')
-  console.log(customProps)
-
   type Snack = {
     id: number
     Quantity: number

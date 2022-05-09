@@ -189,7 +189,7 @@ export type Order = {
     data: Plans
   }
   snack: OrderSnack[]
-  users_permissions_user?: {
+  users_permissions_user: {
     data: {
       attributes: Customer
     }

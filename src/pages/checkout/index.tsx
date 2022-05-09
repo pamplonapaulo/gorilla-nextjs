@@ -1,6 +1,6 @@
 import CheckoutTemplate from 'templates/checkout'
 import { initializeApollo } from 'utils/apollo'
-// import protectedRoutes from 'utils/protectedRoutes'
+import protectedRoutes from 'utils/protectedRoutes'
 
 import { GET_ORDER } from 'graphql/queries'
 import { GetOrder } from 'graphql/generated/GetOrder'
@@ -21,9 +21,8 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const id = context.query.name
 
-  //const session = await protectedRoutes(context)
-  //const apolloClient = initializeApollo(null, session)
-  const apolloClient = initializeApollo()
+  const session = await protectedRoutes(context)
+  const apolloClient = initializeApollo(null, session)
 
   const { data } = await apolloClient.query<GetOrder>({
     query: GET_ORDER,

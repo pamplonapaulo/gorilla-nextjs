@@ -8,6 +8,15 @@ const GET_ORDER = gql`
         attributes {
           createdAt
           Title
+          users_permissions_user {
+            data {
+              attributes {
+                phone
+                email
+                username
+              }
+            }
+          }
           period {
             data {
               attributes {

@@ -1,7 +1,7 @@
 import * as S from './styles'
 
 import OrderSummary from 'components/OrderSummary'
-// import DeliveryAddress from 'components/DeliveryAddress'
+import DeliveryAddress from 'components/DeliveryAddress'
 import Billing from 'components/Billing'
 import Payment from 'components/Payment'
 
@@ -27,11 +27,11 @@ const CheckoutTemplate = ({ ...props }: Props) => {
 
         <S.Text step="2">Contato & endereço</S.Text>
         <S.Content>
-          {/* <DeliveryAddress
-            address={props.address}
-            delivery={props.deliveries}
-            customer={props.users_permissions_user.data.attributes}
-          /> */}
+          <DeliveryAddress
+            address={props.order.address}
+            delivery={props.order.deliveries}
+            customer={props.order.users_permissions_user.data.attributes}
+          />
         </S.Content>
 
         <S.Text step="3">Cupons & Fatura</S.Text>

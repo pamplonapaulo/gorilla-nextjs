@@ -115,8 +115,6 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         }
       )
       .then((response: AxiosResponse<unknown>) => {
-        console.log('typeof response.data:', typeof response.data)
-
         const name = typeof response.data === 'number' ? response.data : null
         router.push(
           {
@@ -202,7 +200,6 @@ const PackPanel = ({ ...panelData }: PanelData) => {
 
   useEffect(() => {
     const getMinimumValue = async () => {
-      // if (!isCustomPack()) {
       if (panelData.packId) {
         setMinimumValue(0)
         return
