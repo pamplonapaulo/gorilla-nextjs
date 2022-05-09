@@ -11,34 +11,34 @@ type Props = {
   order: Order
 }
 
-const CheckoutTemplate = ({ ...props }: Props) => {
+const CheckoutTemplate = ({ order }: Props) => {
   return (
     <>
       <S.FlexCenter>
         <S.Text step="1">Resumo da assinatura</S.Text>
         <S.Content>
           <OrderSummary
-            title={props.order.Title}
-            snacks={props.order.snack}
-            plans={props.order.period.data}
-            toPay={props.order.expectedPayments}
+            title={order.Title}
+            snacks={order.snack}
+            plans={order.period.data}
+            toPay={order.expectedPayments}
           />
         </S.Content>
 
         <S.Text step="2">Contato & endereço</S.Text>
         <S.Content>
           <DeliveryAddress
-            address={props.order.address}
-            delivery={props.order.deliveries}
-            customer={props.order.users_permissions_user.data.attributes}
+            address={order.address}
+            delivery={order.deliveries}
+            customer={order.users_permissions_user.data.attributes}
           />
         </S.Content>
 
         <S.Text step="3">Cupons & Fatura</S.Text>
         <S.Content>
           <Billing
-            deliveryFee={props.order.deliveries.fee}
-            otherValues={props.order.expectedPayments}
+            deliveryFee={order.deliveries.fee}
+            otherValues={order.expectedPayments}
           />
         </S.Content>
 
