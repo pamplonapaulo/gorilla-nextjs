@@ -115,7 +115,16 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         }
       )
       .then((response: AxiosResponse<unknown>) => {
-        router.push(`/checkout#${response.data}`)
+        console.log('typeof response.data:', typeof response.data)
+
+        const name = typeof response.data === 'number' ? response.data : null
+        router.push(
+          {
+            pathname: '/checkout',
+            query: { name },
+          },
+          '/checkout'
+        )
       })
       .catch((error) => {
         console.log(error)

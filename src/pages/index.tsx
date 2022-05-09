@@ -7,7 +7,7 @@ import { GetPacks } from 'graphql/generated/GetPacks'
 import { GET_BENEFITS } from 'graphql/queries'
 import { GetBenefits } from 'graphql/generated/GetBenefits'
 
-export default function Index() {
+export default function HomePage() {
   return <HomeTemplate />
 }
 
