@@ -88,36 +88,6 @@ const FormLogin = () => {
     }
   }
 
-  // .then((response: AxiosResponse<unknown, any>) => {
-  // .then((response: { data: { user: any; jwt: any } }) => {
-  //   // Handle success.
-  //   console.log('User profile', response.data.user)
-  //   console.log('User token', response.data.jwt)
-  //   setUserLog(response.data.user.username)
-  // })
-  // identifier: inputData.email,
-  // password: inputData.password,
-
-  // const loginCustomer = () => {
-  //   axios
-  //     .post(endpoint + 'api/auth/local', {
-  //       identifier: 'paulo@paulo.com',
-  //       password: 'paulo123',
-  //     })
-  //     .then((response: AxiosResponse<any, any>) => {
-  //       // Handle success.
-  //       console.log('User profile', response.data.user)
-  //       console.log('User token', response.data.jwt)
-  //       setUserLog(response.data.user.username)
-  //       console.log('response', response)
-  //     })
-  //     .catch((err: any) => {
-  //       console.log(err.response)
-  //       // Handle error.
-  //       // setMessage(err.response.data.message[0].messages[0].message)
-  //     })
-  // }
-
   const loginCustomer = async () => {
     setLoading(true)
     const result = await signIn('credentials', {

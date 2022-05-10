@@ -206,7 +206,8 @@ const FormRegister = () => {
         }, 6000)
       })
       .catch((error: { response: any }) => {
-        setMessage(error.response.data.message[0].messages[0].message)
+        console.error(error)
+        setMessage('Erro ao registrar novo usuário.')
       })
   }
 

@@ -13,13 +13,7 @@ type Props = {
 }
 
 export default function CheckoutPage(props: Props) {
-  console.log(' ')
-  console.log('props:')
   console.log(props)
-  console.log(' ')
-  console.log('props.order:')
-  console.log(props.order)
-
   return <CheckoutTemplate order={props.order} />
 }
 
@@ -27,7 +21,6 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const id = context.query.name
-
   console.log('order id:', id)
 
   const session = await protectedRoutes(context)
@@ -37,12 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (
     query: GET_ORDER,
     variables: { id },
   })
-
-  console.log('order object:')
   console.log(data)
-
-  console.log('data.order?.data?.attributes:')
-  console.log(data.order?.data?.attributes)
 
   return {
     props: {
