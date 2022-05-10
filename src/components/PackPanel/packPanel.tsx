@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import axios, { AxiosResponse } from 'axios'
 import { useSession } from 'next-auth/client'
@@ -41,6 +41,16 @@ const PackPanel = ({ ...panelData }: PanelData) => {
 
   const router = useRouter()
   const [session] = useSession()
+
+  const mountedRef = useRef(true)
+
+  useEffect(() => {
+    console.log('Component PackPanel did mount')
+    return () => {
+      console.log('Component PackPanel did unmount')
+      mountedRef.current = false
+    }
+  }, [])
 
   const completeSnackDetails = async (s: Snack) => {
     const apolloClient = initializeApollo()
@@ -123,6 +133,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
           },
           '/checkout'
         )
+        if (!mountedRef.current) return null
       })
       .catch((error) => {
         console.log(error)
