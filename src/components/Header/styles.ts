@@ -26,6 +26,8 @@ export const Wrapper = styled.div`
 `
 
 export const Container = styled.div`
+  display: flex;
+
   @media only screen and (min-width: 1320px) {
     max-width: 1320px;
     justify-content: space-between;

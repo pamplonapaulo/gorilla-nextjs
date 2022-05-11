@@ -6,6 +6,8 @@ import { initializeApollo } from 'utils/apollo'
 import { GET_FREE_DELIVERY_VALUE } from 'graphql/queries'
 import BtnLittle from 'components/BtnLittle'
 
+import Brand from 'components/Brand'
+
 const apolloClient = initializeApollo()
 
 const DialogBox = () => {
@@ -39,15 +41,17 @@ const DialogBox = () => {
         isDisplayed={display}
       >
         <S.Wrap isOff={visibility}>
-          <S.Txt>Frete gratuito:</S.Txt>
-          <S.Lista>
-            <S.Item>Rio de Janeiro, RJ</S.Item>
-            <S.Item>Niterói, RJ</S.Item>
-            <S.Item>
-              Compras acima de R$ {freeDelivery} <br />
-              para toda a região Sudeste
-            </S.Item>
-          </S.Lista>
+          <S.FlexCenter>
+            <Brand />
+          </S.FlexCenter>
+
+          <S.FlexCenter isColumn={true}>
+            <S.Txt>Fretes gratuitos:</S.Txt>
+            <S.Txt hasMark={true}>Rio ou Niterói</S.Txt>
+            <S.Txt hasMark={true}>
+              Assinaturas acima de R$ {freeDelivery} (na região Sudeste).
+            </S.Txt>
+          </S.FlexCenter>
           <S.FlexCenter>
             <BtnLittle text={'Entendi'} />
           </S.FlexCenter>

@@ -29,10 +29,7 @@ function App({ Component, pageProps }: AppProps) {
           <title>Gorilla Pack Snacks</title>
           <link rel="shortcut icon" href="/img/favicon.png" />
           <link rel="apple-touch-icon" href="/img/favicon.png" />
-          <meta
-            name="description"
-            content="Gorilla Pack, O seu e-commerce favorito de bananas desidratadas"
-          />
+          <meta name="description" content="Alimentação saudável e prática." />
         </Head>
         <GlobalStyles />
         <NextNProgress
