@@ -69,13 +69,6 @@ const UserSection = () => {
             </S.Wrap>
           </>
         )}
-        {/* <S.BtnWrapper
-          onMouseLeave={() => setBagOverlay(false)}
-          onMouseEnter={() => setBagOverlay(true)}
-        >
-          <Bag />
-          {totalOnBag > 0 && <S.OnBag>{totalOnBag}</S.OnBag>}
-        </S.BtnWrapper> */}
       </S.Container>
     </>
   )

@@ -20,8 +20,8 @@ export default function CheckoutPage(props: Props) {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  console.log('context')
-  console.log(context)
+  console.log('getServerSideProps context')
+  console.log(context.res)
 
   const session = await protectedRoutes(context)
   console.log('session')
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const { data } = await apolloClient.query<GetOrder>({
     query: GET_ORDER,
-    variables: { id: context.query.name },
+    variables: { id: context.query.id },
   })
   console.log('data')
   console.log(data)

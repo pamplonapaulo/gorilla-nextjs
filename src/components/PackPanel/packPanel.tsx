@@ -125,11 +125,11 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         }
       )
       .then((response: AxiosResponse<unknown>) => {
-        const name = typeof response.data === 'number' ? response.data : null
+        const id = typeof response.data === 'number' ? response.data : null
         router.push(
           {
             pathname: '/checkout',
-            query: { name },
+            query: { id },
           },
           '/checkout'
         )
