@@ -20,16 +20,20 @@ export default function CheckoutPage(props: Props) {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const id = context.query.name
-  console.log('order id:', id)
+  console.log('context')
+  console.log(context)
 
   const session = await protectedRoutes(context)
+  console.log('session')
+  console.log(session)
+
   const apolloClient = initializeApollo(null, session)
 
   const { data } = await apolloClient.query<GetOrder>({
     query: GET_ORDER,
-    variables: { id },
+    variables: { id: context.query.name },
   })
+  console.log('data')
   console.log(data)
 
   return {

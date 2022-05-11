@@ -16,6 +16,12 @@ export default function CustomPackPage(props: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  console.log('+++++++++++++++++++++++++++')
+  console.log('+++++++++++++++++++++++++++')
+  console.log('+++++++++++++++++++++++++++')
+  console.log('+++++++++++++++++++++++++++')
+  console.log('+++++++++++++++++++++++++++')
+
   const apolloClient = initializeApollo()
   const { data } = await apolloClient.query<GetProducts>({
     query: GET_PRODUCTS,
