@@ -27,14 +27,13 @@ export const Wrapper = styled.div`
 
 export const Container = styled.div`
   display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  width: 100%;
 
   @media only screen and (min-width: 1320px) {
     max-width: 1320px;
-    justify-content: space-between;
-    width: 100%;
-    display: flex;
     margin: 0 auto;
-    /* padding-left: 47.5px; */
-    padding-left: 3rem;
+    padding: 0 0 0 3rem;
   }
 `
