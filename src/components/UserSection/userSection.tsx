@@ -42,7 +42,7 @@ const UserSection = () => {
               <S.Hello>{getFirstName(userLog)}</S.Hello>
             </S.Wrap>
             <S.DropDown>
-              <Link href={'/profile/me'} passHref>
+              <Link href={'/profile/'} passHref>
                 <span>
                   <AccountCircle size={24} />
                   <p>Meu perfil</p>
