@@ -191,6 +191,7 @@ export type Order = {
   snack: OrderSnack[]
   users_permissions_user: {
     data: {
+      id?: string
       attributes: Customer
     }
   }

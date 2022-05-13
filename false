@@ -7,6 +7,29 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface IDFilterInput {
+  and?: (string | null)[] | null;
+  or?: (string | null)[] | null;
+  not?: IDFilterInput | null;
+  eq?: string | null;
+  ne?: string | null;
+  startsWith?: string | null;
+  endsWith?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  containsi?: string | null;
+  notContainsi?: string | null;
+  gt?: string | null;
+  gte?: string | null;
+  lt?: string | null;
+  lte?: string | null;
+  null?: boolean | null;
+  notNull?: boolean | null;
+  in?: (string | null)[] | null;
+  notIn?: (string | null)[] | null;
+  between?: (string | null)[] | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

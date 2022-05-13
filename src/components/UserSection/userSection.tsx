@@ -24,7 +24,6 @@ const UserSection = () => {
 
   useEffect(() => {
     if (typeof session?.user?.name === 'string') {
-      console.log(session?.jwt)
       setUserLog(session?.user?.name)
     }
   }, [session, setUserLog])

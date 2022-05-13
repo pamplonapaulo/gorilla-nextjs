@@ -2,16 +2,21 @@ import ProfileTemplate from 'templates/profile'
 import { initializeApollo } from 'utils/apollo'
 import protectedRoutes from 'utils/protectedRoutes'
 
-import { GET_ORDERS } from 'graphql/queries'
-import { GetOrder } from 'graphql/generated/GetOrder'
+import { GET_ORDER_BY_USER } from 'graphql/queries'
+import { GetOrderByUser } from 'graphql/generated/GetOrderByUser'
 
+import { Order } from 'types/api'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
-// type Props = {
-//   order: Order
-// }
+type OrderItem = {
+  id: string
+  attributes: Order
+}
+type Props = {
+  order: OrderItem[]
+}
 
-export default function ProfilePage(props: unknown) {
+export default function ProfilePage(props: Props) {
   console.log(props)
   return <ProfileTemplate />
 }
@@ -19,24 +24,18 @@ export default function ProfilePage(props: unknown) {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  console.log('getServerSideProps context')
-  console.log(context.res)
-
   const session = await protectedRoutes(context)
-  console.log('session')
-  console.log(session)
 
   const apolloClient = initializeApollo(null, session)
 
-  const { data } = await apolloClient.query<GetOrder>({
-    query: GET_ORDERS,
+  const { data } = await apolloClient.query<GetOrderByUser>({
+    query: GET_ORDER_BY_USER,
+    variables: { id: { eq: session?.id } },
   })
-  console.log('data')
-  console.log(data)
 
   return {
     props: {
-      order: data,
+      order: data.orders?.data,
     },
   }
 }
