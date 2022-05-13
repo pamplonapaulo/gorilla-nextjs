@@ -1,13 +1,24 @@
 import { gql } from '@apollo/client'
 
-const GET_ORDER_BY_USER = gql`
-  query GetOrderByUser($id: IDFilterInput!) {
-    orders(filters: { users_permissions_user: { id: $id } }) {
+const GET_ACTIVE_ORDER = gql`
+  query GetActiveOrder(
+    $confirm: BooleanFilterInput!
+    $id: IDFilterInput!
+    $deactivated: BooleanFilterInput
+  ) {
+    orders(
+      filters: {
+        isConfirmed: $confirm
+        users_permissions_user: { id: $id }
+        deactivated: $deactivated
+      }
+    ) {
       data {
         id
         attributes {
           createdAt
           Title
+          isConfirmed
           users_permissions_user {
             data {
               id
@@ -18,6 +29,8 @@ const GET_ORDER_BY_USER = gql`
               }
             }
           }
+          deactivated
+          deactivationAuthor
           period {
             data {
               attributes {
@@ -67,4 +80,4 @@ const GET_ORDER_BY_USER = gql`
   }
 `
 
-export { GET_ORDER_BY_USER }
+export { GET_ACTIVE_ORDER }

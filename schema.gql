@@ -292,18 +292,11 @@ type ComponentOrderAddress {
   nome: String!
 }
 
-input ComponentOrderCancellationsInput {
-  id: ID
-  deactivatedByCustomer: Boolean
-  deactivatedByGorilla: Boolean
-  deactivatedByTimeOut: Boolean
-}
-
 type ComponentOrderCancellations {
   id: ID!
-  deactivatedByCustomer: Boolean
-  deactivatedByGorilla: Boolean
-  deactivatedByTimeOut: Boolean
+  byCustomer: Boolean
+  byGorilla: Boolean
+  byTimeOut: Boolean
 }
 
 input ComponentOrderDeliveryInput {
@@ -853,6 +846,12 @@ type MinimumPackValueEntityResponse {
   data: MinimumPackValueEntity
 }
 
+enum ENUM_ORDER_DEACTIVATIONAUTHOR {
+  admin
+  customer
+  timeOut
+}
+
 input OrderFiltersInput {
   id: IDFilterInput
   period: PeriodFiltersInput
@@ -861,6 +860,8 @@ input OrderFiltersInput {
   coupon: CouponFiltersInput
   isConfirmed: BooleanFilterInput
   Title: StringFilterInput
+  deactivated: BooleanFilterInput
+  deactivationAuthor: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [OrderFiltersInput]
@@ -877,9 +878,10 @@ input OrderInput {
   address: ComponentOrderAddressInput
   coupon: ID
   expectedPayments: ComponentOrderExpectedPaymentsInput
-  cancellations: ComponentOrderCancellationsInput
   isConfirmed: Boolean
   Title: String
+  deactivated: Boolean
+  deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR
 }
 
 type Order {
@@ -891,9 +893,10 @@ type Order {
   address: ComponentOrderAddress
   coupon: CouponEntityResponse
   expectedPayments: ComponentOrderExpectedPayments
-  cancellations: ComponentOrderCancellations
   isConfirmed: Boolean
   Title: String!
+  deactivated: Boolean
+  deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR
   createdAt: DateTime
   updatedAt: DateTime
 }

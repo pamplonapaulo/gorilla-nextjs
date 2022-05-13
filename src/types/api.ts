@@ -179,20 +179,27 @@ export type Customer = {
   username: string
 }
 
+export type UserPermUser = {
+  data: {
+    id?: string
+    attributes: Customer
+  }
+}
+
+export type Period = {
+  data: Plans
+}
+
 export type Order = {
   Title: string
   address: Address
   createdAt: string
   deliveries: Deliveries
   expectedPayments: ExpectedPayments
-  period: {
-    data: Plans
-  }
+  period: Period
   snack: OrderSnack[]
-  users_permissions_user: {
-    data: {
-      id?: string
-      attributes: Customer
-    }
-  }
+  users_permissions_user: UserPermUser
+  isConfirmed?: boolean
+  deactivated?: boolean
+  deactivationAuthor: string | null
 }

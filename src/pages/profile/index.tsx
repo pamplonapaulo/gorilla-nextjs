@@ -2,8 +2,8 @@ import ProfileTemplate from 'templates/profile'
 import { initializeApollo } from 'utils/apollo'
 import protectedRoutes from 'utils/protectedRoutes'
 
-import { GET_ORDER_BY_USER } from 'graphql/queries'
-import { GetOrderByUser } from 'graphql/generated/GetOrderByUser'
+import { GET_ACTIVE_ORDER } from 'graphql/queries'
+import { GetActiveOrder } from 'graphql/generated/GetActiveOrder'
 
 import { Order } from 'types/api'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
@@ -28,9 +28,13 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const apolloClient = initializeApollo(null, session)
 
-  const { data } = await apolloClient.query<GetOrderByUser>({
-    query: GET_ORDER_BY_USER,
-    variables: { id: { eq: session?.id } },
+  const { data } = await apolloClient.query<GetActiveOrder>({
+    query: GET_ACTIVE_ORDER,
+    variables: {
+      confirm: { eq: true },
+      id: { eq: session?.id },
+      deactivated: { eq: false },
+    },
   })
 
   return {
