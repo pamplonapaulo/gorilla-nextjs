@@ -13,19 +13,13 @@ type Props = {
 }
 
 export default function CheckoutPage(props: Props) {
-  console.log(props)
   return <CheckoutTemplate order={props.order} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  console.log('getServerSideProps context')
-  console.log(context.res)
-
   const session = await protectedRoutes(context)
-  console.log('session')
-  console.log(session)
 
   const apolloClient = initializeApollo(null, session)
 
@@ -33,8 +27,6 @@ export const getServerSideProps: GetServerSideProps = async (
     query: GET_ORDER,
     variables: { id: context.query.id },
   })
-  console.log('data')
-  console.log(data)
 
   return {
     props: {

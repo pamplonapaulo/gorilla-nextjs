@@ -47,7 +47,7 @@ const UserSection = () => {
                   <p>Meu perfil</p>
                 </span>
               </Link>
-              <Link href={'/packs/me'} passHref>
+              <Link href={'/assinatura'} passHref>
                 <span>
                   <ShoppingBag size={24} />
                   <p>Meu pack</p>

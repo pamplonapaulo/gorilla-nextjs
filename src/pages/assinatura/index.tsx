@@ -1,4 +1,4 @@
-import ProfileTemplate from 'templates/profile'
+import MySubscriptionTemplate from 'templates/mySubscription'
 import { initializeApollo } from 'utils/apollo'
 import protectedRoutes from 'utils/protectedRoutes'
 
@@ -16,9 +16,9 @@ type Props = {
   order: OrderItem[]
 }
 
-export default function ProfilePage(props: Props) {
+export default function MySubscriptionPage(props: Props) {
   console.log(props)
-  return <ProfileTemplate />
+  return <MySubscriptionTemplate order={props.order[0].attributes} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (
