@@ -7,9 +7,17 @@ type Props = {
   as?: string
   pathname?: string
   text: string
+  height?: string
+  dangerMode?: boolean
 }
 
-const BtnLittle = ({ as, pathname, text }: Props) => (
+const BtnLittle = ({
+  as,
+  pathname,
+  text,
+  height = '70px',
+  dangerMode = false,
+}: Props) => (
   <>
     <Link
       as={as}
@@ -17,8 +25,8 @@ const BtnLittle = ({ as, pathname, text }: Props) => (
         pathname: pathname,
       }}
     >
-      <S.Wrap>
-        <S.Btn>{text}</S.Btn>
+      <S.Wrap height={height}>
+        <S.Btn dangerMode={dangerMode}>{text}</S.Btn>
       </S.Wrap>
     </Link>
   </>

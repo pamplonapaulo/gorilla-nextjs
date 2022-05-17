@@ -1,32 +1,28 @@
 import styled from 'styled-components'
 
-export const Wrap = styled.div`
-  /* width: 80px; */
+export const Wrap = styled.div<{ height?: string }>`
   width: 190px;
-  /* height: 70px; */
   display: flex;
   justify-content: center;
 
   height: unset;
   transform: scale(0.65);
-  /* transform-origin: bottom right; */
 
   @media only screen and (min-width: 1024px) {
-    height: 70px;
-    /* transform-origin: center; */
+    height: ${(p) => (p.height ? p.height : '70px')};
     transform: scale(1);
   }
 `
 
-export const Btn = styled.button`
+export const Btn = styled.button<{ dangerMode: boolean }>`
   background: rgba(0, 0, 0, 0.4);
-  border: solid 1px #fff;
+  border: solid 1px;
+  border-color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
   border-radius: 0;
   box-shadow: 0px 1px 3px #000;
-  color: #fff;
+  color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
   cursor: pointer;
   display: inline-block;
-  /* font-size: 1rem; */
   font-size: 1.3rem;
   font-weight: 100;
   height: 50px;
@@ -39,7 +35,6 @@ export const Btn = styled.button`
   text-transform: uppercase;
   transition: all 0.05s;
   transition: all 0.2s ease-in-out;
-  /* width: 80px; */
   width: 190px;
   z-index: 0;
 
@@ -57,8 +52,7 @@ export const Btn = styled.button`
     }
 
     &:hover {
-      /* background: rgba(0, 0, 0, 1); */
-      background: #ef8321;
+      background: ${(p) => (p.dangerMode ? 'red' : '#ef8321')};
       color: #fbc822;
       border-color: #fbc822;
       text-shadow: 0px 1px 2px #000;

@@ -4,6 +4,7 @@ import { Order, OrderSnack } from 'types/api'
 
 import TruckDelivery from 'components/TruckDelivery'
 import Bills from 'components/Bills'
+import BtnLittle from 'components/BtnLittle'
 
 type Props = {
   order: Order
@@ -16,8 +17,6 @@ type Delivery = {
 import { formatCurrency } from 'utils/formatCurrency'
 
 const MySubscriptionTemplate = ({ order }: Props) => {
-  console.log(order.deliveries.expectedArrivalDays)
-
   const convertTimestamp = (timestamp: string) => {
     const months = [
       'Janeiro',
@@ -43,11 +42,6 @@ const MySubscriptionTemplate = ({ order }: Props) => {
     }
     return `${date.day}/${date.month}/${date.year}`
   }
-
-  console.log(order.createdAt)
-  console.log(convertTimestamp(order.createdAt))
-  console.log(`2022-05-27`)
-  console.log(convertTimestamp('2022-05-27'))
 
   const buildArrayOfDates = (timestamp: string, months: number) => {
     const baseDate = new Date(timestamp)
@@ -96,6 +90,17 @@ const MySubscriptionTemplate = ({ order }: Props) => {
             <S.Text>
               Contrato: <br />
               {order.period.data.attributes.Type}
+            </S.Text>
+          </S.Item>
+
+          <S.Item>
+            <S.Text>
+              Endereço de entrega: <br />
+              {order.address.logradouro}
+              {order.address.numero ? ', nº' + order.address.numero : ''}
+              {order.address.complemento ? ',' + order.address.complemento : ''}
+              {', ' + order.address.municipio + ' - ' + order.address.uf}
+              {', CEP: ' + order.address.cep}
             </S.Text>
           </S.Item>
         </S.Content>
@@ -147,6 +152,17 @@ const MySubscriptionTemplate = ({ order }: Props) => {
               <S.Text>{d.formated}</S.Text>
             </S.Item>
           ))}
+        </S.Content>
+
+        <S.TextBigger>Cancelamento</S.TextBigger>
+        <S.Content>
+          <BtnLittle
+            as={'/'}
+            pathname={'/'}
+            text={'Cancelar'}
+            height={'50px'}
+            dangerMode={true}
+          />
         </S.Content>
       </S.FlexCenter>
     </>

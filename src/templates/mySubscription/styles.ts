@@ -1,5 +1,48 @@
 import styled from 'styled-components'
 
+export const Item = styled.div<{ isChecked?: boolean }>`
+  margin: 0 15px;
+  padding: 30px;
+  border: 1px solid;
+  border-color: ${(p) =>
+    p.isChecked
+      ? '#fbc822'
+      : p.isChecked === undefined
+      ? '#fbc822'
+      : 'rgba(204, 204, 204, 0.5)'};
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 155px;
+  color: ${(p) =>
+    p.isChecked
+      ? '#fbc822'
+      : p.isChecked === undefined
+      ? '#fbc822'
+      : 'rgba(204, 204, 204, 0.5)'};
+
+  &:nth-of-type(1) {
+    margin: 0 15px 0 0;
+  }
+
+  &::after {
+    background: #442f22;
+    border: 3px solid #2da650;
+    border-radius: 50%;
+    box-shadow: black 2px 2px 5px;
+    color: #2da650;
+    content: '\\2713';
+    display: ${(p) => (p.isChecked ? 'initial' : 'none')};
+    font-size: 2rem;
+    font-weight: 700;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 18px;
+    transform: translateX(195%);
+    text-shadow: black 2px 2px 3px;
+  }
+`
+
 export const TextBigger = styled.h1`
   color: #fbc822;
   font-size: 2rem;
@@ -93,6 +136,16 @@ export const Content = styled.div`
     padding: 30px;
     text-align: unset;
   }
+
+  &:nth-of-type(1) {
+    ${Item}:nth-of-type(4) {
+      width: 465px;
+
+      ${Text} {
+        text-transform: unset;
+      }
+    }
+  }
 `
 
 export const Snack = styled.div`
@@ -169,48 +222,5 @@ export const Row = styled.div`
         margin-left: 30px;
       }
     }
-  }
-`
-
-export const Item = styled.div<{ isChecked?: boolean }>`
-  margin: 0 15px;
-  padding: 30px;
-  border: 1px solid;
-  border-color: ${(p) =>
-    p.isChecked
-      ? '#fbc822'
-      : p.isChecked === undefined
-      ? '#fbc822'
-      : 'rgba(204, 204, 204, 0.5)'};
-  background: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  width: 155px;
-  color: ${(p) =>
-    p.isChecked
-      ? '#fbc822'
-      : p.isChecked === undefined
-      ? '#fbc822'
-      : 'rgba(204, 204, 204, 0.5)'};
-
-  &:nth-of-type(1) {
-    margin: 0 15px 0 0;
-  }
-
-  &::after {
-    background: #442f22;
-    border: 3px solid #2da650;
-    border-radius: 50%;
-    box-shadow: black 2px 2px 5px;
-    color: #2da650;
-    content: '\\2713';
-    display: ${(p) => (p.isChecked ? 'initial' : 'none')};
-    font-size: 2rem;
-    font-weight: 700;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    top: 18px;
-    transform: translateX(195%);
-    text-shadow: black 2px 2px 3px;
   }
 `
