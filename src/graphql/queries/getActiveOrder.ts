@@ -4,7 +4,7 @@ const GET_ACTIVE_ORDER = gql`
   query GetActiveOrder(
     $confirm: BooleanFilterInput!
     $id: IDFilterInput!
-    $deactivated: BooleanFilterInput
+    $deactivated: BooleanFilterInput!
   ) {
     orders(
       filters: {
