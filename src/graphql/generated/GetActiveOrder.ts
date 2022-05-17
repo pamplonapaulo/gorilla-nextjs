@@ -131,5 +131,5 @@ export interface GetActiveOrder {
 export interface GetActiveOrderVariables {
   confirm: BooleanFilterInput;
   id: IDFilterInput;
-  deactivated?: BooleanFilterInput | null;
+  deactivated: BooleanFilterInput;
 }
