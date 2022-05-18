@@ -25,7 +25,7 @@ const BtnLittle = ({
         pathname: pathname,
       }}
     >
-      <S.Wrap height={height}>
+      <S.Wrap height={height} dangerMode={dangerMode}>
         <S.Btn dangerMode={dangerMode}>{text}</S.Btn>
       </S.Wrap>
     </Link>

@@ -125,19 +125,13 @@ export const H = styled.h1`
   }
 `
 
-type MargimBottom = {
-  margimBottom?: boolean
-}
-
-export const Item = styled.div<MargimBottom>`
-  margin: 0 0 50px;
-  margin-bottom: ${(p) => (p.margimBottom ? '0px' : '50px')};
+export const Item = styled.div<{ margimBottom?: boolean }>`
+  margin: ${(p) => (p.margimBottom ? '0 0 0' : '0 0 50px')};
   text-align: center;
   max-width: 300px;
 
   @media only screen and (min-width: 1024px) {
-    margin: 0 20px 150px;
-    margin-bottom: ${(p) => (p.margimBottom ? '0px' : '150px')};
+    margin: ${(p) => (p.margimBottom ? '0 20px 0' : '0 20px 150px')};
     /* box-shadow: 0 0 8px #000; */
 
     &:hover {

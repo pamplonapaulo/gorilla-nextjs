@@ -43,7 +43,7 @@ const GET_ACTIVE_ORDER = gql`
           deliveries {
             fee
             company
-            expectedArrivalDays {
+            expectedArrivalDays(pagination: { limit: 12 }) {
               date
             }
           }

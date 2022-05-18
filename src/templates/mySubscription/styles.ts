@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 
 export const Item = styled.div<{ isChecked?: boolean }>`
-  margin: 0 15px;
-  padding: 30px;
+  /* margin: 0 15px; */
+  margin: 0;
+
+  /* padding: 30px; */
+  padding: 15px;
+
   border: 1px solid;
   border-color: ${(p) =>
     p.isChecked
@@ -12,7 +16,7 @@ export const Item = styled.div<{ isChecked?: boolean }>`
       : 'rgba(204, 204, 204, 0.5)'};
   background: rgba(0, 0, 0, 0.5);
   text-align: center;
-  width: 155px;
+  width: 260px;
   color: ${(p) =>
     p.isChecked
       ? '#fbc822'
@@ -20,9 +24,9 @@ export const Item = styled.div<{ isChecked?: boolean }>`
       ? '#fbc822'
       : 'rgba(204, 204, 204, 0.5)'};
 
-  &:nth-of-type(1) {
+  /* &:nth-of-type(1) {
     margin: 0 15px 0 0;
-  }
+  } */
 
   &::after {
     background: #442f22;
@@ -41,29 +45,53 @@ export const Item = styled.div<{ isChecked?: boolean }>`
     transform: translateX(195%);
     text-shadow: black 2px 2px 3px;
   }
+
+  &:nth-of-type(1) {
+    margin-bottom: 10px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    margin: 0 15px;
+    padding: 30px;
+
+    &:nth-of-type(1) {
+      margin: 0 15px 0 0;
+    }
+  }
 `
 
 export const TextBigger = styled.h1`
   color: #fbc822;
   font-size: 2rem;
-  text-transform: uppercase;
   font-style: italic;
   font-weight: 600;
-  text-shadow: 0px 1px 2px #000;
   margin: 4rem 15px 2rem 22px;
+  margin: 4rem auto;
+
+  text-align: center;
+  text-shadow: 0px 1px 2px #000;
+  text-transform: uppercase;
 
   &&:nth-of-type(1) {
-    /* margin: 2rem 0; */
-    margin-top: -30px;
+    margin-top: 0;
+
+    @media only screen and (min-width: 1024px) {
+      margin-top: -30px;
+    }
   }
 
-  /* &&:nth-of-type(2) {
-    white-space: nowrap;
-  } */
+  &&:nth-of-type(5) {
+    display: none;
+
+    @media only screen and (min-width: 1024px) {
+      display: flex;
+    }
+  }
 
   @media only screen and (min-width: 1024px) {
     font-size: 3rem;
-    margin-left: 0;
+    margin: 4rem 15px 2rem 0;
+    text-align: unset;
   }
 `
 
@@ -74,9 +102,30 @@ export const Text = styled.p`
   text-shadow: 0px 1px 2px #000;
   text-transform: capitalize;
 
+  display: flex;
+  flex-direction: column;
+
   @media only screen and (min-width: 1024px) {
     font-size: 13px;
   }
+`
+
+export const Break = styled.br`
+  display: block;
+
+  @media only screen and (min-width: 1024px) {
+    display: none;
+  }
+`
+
+export const Span = styled.span<{ isLowercase?: boolean }>`
+  text-align: left;
+  text-transform: ${(p) => (p.isLowercase ? 'lowercase' : 'capitalize')};
+`
+
+export const Em = styled.em`
+  text-transform: capitalize;
+  font-style: normal;
 `
 
 export const FlexCenter = styled.div`
@@ -125,69 +174,150 @@ export const Content = styled.div`
   width: auto;
   margin: 0;
   padding: 10px;
+
   text-align: center;
   justify-content: start;
 
   @media only screen and (min-width: 1024px) {
-    display: flex;
     flex-direction: row;
     height: unset;
     margin: unset;
-    padding: 30px;
+    padding: 30px 30px 23px;
     text-align: unset;
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+  }
+
+  &::-webkit-scrollbar {
+    width: 1px;
+    height: 7px !important;
+    border: 1px solid transparent;
+    margin-bottom: 3px !important;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+
+    border: 1px solid transparent;
+    height: 2px !important;
+    width: 2px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #fbc822;
+    outline: none !important;
+    width: 1px !important;
+    height: 2px !important;
+    width: 2px !important;
+    margin: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.01);
+    height: 2px !important;
+    width: 2px !important;
   }
 
   &:nth-of-type(1) {
-    ${Item}:nth-of-type(4) {
-      width: 465px;
+    ${Item} {
+      flex-direction: column;
+
+      display: flex;
+      width: auto;
+
+      ${Text}:nth-of-type(1) {
+        margin-right: 30px;
+      }
+
+      @media only screen and (min-width: 1024px) {
+        flex-direction: row;
+      }
+    }
+
+    ${Item}:nth-of-type(5) {
+      width: auto;
 
       ${Text} {
         text-transform: unset;
       }
     }
   }
-`
 
-export const Snack = styled.div`
-  /* height: 120px; */
-  margin-right: 30px;
-`
+  &:nth-of-type(2) {
+    padding: 0;
 
-export const Icon = styled.img`
-  display: block;
-  height: auto;
-  width: 40px;
+    @media only screen and (min-width: 1024px) {
+      padding: 30px 30px 23px;
+    }
+  }
 
-  @media only screen and (min-width: 1024px) {
-    width: 100px;
-    transition: ease-in-out 0.3s all;
+  &:nth-of-type(5) {
+    background: transparent;
+    width: fit-content;
+    align-self: center;
+    border-color: red;
+    margin: 4rem 0 3rem;
+
+    @media only screen and (min-width: 1024px) {
+      background: rgba(28, 19, 11, 0.65);
+      width: 100%;
+      border-color: #000;
+      margin: 0 0 3rem;
+    }
   }
 `
 
-export const Quantity = styled.h1`
-  align-items: center;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px #000 solid;
-  border-radius: 50%;
-  color: #000;
+export const Snack = styled.div<{ quantity: number }>`
+  margin: 0 0 10%;
+  width: 40%;
 
-  font-size: 13px;
-  font-weight: 300;
-  height: 30px;
-  width: 30px;
-  transform: translateY(-75%);
-  transform: translate(85px, -60%);
+  @media only screen and (min-width: 1024px) {
+    width: unset;
+    margin: 0 30px 0 0;
+  }
 
-  float: right;
-  display: flex;
-  justify-content: center;
+  &::after {
+    content: '${(p) => p.quantity}';
+    align-items: center;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px #000 solid;
+    border-radius: 50%;
+    color: #000;
 
-  position: absolute;
+    font-size: 13px;
+    font-weight: 300;
+    height: 30px;
+    width: 30px;
 
-  text-align: center;
-  span {
-    font-size: 15px;
-    margin: 0 3px 1px 0;
+    float: right;
+    display: flex;
+    justify-content: center;
+
+    position: absolute;
+
+    text-align: center;
+    span {
+      font-size: 15px;
+      margin: 0 3px 1px 0;
+    }
+
+    /* transform: translate(67px, -60%); */
+    transform: translateY(-50%);
+
+    @media only screen and (min-width: 1024px) {
+      transform: translate(85px, -60%);
+    }
+  }
+`
+
+export const Icon = styled.img`
+  width: 100%;
+
+  @media only screen and (min-width: 1024px) {
+    display: block;
+    height: auto;
+    width: 100px;
+    transition: ease-in-out 0.3s all;
   }
 `
 
@@ -200,9 +330,15 @@ export const Items = styled.div`
   justify-content: start;
   width: unset;
 
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10% 10% 0;
+
   @media only screen and (min-width: 1024px) {
     width: unset;
     justify-content: unset;
+    flex-wrap: unset;
+    padding: unset;
   }
 `
 

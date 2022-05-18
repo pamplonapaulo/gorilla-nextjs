@@ -74,33 +74,42 @@ const MySubscriptionTemplate = ({ order }: Props) => {
         <S.Content>
           <S.Item>
             <S.Text>
-              Pack: <br />
-              {order.Title}
+              <S.Span>Pack: {order.Title}</S.Span>
+              <S.Span>Contrato: {order.period.data.attributes.Type}</S.Span>
+              <S.Span>Adesão: {convertTimestamp(order.createdAt)}</S.Span>
+            </S.Text>
+            <S.Text>
+              <S.Span>
+                Contratante:{' '}
+                {order.users_permissions_user.data.attributes.username}
+              </S.Span>
+
+              <S.Span>
+                Telefone: {order.users_permissions_user.data.attributes.phone}{' '}
+              </S.Span>
+              <S.Span isLowercase={true}>
+                <S.Em>Email: </S.Em>
+                {order.users_permissions_user.data.attributes.email}
+              </S.Span>
             </S.Text>
           </S.Item>
 
           <S.Item>
             <S.Text>
-              Adesão: <br />
-              {convertTimestamp(order.createdAt)}
+              <S.Span>
+                Logradouro: <S.Break />
+                {order.address.logradouro}
+              </S.Span>
+              <S.Span>Nº: {order.address.numero}</S.Span>
+              <S.Span>Complemento: {order.address.complemento}</S.Span>
             </S.Text>
-          </S.Item>
 
-          <S.Item>
             <S.Text>
-              Contrato: <br />
-              {order.period.data.attributes.Type}
-            </S.Text>
-          </S.Item>
-
-          <S.Item>
-            <S.Text>
-              Endereço de entrega: <br />
-              {order.address.logradouro}
-              {order.address.numero ? ', nº' + order.address.numero : ''}
-              {order.address.complemento ? ',' + order.address.complemento : ''}
-              {', ' + order.address.municipio + ' - ' + order.address.uf}
-              {', CEP: ' + order.address.cep}
+              <S.Span>Bairro: {order.address.bairro}</S.Span>
+              <S.Span>
+                {order.address.municipio + ' - ' + order.address.uf}
+              </S.Span>
+              <S.Span>{'CEP: ' + order.address.cep}</S.Span>
             </S.Text>
           </S.Item>
         </S.Content>
@@ -111,13 +120,12 @@ const MySubscriptionTemplate = ({ order }: Props) => {
             <S.Column>
               <S.Items>
                 {order.snack.map((s: OrderSnack) => (
-                  <S.Snack key={s.product.data.id}>
+                  <S.Snack key={s.product.data.id} quantity={s.Quantity}>
                     <S.Icon
                       src={`https://via.placeholder.com/113x156/CCC/00000?text=${s.product.data.attributes.Name}`}
                       // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
                       alt={s.product.data.attributes.Name}
                     />
-                    <S.Quantity>{s.Quantity}</S.Quantity>
                   </S.Snack>
                 ))}
               </S.Items>
@@ -135,7 +143,7 @@ const MySubscriptionTemplate = ({ order }: Props) => {
           ))}
         </S.Content>
 
-        <S.TextBigger>Pagamentos</S.TextBigger>
+        <S.TextBigger>Cobranças</S.TextBigger>
         <S.Content>
           {buildArrayOfDates(
             order.createdAt,

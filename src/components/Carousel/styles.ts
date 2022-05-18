@@ -61,7 +61,7 @@ export const Item = styled.div`
   width: calc(100vw - 50px);
   padding: 10px;
   justify-content: space-evenly;
-  height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem));
+  height: calc(100vh - calc(50px + 70px + 58px + 50px));
 
   &&:nth-child(even) {
     background: rgba(28, 19, 11, 0.9);
@@ -72,10 +72,12 @@ export const Item = styled.div`
   }
 
   @media only screen and (min-width: 320px) {
+    /* height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem)); */
     width: 300px;
   }
 
   @media only screen and (min-width: 480px) {
+    height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem));
     width: calc(470px / 2);
   }
 

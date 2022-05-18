@@ -145,7 +145,7 @@ export type OrderSnack = {
   }
 }
 
-export type ExpectedArrivalDay = {
+export type ExpectedDay = {
   date: string
 }
 
@@ -169,7 +169,7 @@ export type Address = {
 
 export type Deliveries = {
   company: string
-  expectedArrivalDays: ExpectedArrivalDay[]
+  expectedArrivalDays: ExpectedDay[]
   fee: number
 }
 

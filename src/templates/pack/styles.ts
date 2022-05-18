@@ -22,8 +22,9 @@ export const Wrapper = styled.section`
   justify-content: space-around;
 
   &&:nth-of-type(2) {
-    margin-bottom: 10rem;
+    margin-bottom: 0.5rem;
     flex-direction: column;
+    padding: 1rem;
 
     ${T} {
       background: #402c1c;
@@ -35,18 +36,21 @@ export const Wrapper = styled.section`
       justify-content: center;
       line-height: 2;
       padding: 4rem;
-      margin: 0;
+      margin: 0 0 1rem;
       box-shadow: 2px 2px 5px #000;
 
       @media only screen and (min-width: 1024px) {
         font-size: 4rem;
         padding: 0 4rem;
+        margin: 0;
         width: 50%;
       }
     }
 
     @media only screen and (min-width: 1024px) {
       flex-direction: row;
+      margin-bottom: 10rem;
+      padding: unset;
     }
   }
 

@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const Overlay = styled.div<{ isHidden: boolean; isDisplayed: boolean }>`
   position: fixed;
-  /* backdrop-filter: blur(10px); */
   backdrop-filter: ${(p) => (p.isHidden ? 'blur(0px)' : 'blur(10px)')};
   background: ${(p) =>
     p.isHidden ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0.1)'};
@@ -51,16 +50,26 @@ export const Txt = styled.h5<{ hasMark?: boolean }>`
   text-transform: ${(p) => (p.hasMark ? 'none' : 'uppercase')};
   line-height: 1.75;
 
-  font-size: ${(p) => (p.hasMark ? '1.5rem' : '2rem')};
+  font-size: ${(p) => (p.hasMark ? '1.25rem' : '2rem')};
   font-weight: ${(p) => (p.hasMark ? 'normal' : '800')};
   font-style: ${(p) => (p.hasMark ? 'none' : 'italic')};
 
+  &:nth-of-type(1) {
+    margin-left: 0;
+    font-size: 1.6rem;
+  }
+
   &::before {
     content: '${(p) => (p.hasMark ? '\\2713' : '')}';
+    display: ${(p) => (p.hasMark ? 'inline' : 'none')};
     margin-right: 10px;
     font-weight: 900;
     font-size: 13px;
     transform: translateY(-6px);
+  }
+
+  @media only screen and (min-width: 1024px) {
+    font-size: ${(p) => (p.hasMark ? '1.5rem' : '2rem')};
   }
 `
 
@@ -74,5 +83,18 @@ export const FlexCenter = styled.div<{ isColumn?: boolean }>`
   @media only screen and (min-width: 1024px) {
     padding: ${(p) => (p.isColumn ? '0 5rem 5rem' : '0')};
     width: ${(p) => (p.isColumn ? '75%' : 'unset')};
+  }
+`
+
+export const LogoWrapper = styled.div`
+  align-self: unset;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 2rem;
+
+  @media only screen and (min-width: 1024px) {
+    padding: 0;
+    width: unset;
   }
 `

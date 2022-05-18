@@ -41,9 +41,9 @@ const DialogBox = () => {
         isDisplayed={display}
       >
         <S.Wrap isOff={visibility}>
-          <S.FlexCenter>
+          <S.LogoWrapper>
             <Brand />
-          </S.FlexCenter>
+          </S.LogoWrapper>
 
           <S.FlexCenter isColumn={true}>
             <S.Txt>Fretes gratuitos:</S.Txt>

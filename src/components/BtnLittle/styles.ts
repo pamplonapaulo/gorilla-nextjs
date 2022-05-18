@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 
-export const Wrap = styled.div<{ height?: string }>`
+export const Wrap = styled.div<{ height?: string; dangerMode?: boolean }>`
   width: 190px;
   display: flex;
   justify-content: center;
 
   height: unset;
-  transform: scale(0.65);
+  //transform: scale(0.65);
+  transform: ${(p) => (p.dangerMode ? 'scale(1)' : 'scale(0.65)')};
 
   @media only screen and (min-width: 1024px) {
     height: ${(p) => (p.height ? p.height : '70px')};
@@ -14,7 +15,7 @@ export const Wrap = styled.div<{ height?: string }>`
   }
 `
 
-export const Btn = styled.button<{ dangerMode: boolean }>`
+export const Btn = styled.button<{ dangerMode?: boolean }>`
   background: rgba(0, 0, 0, 0.4);
   border: solid 1px;
   border-color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
