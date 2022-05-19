@@ -1,12 +1,7 @@
 import styled from 'styled-components'
 
 export const Item = styled.div<{ isChecked?: boolean }>`
-  /* margin: 0 15px; */
-  margin: 0;
-
-  /* padding: 30px; */
-  padding: 15px;
-
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid;
   border-color: ${(p) =>
     p.isChecked
@@ -14,19 +9,17 @@ export const Item = styled.div<{ isChecked?: boolean }>`
       : p.isChecked === undefined
       ? '#fbc822'
       : 'rgba(204, 204, 204, 0.5)'};
-  background: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  width: 260px;
+
   color: ${(p) =>
     p.isChecked
       ? '#fbc822'
       : p.isChecked === undefined
       ? '#fbc822'
       : 'rgba(204, 204, 204, 0.5)'};
-
-  /* &:nth-of-type(1) {
-    margin: 0 15px 0 0;
-  } */
+  margin: 0;
+  padding: 15px;
+  text-align: center;
+  width: 260px;
 
   &::after {
     background: #442f22;
@@ -41,18 +34,30 @@ export const Item = styled.div<{ isChecked?: boolean }>`
     width: 25px;
     height: 25px;
     position: absolute;
-    top: 18px;
-    transform: translateX(195%);
+    top: 0;
+    transform: translateX(115%);
     text-shadow: black 2px 2px 3px;
+
+    @media only screen and (min-width: 1024px) {
+      top: 18px;
+      transform: translateX(230%);
+    }
   }
 
   &:nth-of-type(1) {
-    margin-bottom: 10px;
+    @media only screen and (min-width: 1024px) {
+      margin-bottom: 10px;
+    }
   }
+
+  max-width: 120px;
+  width: 120px;
+  min-width: 120px;
 
   @media only screen and (min-width: 1024px) {
     margin: 0 15px;
     padding: 30px;
+    min-width: 180px;
 
     &:nth-of-type(1) {
       margin: 0 15px 0 0;
@@ -67,7 +72,6 @@ export const TextBigger = styled.h1`
   font-weight: 600;
   margin: 4rem 15px 2rem 22px;
   margin: 4rem auto;
-
   text-align: center;
   text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
@@ -97,17 +101,12 @@ export const TextBigger = styled.h1`
 
 export const Text = styled.p`
   color: inherit;
+  display: flex;
+  flex-direction: column;
   font-size: 13px;
   line-height: 2;
   text-shadow: 0px 1px 2px #000;
   text-transform: capitalize;
-
-  display: flex;
-  flex-direction: column;
-
-  @media only screen and (min-width: 1024px) {
-    font-size: 13px;
-  }
 `
 
 export const Break = styled.br`
@@ -124,8 +123,8 @@ export const Span = styled.span<{ isLowercase?: boolean }>`
 `
 
 export const Em = styled.em`
-  text-transform: capitalize;
   font-style: normal;
+  text-transform: capitalize;
 `
 
 export const FlexCenter = styled.div`
@@ -137,7 +136,6 @@ export const FlexCenter = styled.div`
   margin-bottom: 2rem;
   margin-left: -32px;
   overflow: visible;
-  padding-left: 32px;
   text-align: left;
   width: calc(100% - 40px);
   margin-left: 0;
@@ -168,15 +166,14 @@ export const Content = styled.div`
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 3;
-  transform-origin: bottom;
-  transform: translateY(0%);
   height: calc(100% - 7.5vw - 80px);
+  justify-content: start;
   width: auto;
   margin: 0;
   padding: 10px;
-
   text-align: center;
-  justify-content: start;
+  transform-origin: bottom;
+  transform: translateY(0%);
 
   @media only screen and (min-width: 1024px) {
     flex-direction: row;
@@ -221,12 +218,21 @@ export const Content = styled.div`
   &:nth-of-type(1) {
     ${Item} {
       flex-direction: column;
-
       display: flex;
+      max-width: unset;
       width: auto;
+
+      &:nth-of-type(1) {
+        margin-bottom: 12px;
+
+        @media only screen and (min-width: 1024px) {
+          margin-bottom: unset;
+        }
+      }
 
       ${Text}:nth-of-type(1) {
         margin-right: 30px;
+        font-size: 13px;
       }
 
       @media only screen and (min-width: 1024px) {
@@ -246,8 +252,75 @@ export const Content = styled.div`
   &:nth-of-type(2) {
     padding: 0;
 
+    ${Text} {
+      font-size: 10px;
+    }
+
     @media only screen and (min-width: 1024px) {
       padding: 30px 30px 23px;
+
+      ${Text} {
+        font-size: 13px;
+      }
+    }
+  }
+
+  &:nth-of-type(3) {
+    flex-direction: row;
+    overflow: scroll;
+
+    ${Item} {
+      margin-right: 10px;
+
+      &:last-of-type {
+        margin-right: 0px;
+      }
+
+      @media only screen and (min-width: 1024px) {
+        margin: 0 15px;
+
+        &:nth-of-type(1) {
+          margin-left: 0px;
+        }
+      }
+    }
+
+    ${Text} {
+      font-size: 10px;
+      @media only screen and (min-width: 1024px) {
+        font-size: 13px;
+      }
+    }
+
+    @media only screen and (min-width: 1024px) {
+      /* padding: 30px 30px 23px; */
+    }
+  }
+
+  &:nth-of-type(4) {
+    flex-direction: row;
+    overflow: scroll;
+
+    ${Item} {
+      margin-right: 10px;
+
+      &:last-of-type {
+        margin-right: 0px;
+      }
+
+      @media only screen and (min-width: 1024px) {
+        margin: 0 15px;
+
+        &:nth-of-type(1) {
+          margin-left: 0px;
+        }
+      }
+    }
+    ${Text} {
+      font-size: 10px;
+      @media only screen and (min-width: 1024px) {
+        font-size: 13px;
+      }
     }
   }
 
@@ -283,29 +356,24 @@ export const Snack = styled.div<{ quantity: number }>`
     border: 1px #000 solid;
     border-radius: 50%;
     color: #000;
-
+    display: flex;
+    float: right;
     font-size: 13px;
     font-weight: 300;
     height: 30px;
-    width: 30px;
-
-    float: right;
-    display: flex;
     justify-content: center;
-
+    width: 30px;
     position: absolute;
-
     text-align: center;
-    span {
-      font-size: 15px;
-      margin: 0 3px 1px 0;
-    }
-
-    /* transform: translate(67px, -60%); */
     transform: translateY(-50%);
 
     @media only screen and (min-width: 1024px) {
       transform: translate(85px, -60%);
+    }
+
+    span {
+      font-size: 15px;
+      margin: 0 3px 1px 0;
     }
   }
 `
@@ -324,12 +392,10 @@ export const Icon = styled.img`
 export const Items = styled.div`
   display: flex;
   flex-direction: row;
-
   width: 150px;
   margin: 0;
   justify-content: start;
   width: unset;
-
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 10% 10% 0;
