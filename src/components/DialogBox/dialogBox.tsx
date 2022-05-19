@@ -4,8 +4,8 @@ import * as S from './styles'
 
 import { initializeApollo } from 'utils/apollo'
 import { GET_FREE_DELIVERY_VALUE } from 'graphql/queries'
+import Loader from 'components/Loader'
 import BtnLittle from 'components/BtnLittle'
-
 import Brand from 'components/Brand'
 
 const apolloClient = initializeApollo()
@@ -14,6 +14,11 @@ const DialogBox = () => {
   const [visibility, setVisibility] = useState(false)
   const [display, setDisplay] = useState(true)
   const [freeDelivery, setFreeDelivery] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [])
 
   const handleTurnItOff = () => {
     setVisibility(true)
@@ -41,20 +46,26 @@ const DialogBox = () => {
         isDisplayed={display}
       >
         <S.Wrap isOff={visibility}>
-          <S.LogoWrapper>
-            <Brand />
-          </S.LogoWrapper>
+          {isLoading && <Loader isHidden={false} />}
 
-          <S.FlexCenter isColumn={true}>
-            <S.Txt>Fretes gratuitos:</S.Txt>
-            <S.Txt hasMark={true}>Rio ou Niterói</S.Txt>
-            <S.Txt hasMark={true}>
-              Assinaturas acima de R$ {freeDelivery} (na região Sudeste).
-            </S.Txt>
-          </S.FlexCenter>
-          <S.FlexCenter>
-            <BtnLittle text={'Entendi'} />
-          </S.FlexCenter>
+          {!isLoading && (
+            <>
+              <S.LogoWrapper>
+                <Brand />
+              </S.LogoWrapper>
+
+              <S.FlexCenter isColumn={true}>
+                <S.Txt>Fretes gratuitos:</S.Txt>
+                <S.Txt hasMark={true}>Rio ou Niterói</S.Txt>
+                <S.Txt hasMark={true}>
+                  Assinaturas acima de R$ {freeDelivery} (na região Sudeste).
+                </S.Txt>
+              </S.FlexCenter>
+              <S.FlexCenter>
+                <BtnLittle text={'Entendi'} />
+              </S.FlexCenter>
+            </>
+          )}
         </S.Wrap>
       </S.Overlay>
     </>
