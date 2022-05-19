@@ -77,9 +77,11 @@ export const Loader = styled.div`
 
 export const Svg = styled.svg`
   animation: ${rotate} 2s linear infinite;
-  height: 100%;
+  /* height: 100%; */
+  height: 100px;
   transform-origin: center center;
-  width: 100%;
+  /* width: 100%; */
+  width: 100px;
   position: absolute;
   top: 0;
   bottom: 0;
