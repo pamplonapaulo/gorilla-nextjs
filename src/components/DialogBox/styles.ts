@@ -19,27 +19,25 @@ export const Overlay = styled.div<{ isHidden: boolean; isDisplayed: boolean }>`
 `
 
 export const Wrap = styled.div<{ isOff: boolean }>`
-  margin: 0 auto;
-  background: black;
   background: rgb(28, 19, 11);
   box-shadow: 0px 0px 1px rgb(255 255 255 / 75%);
-
-  padding: 4rem;
-  justify-content: space-around;
-  display: flex;
+  display: block;
   flex-direction: column;
-  transform: translateY(-75px);
-  opacity: ${(p) => (p.isOff ? '0' : '1')};
-  transition: all 0.1s;
-
   height: calc(90vh - 70px);
-  margin-top: 70px;
+  justify-content: space-around;
+  margin: 70px auto 0;
+  opacity: ${(p) => (p.isOff ? '0' : '1')};
+  padding: 0;
+  transform: translateY(-75px);
+  transition: all 0.1s;
   width: 86%;
 
   @media only screen and (min-width: 1024px) {
+    display: flex;
     height: 700px;
-    width: 700px;
     justify-content: space-between;
+    padding: 4rem;
+    width: 700px;
   }
 `
 
@@ -76,13 +74,18 @@ export const Txt = styled.h5<{ hasMark?: boolean }>`
 
 export const FlexCenter = styled.div<{ isColumn?: boolean }>`
   align-self: ${(p) => (p.isColumn ? 'center' : 'unset')};
+  bottom: ${(p) => (p.isColumn ? 'unset' : '1rem')};
   display: flex;
   flex-direction: ${(p) => (p.isColumn ? 'column' : 'row')};
   justify-content: center;
-  padding-bottom: 2rem;
+  padding: ${(p) => (p.isColumn ? '0 1rem 2rem' : '0')};
+  position: ${(p) => (p.isColumn ? 'unset' : 'absolute')};
+  width: ${(p) => (p.isColumn ? 'unset' : '100%')};
 
   @media only screen and (min-width: 1024px) {
+    bottom: unset;
     padding: ${(p) => (p.isColumn ? '6rem 5rem 0' : '0')};
+    position: relative;
     width: ${(p) => (p.isColumn ? '75%' : 'unset')};
   }
 `
@@ -92,7 +95,8 @@ export const LogoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-bottom: 2rem;
+  /* padding-bottom: 2rem; */
+  padding-top: 1rem;
 
   @media only screen and (min-width: 1024px) {
     padding: 0;
