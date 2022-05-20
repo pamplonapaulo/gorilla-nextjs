@@ -1,7 +1,7 @@
 import * as S from './styles'
 
 const Brand = () => (
-  <S.Svg viewBox="0 0 705.52002 832.08002">
+  <S.Svg width="auto" height="275px" viewBox="0 0 705.52002 832.08002">
     <g transform="matrix(1.3333333,0,0,-1.3333333,0,832.08)" id="g10">
       <g transform="scale(0.1)" id="g12">
         <path

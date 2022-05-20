@@ -4,7 +4,7 @@ import * as S from './styles'
 
 const Logo = () => (
   <Link href={'/'}>
-    <S.Svg viewBox="0 0 706 372">
+    <S.Svg width="auto" height="66px" viewBox="0 0 706 372">
       <g id="g10">
         <g id="g12">
           <path
