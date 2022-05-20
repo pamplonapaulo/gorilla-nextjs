@@ -39,6 +39,7 @@ export const Wrap = styled.div<{ isOff: boolean }>`
   @media only screen and (min-width: 1024px) {
     height: 700px;
     width: 700px;
+    justify-content: space-between;
   }
 `
 
@@ -81,7 +82,7 @@ export const FlexCenter = styled.div<{ isColumn?: boolean }>`
   padding-bottom: 2rem;
 
   @media only screen and (min-width: 1024px) {
-    padding: ${(p) => (p.isColumn ? '0 5rem 5rem' : '0')};
+    padding: ${(p) => (p.isColumn ? '6rem 5rem 0' : '0')};
     width: ${(p) => (p.isColumn ? '75%' : 'unset')};
   }
 `

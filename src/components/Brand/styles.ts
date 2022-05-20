@@ -9,5 +9,8 @@ export const Svg = styled.svg`
   @media only screen and (min-width: 1024px) {
     width: unset;
     max-width: 400px;
+
+    transform: scale(1.4);
+    transform-origin: top;
   }
 `
