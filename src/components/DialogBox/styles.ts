@@ -21,10 +21,10 @@ export const Overlay = styled.div<{ isHidden: boolean; isDisplayed: boolean }>`
 export const Wrap = styled.div<{ isOff: boolean }>`
   background: rgb(28, 19, 11);
   box-shadow: 0px 0px 1px rgb(255 255 255 / 75%);
-  display: block;
+  /* display: block; */
   flex-direction: column;
   height: calc(90vh - 70px);
-  justify-content: space-around;
+  /* justify-content: space-around; */
   margin: 70px auto 0;
   opacity: ${(p) => (p.isOff ? '0' : '1')};
   padding: 0;
@@ -32,8 +32,11 @@ export const Wrap = styled.div<{ isOff: boolean }>`
   transition: all 0.1s;
   width: 86%;
 
+  display: flex;
+  justify-content: space-evenly;
+
   @media only screen and (min-width: 1024px) {
-    display: flex;
+    //display: flex;
     height: 700px;
     justify-content: space-between;
     padding: 4rem;
@@ -78,7 +81,7 @@ export const FlexCenter = styled.div<{ isColumn?: boolean }>`
   display: flex;
   flex-direction: ${(p) => (p.isColumn ? 'column' : 'row')};
   justify-content: center;
-  padding: ${(p) => (p.isColumn ? '0 1rem 2rem' : '0')};
+  padding: ${(p) => (p.isColumn ? '0 3rem 2rem' : '0')};
   position: ${(p) => (p.isColumn ? 'unset' : 'absolute')};
   width: ${(p) => (p.isColumn ? 'unset' : '100%')};
 
