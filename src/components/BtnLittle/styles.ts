@@ -23,14 +23,14 @@ export const Btn = styled.button<{ dangerMode?: boolean }>`
   box-shadow: 0px 1px 3px #000;
   color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
   cursor: pointer;
-  display: inline-block;
-  font-size: 1.3rem;
+  /* display: inline-block; */
+  /* font-size: 1.3rem; */
   font-weight: 100;
   height: 50px;
   letter-spacing: 1px;
   overflow: hidden;
   padding: 1.3em 1.7em;
-  text-align: center;
+  /* text-align: center; */
   text-decoration: none;
   text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
@@ -38,6 +38,11 @@ export const Btn = styled.button<{ dangerMode?: boolean }>`
   transition: all 0.2s ease-in-out;
   width: 190px;
   z-index: 0;
+
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media only screen and (min-width: 1024px) {
     &&:before {

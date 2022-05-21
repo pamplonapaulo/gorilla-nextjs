@@ -35,7 +35,9 @@ export const Attribute = styled.li<{ isChecked: boolean; isHome: boolean }>`
   list-style-type: none;
   text-align: left;
   margin: auto;
-  font-size: ${(p) => (p.isHome ? '11px' : '1.5rem')};
+  //font-size: ${(p) => (p.isHome ? '11px' : '1.5rem')};
+  font-size: ${(p) => (p.isHome ? '13px' : '1.5rem')};
+
   width: ${(p) => (p.isHome ? 'unset' : '80%')};
   color: ${(p) =>
     !p.isChecked

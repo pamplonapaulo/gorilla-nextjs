@@ -120,7 +120,8 @@ export const H = styled.h1`
   }
 
   &&:nth-of-type(2) {
-    font-size: 1.3rem;
+    //font-size: 1.3rem;
+    font-size: 1.7rem;
 
     @media only screen and (min-width: 1024px) {
       font-size: 2.3rem;
@@ -135,8 +136,9 @@ export const Desc = styled.p`
 
   margin: 0;
   text-align: center;
-  font-size: 13px;
+  /* font-size: 13px; */
   font-style: italic;
+  font-size: 14px;
 
   @media only screen and (min-width: 1024px) {
     font-size: 16px;
