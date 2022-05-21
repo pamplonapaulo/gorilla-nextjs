@@ -29,7 +29,8 @@ export const Btn = styled.button<{ dangerMode?: boolean }>`
   height: 50px;
   letter-spacing: 1px;
   overflow: hidden;
-  padding: 1.3em 1.7em;
+  /* padding: 1.3em 1.7em; */
+  padding: 0;
   /* text-align: center; */
   text-decoration: none;
   text-shadow: 0px 1px 2px #000;
@@ -45,6 +46,9 @@ export const Btn = styled.button<{ dangerMode?: boolean }>`
   justify-content: center;
 
   @media only screen and (min-width: 1024px) {
+    display: block;
+    font-size: 1.3rem;
+
     &&:before {
       width: 0%;
       height: 100%;

@@ -21,8 +21,13 @@ type Props = {
 const Carousel = ({ packs }: Props) => {
   const [pageLength, setPageLength] = useState(1)
   const [nav, setNav] = useState(0)
-  const [translate, setTranslate] = useState<number>(0)
+  const [translate, setTranslate] = useState(0)
   const refItem = useRef<HTMLDivElement>(null)
+  const [availHeight, setAvailHeight] = useState('100vh')
+
+  useEffect(() => {
+    setAvailHeight(screen.availHeight + 'px')
+  }, [])
 
   const { loading, error, data } = useQuery(GET_BENEFITS)
 
@@ -79,7 +84,12 @@ const Carousel = ({ packs }: Props) => {
         <S.Window moving={translate}>
           {packs.map((p: Pack) => {
             return (
-              <S.Item key={p.id} className={p.id} ref={refItem}>
+              <S.Item
+                key={p.id}
+                className={p.id}
+                ref={refItem}
+                availHeight={availHeight}
+              >
                 <S.H>{p.attributes.Name}</S.H>
                 <S.Desc>{p.attributes.Description}</S.Desc>
                 <S.H>R$ {getPackPrice(p)} / mês</S.H>

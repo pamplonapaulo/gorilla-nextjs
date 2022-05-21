@@ -54,14 +54,14 @@ export const Window = styled.div<{ moving: number }>`
   transform: ${(p) => 'translateX(' + p.moving + 'px)'};
 `
 
-export const Item = styled.div`
+export const Item = styled.div<{ availHeight?: string }>`
   text-align: center;
   display: flex;
   flex-direction: column;
   width: calc(100vw - 50px);
   padding: 10px;
   justify-content: space-evenly;
-  height: calc(100vh - calc(50px + 70px + 58px + 50px));
+  height: calc(${(p) => p.availHeight} - 228px);
 
   &&:nth-child(even) {
     background: rgba(28, 19, 11, 0.9);
