@@ -115,7 +115,7 @@ const ContainerExtra = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 
   margin: auto;
   min-height: calc(100vh - 70px);
@@ -124,6 +124,8 @@ const ContainerExtra = styled.div`
 
   -ms-overflow-style: none;
   scrollbar-width: none;
+
+  justify-content: start;
 
   &::-webkit-scrollbar {
     display: none;
