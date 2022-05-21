@@ -130,15 +130,18 @@ export const H = styled.h1`
 `
 
 export const Desc = styled.p`
-  color: #ef8321;
-  font-weight: 600;
-  text-shadow: 0px 1px 2px #000;
+  display: none;
 
-  margin: 0;
-  text-align: center;
-  /* font-size: 13px; */
-  font-style: italic;
-  font-size: 14px;
+  @media only screen and (min-height: 590px) {
+    color: #ef8321;
+    display: unset;
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 600;
+    text-shadow: 0px 1px 2px #000;
+  }
 
   @media only screen and (min-width: 1024px) {
     font-size: 16px;
