@@ -82,15 +82,18 @@ const ContainerOuter = styled.div`
 
 const ContainerInner = styled.main`
   background: 'transparent';
-  height: unset;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  overflow-y: hidden;
-  position: relative;
-  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  height: unset;
+
+  /* justify-content: space-evenly; */
+  justify-content: start;
+  -ms-overflow-style: none;
+  min-height: calc(100vh - 70px);
+
+  overflow-y: hidden;
+  position: relative;
+  scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
@@ -100,6 +103,7 @@ const ContainerInner = styled.main`
   }
   @media only screen and (min-width: 1024px) {
     /* min-height: 100vh; */
+    justify-content: center;
     min-height: calc(100vh - 70px);
     margin-top: 70px;
   }
