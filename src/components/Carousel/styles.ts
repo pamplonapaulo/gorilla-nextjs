@@ -77,11 +77,11 @@ export const Item = styled.div<{ availHeight?: string }>`
   }
 
   @media only screen and (min-width: 480px) {
-    height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem));
     width: calc(470px / 2);
   }
 
   @media only screen and (min-width: 600px) {
+    height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem));
     width: calc(520px / 2);
   }
 
