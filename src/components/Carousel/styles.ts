@@ -64,7 +64,11 @@ export const Item = styled.div<{ availHeight?: string }>`
   height: calc(${(p) => p.availHeight} - 228px);
 
   &&:nth-child(even) {
-    background: rgba(28, 19, 11, 0.9);
+    background: rgba(239, 131, 33, 0.9);
+
+    @media only screen and (min-width: 1024px) {
+      background: rgba(28, 19, 11, 0.9);
+    }
   }
 
   &&:nth-child(odd) {
@@ -106,9 +110,8 @@ export const Item = styled.div<{ availHeight?: string }>`
 `
 
 export const H = styled.h1`
-  color: #ef8321;
+  color: #47311b;
   font-weight: 600;
-  text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
   font-size: 3rem;
 
@@ -116,7 +119,9 @@ export const H = styled.h1`
   font-size: 20px;
 
   @media only screen and (min-width: 1024px) {
+    color: #ef8321;
     font-size: 3rem;
+    text-shadow: 0px 1px 2px #000;
   }
 
   &&:nth-of-type(2) {
@@ -133,7 +138,7 @@ export const Desc = styled.p`
   display: none;
 
   @media only screen and (min-height: 590px) {
-    color: #ef8321;
+    color: #fbc822;
     display: unset;
     margin: 0;
     text-align: center;
@@ -144,6 +149,7 @@ export const Desc = styled.p`
   }
 
   @media only screen and (min-width: 1024px) {
+    color: #ef8321;
     font-size: 16px;
     margin: 10px;
     font-style: normal;

@@ -32,24 +32,33 @@ export const Benefits = styled.ul<{ isHome: boolean }>`
 `
 
 export const Attribute = styled.li<{ isChecked: boolean; isHome: boolean }>`
-  list-style-type: none;
-  text-align: left;
-  margin: auto;
-  //font-size: ${(p) => (p.isHome ? '11px' : '1.5rem')};
-  font-size: ${(p) => (p.isHome ? '13px' : '1.5rem')};
-
-  width: ${(p) => (p.isHome ? 'unset' : '80%')};
   color: ${(p) =>
     !p.isChecked
       ? p.isHome
-        ? '#ccc'
+        ? 'rgba(0,0,0,0.5)'
         : 'rgba(204, 204, 204, 0.6)'
       : p.isHome
-      ? '#fbc822'
+      ? '#000'
       : '#402c1c'};
-
-  text-shadow: ${(p) => (p.isHome ? '0px 1px 2px #000' : 'none')};
+  //font-size: ${(p) => (p.isHome ? '11px' : '1.5rem')};
+  font-size: ${(p) => (p.isHome ? '13px' : '1.5rem')};
   line-height: 1.75;
+  list-style-type: none;
+  margin: auto;
+  text-align: left;
+  width: ${(p) => (p.isHome ? 'unset' : '80%')};
+
+  @media only screen and (min-width: 1024px) {
+    text-shadow: ${(p) => (p.isHome ? '0px 1px 2px #000' : 'none')};
+    color: ${(p) =>
+      !p.isChecked
+        ? p.isHome
+          ? '#ccc'
+          : 'rgba(204, 204, 204, 0.6)'
+        : p.isHome
+        ? '#fbc822'
+        : '#402c1c'};
+  }
 
   &::before {
     content: '${(p) => (p.isChecked ? '\\2713' : '\\00D7')}';
