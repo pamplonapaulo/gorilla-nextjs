@@ -104,6 +104,7 @@ const Carousel = ({ packs }: Props) => {
                     }`}
                     pathname={'/packs/[slug]'}
                     text={'Selecionar'}
+                    mobileInheritColor={true}
                   />
                 </S.FlexCenter>
               </S.Item>

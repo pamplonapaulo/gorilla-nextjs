@@ -15,13 +15,18 @@ export const Wrap = styled.div<{ height?: string; dangerMode?: boolean }>`
   }
 `
 
-export const Btn = styled.button<{ dangerMode?: boolean }>`
+export const Btn = styled.button<{
+  dangerMode?: boolean
+  mobileInheritColor?: boolean
+}>`
   background: rgba(0, 0, 0, 0.4);
   border: solid 1px;
   border-color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
   border-radius: 0;
   box-shadow: 0px 1px 3px #000;
-  color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
+  border-color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
+  color: ${(p) =>
+    p.dangerMode ? 'red' : p.mobileInheritColor ? 'inherit' : '#fff'};
   cursor: pointer;
   /* display: inline-block; */
   /* font-size: 1.3rem; */
@@ -39,11 +44,14 @@ export const Btn = styled.button<{ dangerMode?: boolean }>`
   transition: all 0.2s ease-in-out;
   width: 190px;
   z-index: 0;
-
   font-size: 1.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media only screen and (min-width: 1024px) {
+    color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
+  }
 
   @media only screen and (min-width: 1024px) {
     display: block;

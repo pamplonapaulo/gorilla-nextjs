@@ -64,7 +64,15 @@ export const Item = styled.div<{ availHeight?: string }>`
   height: calc(${(p) => p.availHeight} - 228px);
 
   &&:nth-child(even) {
-    background: rgba(239, 131, 33, 0.9);
+    //background: rgba(239, 131, 33, 0.9);
+    background: rgba(45, 166, 80, 0.9);
+    box-shadow: inset 0px 0px 1px 2px #fbc822;
+    color: #fbc822;
+
+    @media only screen and (min-width: 480px) {
+      background: rgba(239, 131, 33, 0.9);
+      box-shadow: unset;
+    }
 
     @media only screen and (min-width: 1024px) {
       background: rgba(28, 19, 11, 0.9);
@@ -73,6 +81,12 @@ export const Item = styled.div<{ availHeight?: string }>`
 
   &&:nth-child(odd) {
     background: rgba(45, 166, 80, 0.9);
+    box-shadow: inset 0px 0px 1px 2px #ef8321;
+    color: #ef8321;
+
+    @media only screen and (min-width: 480px) {
+      box-shadow: unset;
+    }
   }
 
   @media only screen and (min-width: 320px) {
@@ -110,13 +124,17 @@ export const Item = styled.div<{ availHeight?: string }>`
 `
 
 export const H = styled.h1`
-  color: #47311b;
+  color: inherit;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 3rem;
-
-  text-align: center;
   font-size: 20px;
+  text-align: center;
+  text-shadow: 1px 1px 0px black;
+
+  @media only screen and (min-width: 480px) {
+    color: #47311b;
+    text-shadow: unset;
+  }
 
   @media only screen and (min-width: 1024px) {
     color: #ef8321;
