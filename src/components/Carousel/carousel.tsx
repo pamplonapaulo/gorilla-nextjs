@@ -25,13 +25,12 @@ const Carousel = ({ packs }: Props) => {
   const refItem = useRef<HTMLDivElement>(null)
   const [availHeight, setAvailHeight] = useState('100vh')
 
-  useEffect(() => {
-    setAvailHeight(screen.availHeight + 'px')
-  }, [])
-
   const { loading, error, data } = useQuery(GET_BENEFITS)
 
   useEffect(() => {
+    // setAvailHeight(screen.availHeight + 'px')
+    setAvailHeight(window.innerHeight + 'px')
+
     const updateSize = () => {
       if (window.innerWidth < 480) setPageLength(1)
       if (window.innerWidth < 1024 && window.innerWidth >= 480) setPageLength(2)
