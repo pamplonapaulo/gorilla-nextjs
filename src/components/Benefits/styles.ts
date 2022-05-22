@@ -35,7 +35,7 @@ export const Attribute = styled.li<{ isChecked: boolean; isHome: boolean }>`
   color: ${(p) =>
     !p.isChecked
       ? p.isHome
-        ? 'rgba(0,0,0,0.5)'
+        ? 'rgba(0,0,0,0.35)'
         : 'rgba(204, 204, 204, 0.6)'
       : p.isHome
       ? '#000'

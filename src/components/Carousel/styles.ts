@@ -65,8 +65,9 @@ export const Item = styled.div<{ availHeight?: string }>`
 
   &&:nth-child(even) {
     //background: rgba(239, 131, 33, 0.9);
-    background: rgba(45, 166, 80, 0.9);
-    box-shadow: inset 0px 0px 1px 2px #fbc822;
+    //background: rgba(45, 166, 80, 0.9);
+    background: rgba(251, 200, 34, 0.9);
+    //box-shadow: inset 0px 0px 1px 2px #fbc822;
     color: #fbc822;
 
     @media only screen and (min-width: 480px) {
@@ -81,7 +82,7 @@ export const Item = styled.div<{ availHeight?: string }>`
 
   &&:nth-child(odd) {
     background: rgba(45, 166, 80, 0.9);
-    box-shadow: inset 0px 0px 1px 2px #ef8321;
+    //box-shadow: inset 0px 0px 1px 2px #ef8321;
     color: #ef8321;
 
     @media only screen and (min-width: 480px) {
@@ -124,15 +125,16 @@ export const Item = styled.div<{ availHeight?: string }>`
 `
 
 export const H = styled.h1`
-  color: inherit;
+  color: #000;
+  /* color: inherit; */
   font-weight: 600;
   text-transform: uppercase;
   font-size: 20px;
   text-align: center;
-  text-shadow: 1px 1px 0px black;
+  /* text-shadow: 1px 1px 0px black; */
 
   @media only screen and (min-width: 480px) {
-    color: #47311b;
+    /* color: #47311b; */
     text-shadow: unset;
   }
 
@@ -156,14 +158,15 @@ export const Desc = styled.p`
   display: none;
 
   @media only screen and (min-height: 590px) {
-    color: #fbc822;
+    /* color: #fbc822; */
+    color: #000;
     display: unset;
     margin: 0;
     text-align: center;
     font-size: 14px;
-    font-style: italic;
+    //font-style: italic;
     font-weight: 600;
-    text-shadow: 0px 1px 2px #000;
+    /* text-shadow: 0px 1px 2px #000; */
   }
 
   @media only screen and (min-width: 1024px) {
@@ -171,6 +174,7 @@ export const Desc = styled.p`
     font-size: 16px;
     margin: 10px;
     font-style: normal;
+    text-shadow: 0px 1px 2px #000;
   }
 `
 

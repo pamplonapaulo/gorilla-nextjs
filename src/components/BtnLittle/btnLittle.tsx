@@ -9,7 +9,6 @@ type Props = {
   text: string
   height?: string
   dangerMode?: boolean
-  mobileInheritColor?: boolean
 }
 
 const BtnLittle = ({
@@ -18,7 +17,6 @@ const BtnLittle = ({
   text,
   height = '70px',
   dangerMode = false,
-  mobileInheritColor,
 }: Props) => (
   <>
     <Link
@@ -28,9 +26,7 @@ const BtnLittle = ({
       }}
     >
       <S.Wrap height={height} dangerMode={dangerMode}>
-        <S.Btn mobileInheritColor={mobileInheritColor} dangerMode={dangerMode}>
-          {text}
-        </S.Btn>
+        <S.Btn dangerMode={dangerMode}>{text}</S.Btn>
       </S.Wrap>
     </Link>
   </>

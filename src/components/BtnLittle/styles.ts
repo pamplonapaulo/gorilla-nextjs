@@ -17,7 +17,6 @@ export const Wrap = styled.div<{ height?: string; dangerMode?: boolean }>`
 
 export const Btn = styled.button<{
   dangerMode?: boolean
-  mobileInheritColor?: boolean
 }>`
   background: rgba(0, 0, 0, 0.4);
   border: solid 1px;
@@ -25,8 +24,7 @@ export const Btn = styled.button<{
   border-radius: 0;
   box-shadow: 0px 1px 3px #000;
   border-color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
-  color: ${(p) =>
-    p.dangerMode ? 'red' : p.mobileInheritColor ? 'inherit' : '#fff'};
+  color: ${(p) => (p.dangerMode ? 'red' : '#fff')};
   cursor: pointer;
   /* display: inline-block; */
   /* font-size: 1.3rem; */
@@ -38,7 +36,7 @@ export const Btn = styled.button<{
   padding: 0;
   /* text-align: center; */
   text-decoration: none;
-  text-shadow: 0px 1px 2px #000;
+  /* text-shadow: 0px 1px 2px #000; */
   text-transform: uppercase;
   transition: all 0.05s;
   transition: all 0.2s ease-in-out;
