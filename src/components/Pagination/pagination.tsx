@@ -20,11 +20,6 @@ const Pagination = ({
 }: Props) => {
   const [dots, setDots] = useState<number[]>([])
 
-  const handleNavigation = (e: React.MouseEvent<HTMLHeadElement>) => {
-    const dir = (e.target as Element).getAttribute('dir')
-    if (typeof dir === 'string') moveCarousel(dir)
-  }
-
   useEffect(() => {
     setDots(getPagination())
   }, [getPagination])
@@ -32,8 +27,7 @@ const Pagination = ({
   return (
     <>
       <S.Arrow
-        onClick={handleNavigation}
-        dir={'left'}
+        onClick={() => (nav > 0 ? moveCarousel('left') : null)}
         isVisible={nav > 0}
       ></S.Arrow>
       <S.DotsWrap>
@@ -47,8 +41,7 @@ const Pagination = ({
           ))}
       </S.DotsWrap>
       <S.Arrow
-        onClick={handleNavigation}
-        dir={'right'}
+        onClick={() => (nav < length ? moveCarousel('right') : null)}
         isVisible={nav < length}
       ></S.Arrow>
     </>

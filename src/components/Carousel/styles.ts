@@ -47,27 +47,57 @@ export const Wrapper = styled.section`
   }
 `
 
-export const Window = styled.div<{ moving: number }>`
+export const Window = styled.div`
   display: flex;
   flex-direction: row;
   transition: transform 0.2s ease-in;
-  transform: ${(p) => 'translateX(' + p.moving + 'px)'};
+  scroll-snap-type: x mandatory;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+    border: none;
+    margin: 0;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 0;
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    outline: none;
+    height: 0;
+    width: 0;
+    margin: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    height: 0;
+    width: 0;
+  }
 `
 
 export const Item = styled.div<{ availHeight?: string }>`
-  text-align: center;
+  cursor: grab;
   display: flex;
+  text-align: center;
   flex-direction: column;
   width: calc(100vw - 50px);
   padding: 10px;
   justify-content: space-evenly;
   height: calc(${(p) => p.availHeight} - 228px);
 
+  min-width: 100%;
+  scroll-snap-align: start;
+
   &&:nth-child(even) {
-    //background: rgba(239, 131, 33, 0.9);
-    //background: rgba(45, 166, 80, 0.9);
     background: rgba(251, 200, 34, 0.9);
-    //box-shadow: inset 0px 0px 1px 2px #fbc822;
     color: #fbc822;
 
     @media only screen and (min-width: 480px) {
@@ -82,7 +112,6 @@ export const Item = styled.div<{ availHeight?: string }>`
 
   &&:nth-child(odd) {
     background: rgba(45, 166, 80, 0.9);
-    //box-shadow: inset 0px 0px 1px 2px #ef8321;
     color: #ef8321;
 
     @media only screen and (min-width: 480px) {
@@ -97,15 +126,18 @@ export const Item = styled.div<{ availHeight?: string }>`
 
   @media only screen and (min-width: 480px) {
     width: calc(470px / 2);
+    min-width: calc(470px / 2);
   }
 
   @media only screen and (min-width: 600px) {
     height: calc(100vh - calc(50px + 70px + 58px + 50px + 4rem));
     width: calc(520px / 2);
+    min-width: calc(520px / 2);
   }
 
   @media only screen and (min-width: 768px) {
     width: calc(600px / 2);
+    min-width: calc(600px / 2);
   }
 
   @media only screen and (min-width: 1024px) {
@@ -113,14 +145,17 @@ export const Item = styled.div<{ availHeight?: string }>`
     height: 550px;
     justify-content: space-around;
     width: calc(900px / 3);
+    min-width: calc(900px / 3);
   }
 
   @media only screen and (min-width: 1260px) {
     width: calc(1150px / 4);
+    min-width: calc(1150px / 4);
   }
 
   @media only screen and (min-width: 1300px) {
     width: calc(1260px / 4);
+    min-width: calc(1260px / 4);
   }
 `
 

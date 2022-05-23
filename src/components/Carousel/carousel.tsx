@@ -21,8 +21,8 @@ type Props = {
 const Carousel = ({ packs }: Props) => {
   const [pageLength, setPageLength] = useState(1)
   const [nav, setNav] = useState(0)
-  const [translate, setTranslate] = useState(0)
   const refItem = useRef<HTMLDivElement>(null)
+  const refWindow = useRef<HTMLDivElement>(null)
   const [availHeight, setAvailHeight] = useState('100vh')
 
   const { loading, error, data } = useQuery(GET_BENEFITS)
@@ -40,28 +40,36 @@ const Carousel = ({ packs }: Props) => {
     }
     window.addEventListener('resize', updateSize)
     updateSize()
+
     return () => window.removeEventListener('resize', updateSize)
   }, [])
 
-  const moveCarousel = (dir: string | null) => {
-    const el: HTMLDivElement | null = refItem.current
-    let width: number | null = null
-    if (el !== null) {
-      width = el.offsetWidth
-    }
+  const scrollViaButton = (dir: string) => {
+    const ref = refWindow.current
+    const origin = typeof ref?.scrollLeft === 'number' ? ref?.scrollLeft : 0
+    const item =
+      typeof refItem?.current?.offsetWidth === 'number'
+        ? refItem?.current?.offsetWidth
+        : 0
+    const next = dir === 'right' ? origin + item : origin - item
 
-    if (dir === 'left' && typeof width === 'number' && nav > 0) {
-      setNav(nav - 1)
-      setTranslate(translate + width)
-    }
+    refWindow.current?.scrollTo({
+      top: 0,
+      left: next,
+      behavior: 'smooth',
+    })
+  }
+
+  const handleScrollEvent = () => {
+    const carouselScroll = refWindow.current?.scrollLeft
+    const item = refItem?.current?.offsetWidth
 
     if (
-      dir === 'right' &&
-      typeof width === 'number' &&
-      nav < packs.length - pageLength
+      typeof carouselScroll === 'number' &&
+      item &&
+      carouselScroll % item === 0
     ) {
-      setNav(nav + 1)
-      setTranslate(translate - width)
+      setNav(carouselScroll / item)
     }
   }
 
@@ -80,7 +88,7 @@ const Carousel = ({ packs }: Props) => {
   return (
     <>
       <S.Wrapper>
-        <S.Window moving={translate}>
+        <S.Window onScroll={handleScrollEvent} ref={refWindow}>
           {packs.map((p: Pack) => {
             return (
               <S.Item
@@ -114,7 +122,7 @@ const Carousel = ({ packs }: Props) => {
       <S.Wrapper>
         <Pagination
           getPagination={getPagination}
-          moveCarousel={moveCarousel}
+          moveCarousel={scrollViaButton}
           total={packs.length}
           length={packs.length - pageLength}
           nav={nav}
