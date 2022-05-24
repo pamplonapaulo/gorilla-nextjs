@@ -48,11 +48,13 @@ export const Wrapper = styled.section`
 `
 
 export const Window = styled.div`
+  cursor: grab;
   display: flex;
   flex-direction: row;
-  transition: transform 0.2s ease-in;
-  scroll-snap-type: x mandatory;
   overflow: auto;
+  scroll-snap-type: x mandatory;
+  /* touch-action: pan-x; */
+  transition: transform 0.2s ease-in;
 
   &::-webkit-scrollbar {
     height: 0;
@@ -84,7 +86,6 @@ export const Window = styled.div`
 `
 
 export const Item = styled.div<{ availHeight?: string }>`
-  cursor: grab;
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -95,6 +96,7 @@ export const Item = styled.div<{ availHeight?: string }>`
 
   min-width: 100%;
   scroll-snap-align: start;
+  user-select: none;
 
   &&:nth-child(even) {
     background: rgba(251, 200, 34, 0.9);

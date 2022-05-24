@@ -1,4 +1,10 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react'
+import React, {
+  useEffect,
+  useCallback,
+  useState,
+  useRef,
+  MouseEvent,
+} from 'react'
 
 import { useQuery } from '@apollo/client'
 import { GET_BENEFITS } from 'graphql/queries'
@@ -24,6 +30,7 @@ const Carousel = ({ packs }: Props) => {
   const refItem = useRef<HTMLDivElement>(null)
   const refWindow = useRef<HTMLDivElement>(null)
   const [availHeight, setAvailHeight] = useState('100vh')
+  const [mouseDown, setMouseDown] = useState<number | boolean>(false)
 
   const { loading, error, data } = useQuery(GET_BENEFITS)
 
@@ -44,7 +51,32 @@ const Carousel = ({ packs }: Props) => {
     return () => window.removeEventListener('resize', updateSize)
   }, [])
 
+  const handleMouseDown = (e: MouseEvent) => {
+    setMouseDown(e.pageX)
+  }
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (
+      typeof mouseDown === 'number' &&
+      refWindow.current !== null &&
+      refWindow.current !== undefined
+    ) {
+      if (mouseDown - 70 > e.pageX) {
+        scrollViaButton('right')
+      }
+
+      if (mouseDown < e.pageX - 70) {
+        scrollViaButton('left')
+      }
+    }
+  }
+
+  const handleMouseUp = () => {
+    setMouseDown(false)
+  }
+
   const scrollViaButton = (dir: string) => {
+    setMouseDown(false)
     const ref = refWindow.current
     const origin = typeof ref?.scrollLeft === 'number' ? ref?.scrollLeft : 0
     const item =
@@ -88,7 +120,13 @@ const Carousel = ({ packs }: Props) => {
   return (
     <>
       <S.Wrapper>
-        <S.Window onScroll={handleScrollEvent} ref={refWindow}>
+        <S.Window
+          onScroll={handleScrollEvent}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          ref={refWindow}
+        >
           {packs.map((p: Pack) => {
             return (
               <S.Item
