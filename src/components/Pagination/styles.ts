@@ -4,7 +4,7 @@ export const Arrow = styled.span<{ isVisible: boolean }>`
   align-items: center;
   background: #402c1c;
   color: #fbc822;
-  cursor: ${(p) => (p.isVisible ? 'pointer' : 'none')};
+  cursor: ${(p) => (p.isVisible ? 'pointer' : 'default')};
   display: flex;
   font-family: monospace;
   font-weight: 400;
