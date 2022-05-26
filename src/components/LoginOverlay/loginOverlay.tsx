@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 import FormLogin from 'components/FormLogin'
 import FormRegister from 'components/FormRegister'
@@ -15,11 +16,13 @@ import { getFirstName } from 'utils/getFirstName'
 import * as S from './styles'
 
 const LoginOverlay = () => {
+  const router = useRouter()
   const { userLog } = useUser()
   const { overlay, setOverlay } = useOverlay()
 
   const [register, setRegister] = useState<boolean>(false)
   const [height, setHeight] = useState<string>('0px')
+  const [counter, setCounter] = useState(10)
 
   const handleClose = () => {
     if (register === true) setRegister(false)
@@ -36,20 +39,35 @@ const LoginOverlay = () => {
     }
   }, [])
 
+  useEffect(() => {
+    overlay === null &&
+      counter >= 1 &&
+      setTimeout(() => setCounter(counter - 1), 1500)
+
+    if (overlay === null && counter === 0) {
+      setOverlay(false)
+      setCounter(10)
+      router.push({ pathname: '/assinatura' }, '/assinatura')
+    }
+  }, [counter, overlay, router, setOverlay])
+
   return (
     <>
       {overlay === null && (
         <S.Overlay height={height}>
           <S.PopUp height={height}>
             <S.Top>
-              <S.H breakSpaces={true}>
-                Não é possível ter mais de uma assinatura ativa.
-              </S.H>
+              <S.Alert>
+                Você já possui um pack ativo. Deseja alterá-lo? Faça o
+                cancelamento e, em seguida, contrate a nova assinatura desejada.
+              </S.Alert>
             </S.Top>
+            <S.Alert size={'8rem'}>{counter}</S.Alert>
             <S.Bottom>
-              <S.H breakSpaces={true}>
-                Antes de realizar uma nova assinatura, cancele a existente.
-              </S.H>
+              <S.Alert>
+                Em {counter} segundos você será redirecionado para a página
+                &quot;Meu Pack&quot;, onde poderá cancelar a assinatura vigente.
+              </S.Alert>
             </S.Bottom>
           </S.PopUp>
         </S.Overlay>

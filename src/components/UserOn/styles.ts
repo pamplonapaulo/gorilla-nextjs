@@ -9,6 +9,6 @@ export const Svg = styled.svg`
     height: 100%;
     width: 30px;
     transition: 0.2s all;
-    cursor: default;
+    cursor: pointer;
   }
 `

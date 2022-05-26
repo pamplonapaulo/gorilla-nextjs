@@ -18,6 +18,8 @@ export const Overlay = styled.div<{ height: string }>`
   transition: opacity 0.2s;
   width: 100vw;
   z-index: 1;
+  justify-content: start;
+  flex-direction: column;
 
   @media only screen and (min-width: 1024px) {
     height: calc(100vh - 70px);
@@ -25,6 +27,9 @@ export const Overlay = styled.div<{ height: string }>`
     top: 70px;
     transform: none;
     width: 100%;
+
+    justify-content: unset;
+    flex-direction: unset;
   }
 `
 
@@ -97,6 +102,22 @@ export const H = styled.h1<{ breakSpaces?: boolean }>`
   line-height: 1.5;
   white-space: ${(p) => (p.breakSpaces ? 'break-spaces' : 'nowrap')};
   margin-bottom: 4rem;
+`
+
+export const Alert = styled.h1<{ size?: string }>`
+  color: #facb37;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 100;
+  letter-spacing: 5px;
+  line-height: 1.5;
+  white-space: 'break-spaces';
+  margin-bottom: 4rem;
+  font-size: ${(p) => (p.size ? p.size : '1.5rem')};
+  text-align: left;
+  text-transform: none;
+  line-height: 2;
 `
 
 export const HWrap = styled.h1`

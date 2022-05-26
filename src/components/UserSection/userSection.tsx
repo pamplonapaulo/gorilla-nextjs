@@ -53,7 +53,10 @@ const UserSection = () => {
                   <p>Meu pack</p>
                 </span>
               </Link>
-              <span role={'button'} onClick={() => signOut()}>
+              <span
+                role={'button'}
+                onClick={() => signOut({ callbackUrl: '/' })}
+              >
                 <ExitToApp size={24} />
                 <p>Log Off</p>
               </span>

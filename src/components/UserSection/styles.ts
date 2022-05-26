@@ -21,7 +21,7 @@ export const Hello = styled.h1`
   font-weight: 300;
   color: rgb(250, 203, 55);
   min-width: fit-content;
-  cursor: default;
+  cursor: pointer;
 
   color: #fbc822;
   font-weight: 700;
@@ -38,24 +38,24 @@ export const Hello = styled.h1`
   }
 `
 
-export const OnBag = styled.h1`
-  align-items: center;
-  background: #facb37;
-  border-radius: 50%;
-  bottom: 0;
-  color: red;
-  cursor: default;
-  display: flex;
-  font-size: 11px;
-  font-weight: 700;
-  height: 22.5px;
-  justify-content: center;
-  padding: 3px;
-  position: absolute;
-  transform: translate(calc(-100% + 40px), -25%);
-  white-space: nowrap;
-  width: 22.5px;
-`
+// export const OnBag = styled.h1`
+//   align-items: center;
+//   background: #facb37;
+//   border-radius: 50%;
+//   bottom: 0;
+//   color: red;
+//   cursor: default;
+//   display: flex;
+//   font-size: 11px;
+//   font-weight: 700;
+//   height: 22.5px;
+//   justify-content: center;
+//   padding: 3px;
+//   position: absolute;
+//   transform: translate(calc(-100% + 40px), -25%);
+//   white-space: nowrap;
+//   width: 22.5px;
+// `
 
 export const BtnWrapper = styled.div`
   display: flex;
@@ -131,6 +131,7 @@ export const Wrap = styled.div<{ isVisible?: boolean }>`
   display: flex;
   justify-content: center;
   color: ${(p) => (p.isVisible ? '#facb37' : '#FF0000')};
+  cursor: pointer;
 
   & + ${DropDown} {
     transform: ${(p) => (p.isVisible ? 'translateY(0%)' : 'translateY(-100%)')};
