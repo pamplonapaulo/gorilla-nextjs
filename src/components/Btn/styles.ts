@@ -42,6 +42,14 @@ export const Btn = styled.button<{ isDisable: boolean }>`
     width: 190px;
     transition: all 0.2s ease-in-out;
 
+    // testing 25/05/22
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+    padding: 0;
+    // end of testing
+
     &&:before {
       position: absolute;
       width: 0%;

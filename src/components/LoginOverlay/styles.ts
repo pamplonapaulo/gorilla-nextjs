@@ -87,14 +87,15 @@ export const Bottom = styled.div`
   }
 `
 
-export const H = styled.h1`
+export const H = styled.h1<{ breakSpaces?: boolean }>`
   color: #facb37;
   text-align: center;
   text-transform: uppercase;
   font-size: 2rem;
   font-weight: 100;
   letter-spacing: 5px;
-  white-space: nowrap;
+  line-height: 1.5;
+  white-space: ${(p) => (p.breakSpaces ? 'break-spaces' : 'nowrap')};
   margin-bottom: 4rem;
 `
 

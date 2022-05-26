@@ -136,8 +136,17 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         if (!mountedRef.current) return null
       })
       .catch((error) => {
-        console.log(error)
-        setCheckoutBtn('Erro :(')
+        if (error.response.data.error.message === 'Duplication Conflit') {
+          setCheckoutBtn('Erro: você já é assinante')
+          setOverlay(null)
+
+          console.log(
+            'Você não pode ter duas assinaturas simultâneas. Visite Meu Pack para cancelas o seu pack atual e poder contratar uma nova assinatura.'
+          )
+        } else {
+          console.log('else...')
+          setCheckoutBtn('Erro: tente novamente')
+        }
       })
   }
 

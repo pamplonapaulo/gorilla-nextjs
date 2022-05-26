@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 
 export function createCtx<ContextType>() {
   const ctx = React.createContext<ContextType | undefined>(undefined)
@@ -11,8 +11,9 @@ export function createCtx<ContextType>() {
 }
 
 type OverlayContextType = {
-  overlay: boolean
-  setOverlay: (value: boolean) => void
+  overlay: boolean | null
+  setOverlay: Dispatch<SetStateAction<boolean | null>>
+  // setOverlay: (value: boolean | null) => void
 }
 
 const [useOverlay, CtxProvider] = createCtx<OverlayContextType>()
@@ -22,7 +23,7 @@ type Props = {
 }
 
 const OverlayProvider = ({ children }: Props) => {
-  const [overlay, setOverlay] = React.useState(false)
+  const [overlay, setOverlay] = React.useState<boolean | null>(false)
 
   React.useEffect(() => {
     const currentOverlay = false

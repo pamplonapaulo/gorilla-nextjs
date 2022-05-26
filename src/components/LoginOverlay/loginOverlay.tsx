@@ -38,6 +38,22 @@ const LoginOverlay = () => {
 
   return (
     <>
+      {overlay === null && (
+        <S.Overlay height={height}>
+          <S.PopUp height={height}>
+            <S.Top>
+              <S.H breakSpaces={true}>
+                Não é possível ter mais de uma assinatura ativa.
+              </S.H>
+            </S.Top>
+            <S.Bottom>
+              <S.H breakSpaces={true}>
+                Antes de realizar uma nova assinatura, cancele a existente.
+              </S.H>
+            </S.Bottom>
+          </S.PopUp>
+        </S.Overlay>
+      )}
       {overlay && (
         <S.Overlay height={height}>
           <S.PopUp height={height}>
