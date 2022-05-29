@@ -9,15 +9,27 @@ import { formatCurrency } from 'utils/formatCurrency'
 import { Snack } from 'types/api'
 
 type Props = {
+  previouslySavedPostcode: string
   forceReset: boolean
   pack: Snack[]
   parentCallback: (bool: boolean, num: number, cep: string) => void
 }
 
-const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
+const DeliveryCalc = ({
+  previouslySavedPostcode,
+  forceReset,
+  pack,
+  parentCallback,
+}: Props) => {
   const [postcode, setPostcode] = useState('')
   const [fullPostcode, setFullPostcode] = useState('')
   const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
+
+  useEffect(() => {
+    if (previouslySavedPostcode.length === 9) {
+      setPostcode(previouslySavedPostcode)
+    }
+  }, [previouslySavedPostcode])
 
   useEffect(() => {
     if (forceReset) {
@@ -28,7 +40,24 @@ const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
   }, [forceReset])
 
   useEffect(() => {
+    console.log('deliveryCal postcode state: ', postcode)
+
+    if (postCodeMask(postcode).length > 8) {
+      setFullPostcode(postCodeMask(postcode).replace('-', ''))
+    }
+
+    return () => {
+      // Component PackPanel did unmount
+      console.log('popopopopopopopop')
+    }
+  }, [postcode])
+
+  useEffect(() => {
+    console.log(`fullPostcode`)
+    console.log(fullPostcode)
+
     if (fullPostcode != '') {
+      console.log('inside')
       interface ServerData {
         quotation: Quotation
         address: Address
@@ -70,7 +99,10 @@ const DeliveryCalc = ({ forceReset, pack, parentCallback }: Props) => {
           pack: pack,
         })
         .then((response: AxiosResponse<ServerData>) => {
+          console.log('then...')
+          console.log(response)
           if (response?.data?.quotation) {
+            console.log('setting delivery fee....')
             setDeliveryFee(response.data.quotation.fee)
             parentCallback(true, response.data.quotation.fee, fullPostcode)
           }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import axios, { AxiosResponse } from 'axios'
 import { useSession } from 'next-auth/client'
@@ -25,12 +25,28 @@ type PanelData = {
   packId?: string
 }
 
+interface UserData {
+  id: number
+  username: string
+  email: string
+  provider: string
+  confirmed: boolean
+  blocked: boolean
+  createdAt: string
+  updatedAt: string
+  postCode: string
+  phone: string
+  addressNumber: string
+  addressComplement: string
+}
+
 const PackPanel = ({ ...panelData }: PanelData) => {
   const [snacksCost, setSnacksCost] = useState<boolean | number>(false)
   const [discount, setDiscount] = useState<number>(-1)
   const [planId, setPlanId] = useState<number | null>(null)
   const [deliveryFee, setDeliveryFee] = useState<boolean | number>(false)
   const [postCode, setPostCode] = useState('')
+  const [previouslySavedPostcode, setPreviouslySavedPostcode] = useState('')
   const [finalPrice, setFinalPrice] = useState(0)
   const [mobilePanelStep, setMobilePanelStep] = useState(0)
   const [deliveryReset, setDeliveryReset] = useState(false)
@@ -44,33 +60,61 @@ const PackPanel = ({ ...panelData }: PanelData) => {
 
   const mountedRef = useRef(true)
 
+  const apolloClient = initializeApollo()
+
   useEffect(() => {
-    console.log('Component PackPanel did mount')
+    // Component PackPanel did mount
     return () => {
-      console.log('Component PackPanel did unmount')
+      // Component PackPanel did unmount
       mountedRef.current = false
     }
   }, [])
 
-  const completeSnackDetails = async (s: Snack) => {
-    const apolloClient = initializeApollo()
+  useEffect(() => {
+    if (session?.id) {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + session?.jwt,
+      }
 
-    const { data } = await apolloClient.query({
-      query: GET_PRODUCT,
-      variables: { id: `${s.id}` },
-    })
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get<UserData>(
+            process.env.NEXT_PUBLIC_API_URL + '/users/' + session?.id,
+            {
+              headers,
+            }
+          )
+          setPreviouslySavedPostcode(response.data.postCode)
+        } catch (err) {
+          if (err instanceof Error) throw new Error(err.message, { cause: err })
+        }
+      }
 
-    const snack = {
-      ...data,
-      product: {
-        photo: s.photo,
-        quantity: s.Quantity,
-        TotalValue: s.Quantity * data.product.data.attributes.BaseValue,
-      },
+      fetchUser()
     }
+  }, [session])
 
-    return snack.product
-  }
+  const completeSnackDetails = useCallback(
+    async (s: Snack) => {
+      const { data } = await apolloClient.query({
+        query: GET_PRODUCT,
+        variables: { id: `${s.id}` },
+      })
+
+      const snack = {
+        ...data,
+        product: {
+          photo: s.photo,
+          quantity: s.Quantity,
+          TotalValue: s.Quantity * data.product.data.attributes.BaseValue,
+        },
+      }
+
+      return snack.product
+    },
+    [apolloClient]
+  )
 
   const planIsSet = (upcomingDiscount: number, planId: number) => {
     setPlanId(planId)
@@ -116,12 +160,12 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         },
         {
           headers,
-          onDownloadProgress: (event) => {
-            const progress: number = Math.round(
-              (event.loaded * 100) / event.total
-            )
-            console.log(`Processamento: ${progress}% carregado... `)
-          },
+          // onDownloadProgress: (event) => {
+          //   const progress: number = Math.round(
+          //     (event.loaded * 100) / event.total
+          //   )
+          //   console.log(`Processamento: ${progress}% carregado... `)
+          // },
         }
       )
       .then((response: AxiosResponse<unknown>) => {
@@ -139,13 +183,11 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         if (error.response.data.error.message === 'Duplication Conflit') {
           setCheckoutBtn('Erro: você já é assinante')
           setOverlay(null)
-
-          console.log(
-            'Você não pode ter duas assinaturas simultâneas. Visite Meu Pack para cancelas o seu pack atual e poder contratar uma nova assinatura.'
-          )
+        } else if (error.response.data.error.message === 'PostCode Conflit') {
+          setCheckoutBtn('Erro de CEP: atualize seu perfil')
+          setOverlay(null)
         } else {
-          console.log('else...')
-          setCheckoutBtn('Erro: tente novamente')
+          setCheckoutBtn('Erro desconhecido: tente novamente')
         }
       })
   }
@@ -216,7 +258,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
       )
       setSnacksCost(partialPrice)
     })
-  }, [panelData])
+  }, [panelData, completeSnackDetails])
 
   useEffect(() => {
     const getMinimumValue = async () => {
@@ -324,6 +366,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         <S.Text shouldPulse={false}>Frete</S.Text>
         <S.Items>
           <DeliveryCalc
+            previouslySavedPostcode={previouslySavedPostcode}
             forceReset={deliveryReset}
             pack={panelData.pack}
             parentCallback={handleDeliveryFeeDisplay}
