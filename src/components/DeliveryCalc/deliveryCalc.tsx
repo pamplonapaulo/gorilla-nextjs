@@ -33,31 +33,18 @@ const DeliveryCalc = ({
 
   useEffect(() => {
     if (forceReset) {
-      console.log('forceReset: ', forceReset)
       setPostcode('')
-      // setFullPostcode('')
     }
   }, [forceReset])
 
   useEffect(() => {
-    console.log('deliveryCal postcode state: ', postcode)
-
     if (postCodeMask(postcode).length > 8) {
       setFullPostcode(postCodeMask(postcode).replace('-', ''))
-    }
-
-    return () => {
-      // Component PackPanel did unmount
-      console.log('popopopopopopopop')
     }
   }, [postcode])
 
   useEffect(() => {
-    console.log(`fullPostcode`)
-    console.log(fullPostcode)
-
     if (fullPostcode != '') {
-      console.log('inside')
       interface ServerData {
         quotation: Quotation
         address: Address
@@ -99,16 +86,13 @@ const DeliveryCalc = ({
           pack: pack,
         })
         .then((response: AxiosResponse<ServerData>) => {
-          console.log('then...')
-          console.log(response)
           if (response?.data?.quotation) {
-            console.log('setting delivery fee....')
             setDeliveryFee(response.data.quotation.fee)
             parentCallback(true, response.data.quotation.fee, fullPostcode)
           }
         })
-        .catch((error: { response: unknown }) => {
-          console.log('Error: ', error)
+        .catch((err: { response: unknown }) => {
+          if (err instanceof Error) throw new Error(err.message, { cause: err })
         })
     }
   }, [pack, fullPostcode, parentCallback])

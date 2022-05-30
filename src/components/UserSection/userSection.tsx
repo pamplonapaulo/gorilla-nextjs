@@ -42,24 +42,24 @@ const UserSection = () => {
             </S.Wrap>
             <S.DropDown>
               <Link href={'/profile/'} passHref>
-                <span>
+                <S.NavItem>
                   <AccountCircle size={24} />
-                  <p>Meu perfil</p>
-                </span>
+                  <S.NavText>Meu perfil</S.NavText>
+                </S.NavItem>
               </Link>
               <Link href={'/assinatura'} passHref>
-                <span>
+                <S.NavItem>
                   <ShoppingBag size={24} />
-                  <p>Meu pack</p>
-                </span>
+                  <S.NavText>Meu pack</S.NavText>
+                </S.NavItem>
               </Link>
-              <span
+              <S.NavItem
                 role={'button'}
                 onClick={() => signOut({ callbackUrl: '/' })}
               >
                 <ExitToApp size={24} />
-                <p>Log Off</p>
-              </span>
+                <S.NavText>Log Off</S.NavText>
+              </S.NavItem>
             </S.DropDown>
           </>
         ) : (

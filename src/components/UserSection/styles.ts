@@ -10,6 +10,7 @@ export const Container = styled.div`
   @media only screen and (min-width: 1024px) {
     height: 70px;
     padding: 0;
+    position: relative;
   }
 `
 
@@ -38,40 +39,53 @@ export const Hello = styled.h1`
   }
 `
 
-// export const OnBag = styled.h1`
-//   align-items: center;
-//   background: #facb37;
-//   border-radius: 50%;
-//   bottom: 0;
-//   color: red;
-//   cursor: default;
-//   display: flex;
-//   font-size: 11px;
-//   font-weight: 700;
-//   height: 22.5px;
-//   justify-content: center;
-//   padding: 3px;
-//   position: absolute;
-//   transform: translate(calc(-100% + 40px), -25%);
-//   white-space: nowrap;
-//   width: 22.5px;
-// `
-
 export const BtnWrapper = styled.div`
   display: flex;
 `
 
-export const DropDown = styled.nav`
+export const NavText = styled.div`
+  line-height: 1.75;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  text-shadow: 0px 1px 4px #000;
+  font-size: 1.8rem;
+`
+
+export const NavItem = styled.div`
+  background: #2da650;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  padding: 17px 15px;
+  transition: 0.2s background;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  flex-direction: row;
+  align-items: center;
+  transform: translateZ(0);
+
+  svg {
+    filter: drop-shadow(0px 1px 4px #000);
+    margin-right: 15px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    cursor: pointer;
+
+    &:hover {
+      background: #47311b;
+    }
+  }
+`
+
+export const DropDown = styled.div`
   background: #2da650;
   box-shadow: 0px 1px 8px #000;
   color: #fbc822;
   display: flex;
   flex-direction: column;
-  font-weight: 700;
-  font-style: italic;
-  text-transform: uppercase;
-  text-shadow: 0px 1px 4px #000;
-  font-size: 16px;
   height: 250px;
   justify-content: flex-start;
   margin: 0 10px 0 5px;
@@ -84,44 +98,14 @@ export const DropDown = styled.nav`
   transform: translateY(-100%);
   z-index: -1;
 
-  &:hover {
-    transform: translateY(0%);
-  }
-
-  span {
+  @media only screen and (min-width: 1024px) {
     cursor: pointer;
-    display: flex;
-    height: 60px;
-    padding: 17px 15px;
-    transition: 0.2s all;
-    width: 100%;
-
-    svg {
-      filter: drop-shadow(0px 1px 4px #000);
-      margin-right: 15px;
-    }
-
-    p {
-      /* border-bottom: 2px solid;
-      border-color: transparent; */
-      line-height: 1.5;
-      transition: 0.2s all;
-    }
+    height: 250px;
+    width: 180px;
 
     &:hover {
-      /* color: #ef8321; */
-      background: #47311b;
-
-      p {
-        border-color: #ef8321;
-        /* box-shadow: 0 1px 0px 0px rgb(0 0 0 / 25%); */
-      }
+      transform: translateY(0%);
     }
-  }
-
-  @media only screen and (min-width: 1024px) {
-    width: 180px;
-    height: 250px;
   }
 `
 
@@ -131,13 +115,13 @@ export const Wrap = styled.div<{ isVisible?: boolean }>`
   display: flex;
   justify-content: center;
   color: ${(p) => (p.isVisible ? '#facb37' : '#FF0000')};
-  cursor: pointer;
 
   & + ${DropDown} {
     transform: ${(p) => (p.isVisible ? 'translateY(0%)' : 'translateY(-100%)')};
   }
 
   @media only screen and (min-width: 1024px) {
+    cursor: pointer;
     width: 125px;
     height: 70px;
 
