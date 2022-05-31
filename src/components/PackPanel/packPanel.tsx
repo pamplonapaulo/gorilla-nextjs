@@ -80,7 +80,8 @@ const PackPanel = ({ ...panelData }: PanelData) => {
       const fetchUser = async () => {
         try {
           const response = await axios.get<UserData>(
-            process.env.NEXT_PUBLIC_API_URL + '/users/' + session?.id,
+            process.env.NEXT_PUBLIC_API_URL + '/users/me',
+            // process.env.NEXT_PUBLIC_API_URL + '/users/' + session?.id,
             {
               headers,
             }
