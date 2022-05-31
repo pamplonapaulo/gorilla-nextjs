@@ -10,6 +10,11 @@ type AuthorizeProps = {
 }
 
 const options = {
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 60, // 30 minutes
+    updateAge: 30 * 60, // 30 minutes
+  },
   pages: {
     signIn: '/.',
   },
