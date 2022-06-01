@@ -2,10 +2,11 @@ import MySubscriptionTemplate from 'templates/mySubscription'
 import { initializeApollo } from 'utils/apollo'
 import protectedRoutes from 'utils/protectedRoutes'
 
-import { GET_ACTIVE_ORDER } from 'graphql/queries'
+import { GET_ACTIVE_ORDER, GET_ME } from 'graphql/queries'
 import { GetActiveOrder } from 'graphql/generated/GetActiveOrder'
+import { ME } from 'graphql/generated/ME'
 
-import { Order } from 'types/api'
+import { Order, User } from 'types/api'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 type OrderItem = {
@@ -14,11 +15,14 @@ type OrderItem = {
 }
 type Props = {
   order: OrderItem[]
+  me: User
 }
 
 export default function MySubscriptionPage(props: Props) {
   console.log(props)
-  return <MySubscriptionTemplate order={props.order[0].attributes} />
+  return (
+    <MySubscriptionTemplate order={props.order[0].attributes} user={props.me} />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -37,9 +41,14 @@ export const getServerSideProps: GetServerSideProps = async (
     },
   })
 
+  const user = await apolloClient.query<ME>({
+    query: GET_ME,
+  })
+
   return {
     props: {
       order: data.orders?.data,
+      me: user.data.me,
     },
   }
 }

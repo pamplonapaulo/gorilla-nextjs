@@ -1,6 +1,6 @@
 import * as S from './styles'
 
-import { Order, OrderSnack } from 'types/api'
+import { User, Order, OrderSnack } from 'types/api'
 
 import TruckDelivery from 'components/TruckDelivery'
 import Bills from 'components/Bills'
@@ -8,6 +8,7 @@ import BtnLittle from 'components/BtnLittle'
 
 type Props = {
   order: Order
+  user: User
 }
 
 type Delivery = {
@@ -16,7 +17,7 @@ type Delivery = {
 
 import { formatCurrency } from 'utils/formatCurrency'
 
-const MySubscriptionTemplate = ({ order }: Props) => {
+const MySubscriptionTemplate = ({ order, user }: Props) => {
   const convertTimestamp = (timestamp: string) => {
     const months = [
       'Janeiro',
@@ -79,17 +80,12 @@ const MySubscriptionTemplate = ({ order }: Props) => {
               <S.Span>Adesão: {convertTimestamp(order.createdAt)}</S.Span>
             </S.Text>
             <S.Text>
-              <S.Span>
-                Contratante:{' '}
-                {order.users_permissions_user.data.attributes.username}
-              </S.Span>
+              <S.Span>Contratante: {user.username}</S.Span>
 
-              <S.Span>
-                Telefone: {order.users_permissions_user.data.attributes.phone}{' '}
-              </S.Span>
+              <S.Span>Telefone: {user.phone} </S.Span>
               <S.Span isLowercase={true}>
                 <S.Em>Email: </S.Em>
-                {order.users_permissions_user.data.attributes.email}
+                {user.email}
               </S.Span>
             </S.Text>
           </S.Item>
