@@ -49,17 +49,11 @@ export interface GetActiveOrder_orders_data_attributes_deliveries_expectedArriva
   date: any | null;
 }
 
-export interface GetActiveOrder_orders_data_attributes_deliveries_expectedDispatchDays {
-  __typename: "ComponentOrderExpectedDispatchDays";
-  date: any | null;
-}
-
 export interface GetActiveOrder_orders_data_attributes_deliveries {
   __typename: "ComponentOrderDelivery";
   fee: string;
   company: string;
   expectedArrivalDays: (GetActiveOrder_orders_data_attributes_deliveries_expectedArrivalDays | null)[];
-  expectedDispatchDays: (GetActiveOrder_orders_data_attributes_deliveries_expectedDispatchDays | null)[];
 }
 
 export interface GetActiveOrder_orders_data_attributes_address {

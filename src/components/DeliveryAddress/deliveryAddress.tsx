@@ -2,12 +2,12 @@ import React from 'react'
 
 import * as S from './styles'
 
-import { Address, Deliveries, Customer } from 'types/api'
+import { Address, Deliveries, User } from 'types/api'
 
 type Delivery = {
   address: Address
   delivery: Deliveries
-  customer: Customer
+  customer: User
 }
 
 const DeliveryAddress = ({ ...delivery }: Delivery) => (
@@ -39,12 +39,15 @@ const DeliveryAddress = ({ ...delivery }: Delivery) => (
         <S.Row>
           <S.Wrap>
             <S.Label>Número</S.Label>
-            <S.Input width="100px" />
+            <S.Input value={delivery.customer.addressNumber} width="100px" />
           </S.Wrap>
 
           <S.Wrap>
             <S.Label>Complemento</S.Label>
-            <S.Input width="100px" />
+            <S.Input
+              value={delivery.customer.addressComplement}
+              width="100px"
+            />
           </S.Wrap>
         </S.Row>
 

@@ -7,8 +7,6 @@ import Head from 'next/head'
 
 import { ApolloProvider } from '@apollo/client'
 
-// import { client } from 'lib/apollo/client'
-
 import { PacksProvider, UserProvider, OverlayProvider } from 'contexts'
 
 import styled from 'styled-components'

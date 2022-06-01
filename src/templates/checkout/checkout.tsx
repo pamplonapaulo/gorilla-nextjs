@@ -5,13 +5,14 @@ import DeliveryAddress from 'components/DeliveryAddress'
 import Billing from 'components/Billing'
 import Payment from 'components/Payment'
 
-import { Order } from 'types/api'
+import { Order, User } from 'types/api'
 
 type Props = {
   order: Order
+  user: User
 }
 
-const CheckoutTemplate = ({ order }: Props) => {
+const CheckoutTemplate = ({ order, user }: Props) => {
   return (
     <>
       <S.FlexCenter>
@@ -30,7 +31,7 @@ const CheckoutTemplate = ({ order }: Props) => {
           <DeliveryAddress
             address={order.address}
             delivery={order.deliveries}
-            customer={order.users_permissions_user.data.attributes}
+            customer={user}
           />
         </S.Content>
 

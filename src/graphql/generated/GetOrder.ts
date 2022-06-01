@@ -7,23 +7,6 @@
 // GraphQL query operation: GetOrder
 // ====================================================
 
-export interface GetOrder_order_data_attributes_users_permissions_user_data_attributes {
-  __typename: "UsersPermissionsUser";
-  phone: string;
-  email: string;
-  username: string;
-}
-
-export interface GetOrder_order_data_attributes_users_permissions_user_data {
-  __typename: "UsersPermissionsUserEntity";
-  attributes: GetOrder_order_data_attributes_users_permissions_user_data_attributes | null;
-}
-
-export interface GetOrder_order_data_attributes_users_permissions_user {
-  __typename: "UsersPermissionsUserEntityResponse";
-  data: GetOrder_order_data_attributes_users_permissions_user_data | null;
-}
-
 export interface GetOrder_order_data_attributes_period_data_attributes {
   __typename: "Period";
   Type: string;
@@ -99,7 +82,6 @@ export interface GetOrder_order_data_attributes {
   __typename: "Order";
   createdAt: any | null;
   Title: string;
-  users_permissions_user: GetOrder_order_data_attributes_users_permissions_user | null;
   period: GetOrder_order_data_attributes_period | null;
   deliveries: GetOrder_order_data_attributes_deliveries;
   address: GetOrder_order_data_attributes_address | null;

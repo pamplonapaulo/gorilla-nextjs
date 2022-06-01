@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import * as S from './styles'
 
@@ -8,13 +8,13 @@ import Loader from 'components/Loader'
 import BtnLittle from 'components/BtnLittle'
 import Brand from 'components/Brand'
 
-const apolloClient = initializeApollo()
-
 const DialogBox = () => {
   const [visibility, setVisibility] = useState(false)
   const [display, setDisplay] = useState(true)
   const [freeDelivery, setFreeDelivery] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+
+  const apolloClient = initializeApollo()
 
   useEffect(() => {
     setIsLoading(false)
@@ -27,16 +27,16 @@ const DialogBox = () => {
     }, 500)
   }
 
-  const getFreeDeliveryValue = async () => {
+  const getFreeDeliveryValue = useCallback(async () => {
     const { data } = await apolloClient.query({
       query: GET_FREE_DELIVERY_VALUE,
     })
     setFreeDelivery(data?.freeDelivery.data.attributes.MinimumTicket)
-  }
+  }, [apolloClient])
 
   useEffect(() => {
     if (freeDelivery === 0) getFreeDeliveryValue()
-  }, [freeDelivery])
+  }, [freeDelivery, getFreeDeliveryValue])
 
   return (
     <>

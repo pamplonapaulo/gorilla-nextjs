@@ -173,19 +173,6 @@ export type Deliveries = {
   fee: number
 }
 
-export type Customer = {
-  email: string
-  phone: string
-  username: string
-}
-
-export type UserPermUser = {
-  data: {
-    id?: string
-    attributes: Customer
-  }
-}
-
 export type Period = {
   data: Plans
 }
@@ -198,8 +185,17 @@ export type Order = {
   expectedPayments: ExpectedPayments
   period: Period
   snack: OrderSnack[]
-  users_permissions_user: UserPermUser
   isConfirmed?: boolean
   deactivated?: boolean
   deactivationAuthor: string | null
+}
+
+export type User = {
+  id: string
+  username: string
+  email: string
+  phone: string
+  postCode: string
+  addressNumber: string
+  addressComplement: string
 }

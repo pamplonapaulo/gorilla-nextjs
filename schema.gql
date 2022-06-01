@@ -612,6 +612,8 @@ input UsersPermissionsUserFiltersInput {
   role: UsersPermissionsRoleFiltersInput
   postCode: StringFilterInput
   phone: StringFilterInput
+  addressNumber: StringFilterInput
+  addressComplement: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [UsersPermissionsUserFiltersInput]
@@ -631,6 +633,8 @@ input UsersPermissionsUserInput {
   role: ID
   postCode: String
   phone: String
+  addressNumber: String
+  addressComplement: String
 }
 
 type UsersPermissionsUser {
@@ -642,6 +646,8 @@ type UsersPermissionsUser {
   role: UsersPermissionsRoleEntityResponse
   postCode: String!
   phone: String!
+  addressNumber: String
+  addressComplement: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1134,6 +1140,10 @@ type UsersPermissionsMe {
   confirmed: Boolean
   blocked: Boolean
   role: UsersPermissionsMeRole
+  addressComplement: String
+  addressNumber: String
+  phone: String
+  postCode: String
 }
 
 type UsersPermissionsMeRole {
