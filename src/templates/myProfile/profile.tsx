@@ -1,35 +1,27 @@
 import * as S from './styles'
 
-import OrderSummary from 'components/OrderSummary'
-import DeliveryAddress from 'components/DeliveryAddress'
-
-import { Order } from 'types/api'
+import { User } from 'types/api'
 
 type Props = {
-  order: Order
+  user: User
 }
 
-const ProfileTemplate = ({ order }: Props) => {
+const ProfileTemplate = ({ user }: Props) => {
   return (
     <>
       <S.FlexCenter>
-        <S.Text step="1">Resumo da assinatura</S.Text>
+        <S.Text step="1">Dados não editáveis</S.Text>
         <S.Content>
-          <OrderSummary
-            title={order.Title}
-            snacks={order.snack}
-            plans={order.period.data}
-            toPay={order.expectedPayments}
-          />
+          <h1>{user.username}</h1>
+          <h1>{user.email}</h1>
         </S.Content>
 
-        <S.Text step="2">Contato & endereço</S.Text>
+        <S.Text step="2">Dados editáveis</S.Text>
         <S.Content>
-          <DeliveryAddress
-            address={order.address}
-            delivery={order.deliveries}
-            customer={order.users_permissions_user.data.attributes}
-          />
+          <h1>{user.phone}</h1>
+          <h1>{user.postCode}</h1>
+          <h1>{user.addressNumber}</h1>
+          <h1>{user.addressComplement}</h1>
         </S.Content>
       </S.FlexCenter>
     </>
