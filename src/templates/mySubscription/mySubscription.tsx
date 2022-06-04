@@ -1,14 +1,13 @@
 import * as S from './styles'
 
-import { User, Order, OrderSnack } from 'types/api'
+import { UserME, OrderSnack } from 'types/api'
 
 import TruckDelivery from 'components/TruckDelivery'
 import Bills from 'components/Bills'
 import BtnLittle from 'components/BtnLittle'
 
 type Props = {
-  order: Order
-  user: User
+  user: UserME
 }
 
 type Delivery = {
@@ -17,7 +16,7 @@ type Delivery = {
 
 import { formatCurrency } from 'utils/formatCurrency'
 
-const MySubscriptionTemplate = ({ order, user }: Props) => {
+const MySubscriptionTemplate = ({ user }: Props) => {
   const convertTimestamp = (timestamp: string) => {
     const months = [
       'Janeiro',
@@ -75,9 +74,15 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
         <S.Content>
           <S.Item>
             <S.Text>
-              <S.Span>Pack: {order.Title}</S.Span>
-              <S.Span>Contrato: {order.period.data.attributes.Type}</S.Span>
-              <S.Span>Adesão: {convertTimestamp(order.createdAt)}</S.Span>
+              <S.Span>Pack: {user.order.data[0].attributes.Title}</S.Span>
+              <S.Span>
+                Contrato:{' '}
+                {user.order.data[0].attributes.period.data.attributes.Type}
+              </S.Span>
+              <S.Span>
+                Adesão:{' '}
+                {convertTimestamp(user.order.data[0].attributes.createdAt)}
+              </S.Span>
             </S.Text>
             <S.Text>
               <S.Span>Contratante: {user.username}</S.Span>
@@ -94,18 +99,28 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
             <S.Text>
               <S.Span>
                 Logradouro: <S.Break />
-                {order.address.logradouro}
+                {user.order.data[0].attributes.address.logradouro}
               </S.Span>
-              <S.Span>Nº: {order.address.numero}</S.Span>
-              <S.Span>Complemento: {order.address.complemento}</S.Span>
+              <S.Span>
+                Nº: {user.order.data[0].attributes.address.numero}
+              </S.Span>
+              <S.Span>
+                Complemento: {user.order.data[0].attributes.address.complemento}
+              </S.Span>
             </S.Text>
 
             <S.Text>
-              <S.Span>Bairro: {order.address.bairro}</S.Span>
               <S.Span>
-                {order.address.municipio + ' - ' + order.address.uf}
+                Bairro: {user.order.data[0].attributes.address.bairro}
               </S.Span>
-              <S.Span>{'CEP: ' + order.address.cep}</S.Span>
+              <S.Span>
+                {user.order.data[0].attributes.address.municipio +
+                  ' - ' +
+                  user.order.data[0].attributes.address.uf}
+              </S.Span>
+              <S.Span>
+                {'CEP: ' + user.order.data[0].attributes.address.cep}
+              </S.Span>
             </S.Text>
           </S.Item>
         </S.Content>
@@ -115,7 +130,7 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
           <S.Row>
             <S.Column>
               <S.Items>
-                {order.snack.map((s: OrderSnack) => (
+                {user.order.data[0].attributes.snack.map((s: OrderSnack) => (
                   <S.Snack key={s.product.data.id} quantity={s.Quantity}>
                     <S.Icon
                       src={`https://via.placeholder.com/113x156/CCC/00000?text=${s.product.data.attributes.Name}`}
@@ -131,25 +146,28 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
 
         <S.TextBigger>Entregas</S.TextBigger>
         <S.Content>
-          {order.deliveries.expectedArrivalDays.map((d: Delivery) => (
-            <S.Item key={d.date} isChecked={isPast(d.date)}>
-              <TruckDelivery isOn={isPast(d.date)} />
-              <S.Text>{convertTimestamp(d.date)}</S.Text>
-            </S.Item>
-          ))}
+          {user.order.data[0].attributes.deliveries.expectedArrivalDays.map(
+            (d: Delivery) => (
+              <S.Item key={d.date} isChecked={isPast(d.date)}>
+                <TruckDelivery isOn={isPast(d.date)} />
+                <S.Text>{convertTimestamp(d.date)}</S.Text>
+              </S.Item>
+            )
+          )}
         </S.Content>
 
         <S.TextBigger>Cobranças</S.TextBigger>
         <S.Content>
           {buildArrayOfDates(
-            order.createdAt,
-            order.expectedPayments.monthsMultiplier
+            user.order.data[0].attributes.createdAt,
+            user.order.data[0].attributes.expectedPayments.monthsMultiplier
           ).map((d: { stamp: string; formated: string }) => (
             <S.Item key={d.stamp} isChecked={isPast(d.stamp)}>
               <S.Text>
                 R${' '}
                 {formatCurrency(
-                  order.expectedPayments.finalValueInCentavos / 100
+                  user.order.data[0].attributes.expectedPayments
+                    .finalValueInCentavos / 100
                 )}
               </S.Text>
               <Bills isOn={isPast(d.stamp)} />

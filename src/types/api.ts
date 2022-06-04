@@ -178,19 +178,21 @@ export type Period = {
 }
 
 export type Order = {
-  Title: string
-  address: Address
-  createdAt: string
-  deliveries: Deliveries
-  expectedPayments: ExpectedPayments
-  period: Period
-  snack: OrderSnack[]
-  isConfirmed?: boolean
-  deactivated?: boolean
-  deactivationAuthor: string | null
+  attributes: {
+    Title: string
+    address: Address
+    createdAt: string
+    deliveries: Deliveries
+    expectedPayments: ExpectedPayments
+    period: Period
+    snack: OrderSnack[]
+    isConfirmed?: boolean
+    deactivated?: boolean
+    deactivationAuthor: string | null
+  }
 }
 
-export type User = {
+export type UserME = {
   id: string
   username: string
   email: string
@@ -198,4 +200,7 @@ export type User = {
   postCode: string
   addressNumber: string
   addressComplement: string
+  order: {
+    data: Order[]
+  }
 }

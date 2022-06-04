@@ -9,24 +9,6 @@ import { BooleanFilterInput, IDFilterInput, ENUM_ORDER_DEACTIVATIONAUTHOR } from
 // GraphQL query operation: GetActiveOrder
 // ====================================================
 
-export interface GetActiveOrder_orders_data_attributes_users_permissions_user_data_attributes {
-  __typename: "UsersPermissionsUser";
-  phone: string;
-  email: string;
-  username: string;
-}
-
-export interface GetActiveOrder_orders_data_attributes_users_permissions_user_data {
-  __typename: "UsersPermissionsUserEntity";
-  id: string | null;
-  attributes: GetActiveOrder_orders_data_attributes_users_permissions_user_data_attributes | null;
-}
-
-export interface GetActiveOrder_orders_data_attributes_users_permissions_user {
-  __typename: "UsersPermissionsUserEntityResponse";
-  data: GetActiveOrder_orders_data_attributes_users_permissions_user_data | null;
-}
-
 export interface GetActiveOrder_orders_data_attributes_period_data_attributes {
   __typename: "Period";
   Type: string;
@@ -103,7 +85,6 @@ export interface GetActiveOrder_orders_data_attributes {
   createdAt: any | null;
   Title: string;
   isConfirmed: boolean | null;
-  users_permissions_user: GetActiveOrder_orders_data_attributes_users_permissions_user | null;
   deactivated: boolean | null;
   deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR | null;
   period: GetActiveOrder_orders_data_attributes_period | null;

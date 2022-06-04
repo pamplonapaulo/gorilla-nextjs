@@ -614,6 +614,7 @@ input UsersPermissionsUserFiltersInput {
   phone: StringFilterInput
   addressNumber: StringFilterInput
   addressComplement: StringFilterInput
+  order: OrderFiltersInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [UsersPermissionsUserFiltersInput]
@@ -635,6 +636,7 @@ input UsersPermissionsUserInput {
   phone: String
   addressNumber: String
   addressComplement: String
+  order: ID
 }
 
 type UsersPermissionsUser {
@@ -648,6 +650,7 @@ type UsersPermissionsUser {
   phone: String!
   addressNumber: String
   addressComplement: String
+  order: OrderEntityResponse
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -861,13 +864,13 @@ enum ENUM_ORDER_DEACTIVATIONAUTHOR {
 input OrderFiltersInput {
   id: IDFilterInput
   period: PeriodFiltersInput
-  users_permissions_user: UsersPermissionsUserFiltersInput
   pack: PackFiltersInput
   coupon: CouponFiltersInput
   isConfirmed: BooleanFilterInput
   Title: StringFilterInput
   deactivated: BooleanFilterInput
   deactivationAuthor: StringFilterInput
+  user: UsersPermissionsUserFiltersInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [OrderFiltersInput]
@@ -877,7 +880,6 @@ input OrderFiltersInput {
 
 input OrderInput {
   period: ID
-  users_permissions_user: ID
   snack: [ComponentPackItemInput]
   pack: ID
   deliveries: ComponentOrderDeliveryInput
@@ -888,11 +890,11 @@ input OrderInput {
   Title: String
   deactivated: Boolean
   deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR
+  user: ID
 }
 
 type Order {
   period: PeriodEntityResponse
-  users_permissions_user: UsersPermissionsUserEntityResponse
   snack(filters: ComponentPackItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPackItem]!
   pack: PackEntityResponse
   deliveries: ComponentOrderDelivery!
@@ -903,6 +905,7 @@ type Order {
   Title: String!
   deactivated: Boolean
   deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR
+  user: UsersPermissionsUserEntityResponse
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -919,6 +922,10 @@ type OrderEntityResponse {
 type OrderEntityResponseCollection {
   data: [OrderEntity!]!
   meta: ResponseCollectionMeta!
+}
+
+type OrderRelationResponseCollection {
+  data: [OrderEntity!]!
 }
 
 input PackFiltersInput {
@@ -1144,6 +1151,7 @@ type UsersPermissionsMe {
   addressNumber: String
   phone: String
   postCode: String
+  order: OrderRelationResponseCollection
 }
 
 type UsersPermissionsMeRole {
