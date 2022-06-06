@@ -1,9 +1,9 @@
 import * as S from './styles'
 
-import { User } from 'types/api'
+import { UserME } from 'types/api'
 
 type Props = {
-  user: User
+  user: UserME
 }
 
 const ProfileTemplate = ({ user }: Props) => {

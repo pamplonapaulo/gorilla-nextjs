@@ -1,7 +1,10 @@
 import { gql } from '@apollo/client'
 
 const GET_ME = gql`
-  query ME {
+  query ME(
+    $isConfirmed: BooleanFilterInput!
+    $deactivated: BooleanFilterInput!
+  ) {
     me {
       id
       username
@@ -10,7 +13,7 @@ const GET_ME = gql`
       postCode
       addressNumber
       addressComplement
-      order {
+      order(filters: { isConfirmed: $isConfirmed, deactivated: $deactivated }) {
         data {
           id
           attributes {

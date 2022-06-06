@@ -1151,7 +1151,7 @@ type UsersPermissionsMe {
   addressNumber: String
   phone: String
   postCode: String
-  order: OrderRelationResponseCollection
+  order(filters: OrderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): OrderRelationResponseCollection
 }
 
 type UsersPermissionsMeRole {

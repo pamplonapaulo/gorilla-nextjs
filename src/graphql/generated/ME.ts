@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ENUM_ORDER_DEACTIVATIONAUTHOR } from "./../../../false";
+import { BooleanFilterInput, ENUM_ORDER_DEACTIVATIONAUTHOR } from "./../../../false";
 
 // ====================================================
 // GraphQL query operation: ME
@@ -120,4 +120,9 @@ export interface ME_me {
 
 export interface ME {
   me: ME_me | null;
+}
+
+export interface MEVariables {
+  isConfirmed: BooleanFilterInput;
+  deactivated: BooleanFilterInput;
 }

@@ -201,6 +201,6 @@ export type UserME = {
   addressNumber: string
   addressComplement: string
   order: {
-    data: Order[]
+    data: Order[] | null
   }
 }

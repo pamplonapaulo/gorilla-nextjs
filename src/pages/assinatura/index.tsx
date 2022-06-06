@@ -13,7 +13,9 @@ type Props = {
 }
 
 export default function MySubscriptionPage(props: Props) {
-  return <MySubscriptionTemplate user={props.me} />
+  console.log(props.me)
+
+  return <MySubscriptionTemplate order={props.me.order.data} user={props.me} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -25,6 +27,14 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const user = await apolloClient.query<ME>({
     query: GET_ME,
+    variables: {
+      isConfirmed: {
+        eq: true,
+      },
+      deactivated: {
+        eq: false,
+      },
+    },
   })
 
   return {

@@ -5,15 +5,15 @@ import protectedRoutes from 'utils/protectedRoutes'
 import { GET_ME } from 'graphql/queries'
 import { ME } from 'graphql/generated/ME'
 
-import { User } from 'types/api'
+import { UserME } from 'types/api'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 type Props = {
-  user: User
+  me: UserME
 }
 
 export default function ProfilePage(props: Props) {
-  return <ProfileTemplate user={props.user} />
+  return <ProfileTemplate user={props.me} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -25,6 +25,14 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const user = await apolloClient.query<ME>({
     query: GET_ME,
+    variables: {
+      isConfirmed: {
+        eq: true,
+      },
+      deactivated: {
+        eq: false,
+      },
+    },
   })
 
   return {

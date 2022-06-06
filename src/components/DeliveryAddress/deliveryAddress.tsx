@@ -2,12 +2,12 @@ import React from 'react'
 
 import * as S from './styles'
 
-import { Address, Deliveries, User } from 'types/api'
+import { Address, Deliveries, UserME } from 'types/api'
 
 type Delivery = {
   address: Address
   delivery: Deliveries
-  customer: User
+  customer: UserME
 }
 
 const DeliveryAddress = ({ ...delivery }: Delivery) => (
