@@ -153,21 +153,15 @@ const PackPanel = ({ ...panelData }: PanelData) => {
     }
 
     axios
-      .post(
-        process.env.NEXT_PUBLIC_API_URL + '/orderIntent',
-        {
-          ...order,
-        },
-        {
-          headers,
-          // onDownloadProgress: (event) => {
-          //   const progress: number = Math.round(
-          //     (event.loaded * 100) / event.total
-          //   )
-          //   console.log(`Processamento: ${progress}% carregado... `)
-          // },
-        }
-      )
+      .post(process.env.NEXT_PUBLIC_API_URL + '/orderIntent', order, {
+        headers,
+        // onDownloadProgress: (event) => {
+        //   const progress: number = Math.round(
+        //     (event.loaded * 100) / event.total
+        //   )
+        //   console.log(`Processamento: ${progress}% carregado... `)
+        // },
+      })
       .then((response: AxiosResponse<unknown>) => {
         const id = typeof response.data === 'number' ? response.data : null
         router.push(

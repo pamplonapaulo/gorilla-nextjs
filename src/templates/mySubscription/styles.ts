@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Item = styled.div<{ isChecked?: boolean }>`
+export const Item = styled.div<{ isChecked?: boolean; noOrder?: boolean }>`
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid;
   border-color: ${(p) =>
@@ -46,7 +46,7 @@ export const Item = styled.div<{ isChecked?: boolean }>`
 
   &:nth-of-type(1) {
     @media only screen and (min-width: 1024px) {
-      margin-bottom: 10px;
+      margin-bottom: ${(p) => (p.noOrder ? '0' : '10px')};
     }
   }
 
@@ -55,32 +55,32 @@ export const Item = styled.div<{ isChecked?: boolean }>`
   min-width: 120px;
 
   @media only screen and (min-width: 1024px) {
-    margin: 0 15px;
+    margin: ${(p) => (p.noOrder ? '0' : '0 15px')};
     padding: 30px;
     min-width: 180px;
 
     &:nth-of-type(1) {
-      margin: 0 15px 0 0;
+      margin: ${(p) => (p.noOrder ? '0' : '0 15px 0 0')};
     }
   }
 `
 
-export const TextBigger = styled.h1`
+export const TextBigger = styled.h1<{ noOrder?: boolean }>`
   color: #fbc822;
   font-size: 2rem;
   font-style: italic;
   font-weight: 600;
-  margin: 4rem 15px 2rem 22px;
   margin: 4rem auto;
+  margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '4rem auto')};
   text-align: center;
   text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
 
   &&:nth-of-type(1) {
-    margin-top: 0;
+    margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '0 auto 4rem')};
 
     @media only screen and (min-width: 1024px) {
-      margin-top: -30px;
+      margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '-30px auto 4rem')};
     }
   }
 
@@ -94,7 +94,7 @@ export const TextBigger = styled.h1`
 
   @media only screen and (min-width: 1024px) {
     font-size: 3rem;
-    margin: 4rem 15px 2rem 0;
+    margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '4rem 15px 2rem 0')};
     text-align: unset;
   }
 `
@@ -127,42 +127,40 @@ export const Em = styled.em`
   text-transform: capitalize;
 `
 
-export const FlexCenter = styled.div`
+export const FlexCenter = styled.div<{ noOrder?: boolean }>`
   border-left: solid transparent 1px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 50px;
   margin-bottom: 2rem;
-  margin-left: -32px;
   overflow: visible;
   text-align: left;
-  width: calc(100% - 40px);
-  margin-left: 0;
-  padding: 0 10px;
+  width: ${(p) => (p.noOrder ? 'auto' : 'calc(100% - 40px)')};
+  margin: ${(p) => (p.noOrder ? '50px 0 0' : '50px 0 2rem')};
+  padding: ${(p) => (p.noOrder ? '0' : '0 10px')};
+  align-items: ${(p) => (p.noOrder ? 'center' : 'unset')};
 
   @media only screen and (min-width: 1024px) {
-    margin-top: 100px;
-    margin-left: -32px;
-    padding-left: 32px;
-    width: 900px;
+    margin: ${(p) => (p.noOrder ? '0' : '100px 0 2rem -32px')};
+    padding: ${(p) => (p.noOrder ? '0' : '0 10px 0 32px')};
+    width: ${(p) => (p.noOrder ? 'auto' : '900px')};
   }
 
   @media only screen and (min-width: 1260px) {
-    width: 1150px;
+    width: ${(p) => (p.noOrder ? 'auto' : '1150px')};
   }
 
   @media only screen and (min-width: 1300px) {
-    width: 1260px;
+    width: ${(p) => (p.noOrder ? 'auto' : '1260px')};
   }
 `
 
-export const Content = styled.div`
+export const Content = styled.div<{ noOrder?: boolean }>`
   backdrop-filter: blur(10px);
   background: rgba(28, 19, 11, 0.65);
   border: 1px solid #000;
   box-shadow: 0px 1px 3px #000;
-  display: flex;
+  display: ${(p) => (p.noOrder ? 'table' : 'flex')};
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 3;
@@ -170,7 +168,7 @@ export const Content = styled.div`
   justify-content: start;
   width: auto;
   margin: 0;
-  padding: 10px;
+  padding: ${(p) => (p.noOrder ? '30px' : '10px')};
   text-align: center;
   transform-origin: bottom;
   transform: translateY(0%);
@@ -179,7 +177,7 @@ export const Content = styled.div`
     flex-direction: row;
     height: unset;
     margin: unset;
-    padding: 30px 30px 23px;
+    padding: ${(p) => (p.noOrder ? '30px' : '30px 30px 23px')};
     text-align: unset;
     flex-flow: row nowrap;
     overflow-x: scroll;
@@ -194,7 +192,6 @@ export const Content = styled.div`
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none !important;
-
     border: 1px solid transparent;
     height: 2px !important;
     width: 2px !important;
@@ -223,7 +220,7 @@ export const Content = styled.div`
       width: auto;
 
       &:nth-of-type(1) {
-        margin-bottom: 12px;
+        margin-bottom: ${(p) => (p.noOrder ? '0' : '12px')};
 
         @media only screen and (min-width: 1024px) {
           margin-bottom: unset;
@@ -290,10 +287,6 @@ export const Content = styled.div`
       @media only screen and (min-width: 1024px) {
         font-size: 13px;
       }
-    }
-
-    @media only screen and (min-width: 1024px) {
-      /* padding: 30px 30px 23px; */
     }
   }
 

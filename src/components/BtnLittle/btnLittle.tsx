@@ -9,6 +9,7 @@ type Props = {
   text: string
   height?: string
   dangerMode?: boolean
+  parentCallback?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 const BtnLittle = ({
@@ -17,19 +18,34 @@ const BtnLittle = ({
   text,
   height = '70px',
   dangerMode = false,
-}: Props) => (
-  <>
-    <Link
-      as={as}
-      href={{
-        pathname: pathname,
-      }}
-    >
-      <S.Wrap height={height} dangerMode={dangerMode}>
-        <S.Btn dangerMode={dangerMode}>{text}</S.Btn>
-      </S.Wrap>
-    </Link>
-  </>
-)
+  parentCallback,
+}: Props) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (parentCallback) {
+      parentCallback(e)
+    }
+  }
+
+  return (
+    <>
+      <Link
+        as={as}
+        href={{
+          pathname: pathname,
+        }}
+      >
+        <S.Wrap height={height} dangerMode={dangerMode}>
+          {!parentCallback && <S.Btn dangerMode={dangerMode}>{text}</S.Btn>}
+          {parentCallback && (
+            <S.Btn dangerMode={dangerMode} onClick={(e) => handleClick(e)}>
+              {text}
+            </S.Btn>
+          )}
+        </S.Wrap>
+      </Link>
+    </>
+  )
+}
 
 export default BtnLittle

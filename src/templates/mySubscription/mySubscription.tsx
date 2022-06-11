@@ -1,14 +1,18 @@
 import * as S from './styles'
 
+import { useSession } from 'next-auth/client'
+
 import { UserME, Order, OrderSnack } from 'types/api'
 
 import TruckDelivery from 'components/TruckDelivery'
 import Bills from 'components/Bills'
 import BtnLittle from 'components/BtnLittle'
 
+import handleCancellationRequest from 'utils/handleCancellationRequest'
+
 type Props = {
-  order: Order[] | null
-  user: UserME
+  order?: Order[] | null
+  user?: UserME
 }
 
 type Delivery = {
@@ -18,6 +22,8 @@ type Delivery = {
 import { formatCurrency } from 'utils/formatCurrency'
 
 const MySubscriptionTemplate = ({ order, user }: Props) => {
+  const [session] = useSession()
+
   const convertTimestamp = (timestamp: string) => {
     const months = [
       'Janeiro',
@@ -70,8 +76,24 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
 
   return (
     <>
-      <S.FlexCenter>
-        {order && (
+      <S.FlexCenter noOrder={!order}>
+        {!user && !order && (
+          <>
+            <S.TextBigger noOrder={!order}>Assinatura inexistente</S.TextBigger>
+            <S.Content noOrder={!order}>
+              <S.Item noOrder={!order}>
+                <BtnLittle
+                  as={'/'}
+                  pathname={'/'}
+                  text={'Voltar'}
+                  height={'50px'}
+                  dangerMode={false}
+                />
+              </S.Item>
+            </S.Content>
+          </>
+        )}
+        {user && order && (
           <>
             <S.TextBigger>Assinatura</S.TextBigger>
             <S.Content>
@@ -179,6 +201,9 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
                 text={'Cancelar'}
                 height={'50px'}
                 dangerMode={true}
+                parentCallback={() =>
+                  handleCancellationRequest('cancelOrder', session?.jwt)
+                }
               />
             </S.Content>
           </>
