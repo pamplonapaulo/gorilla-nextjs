@@ -9,16 +9,14 @@ import { UserME } from 'types/api'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 type Props = {
-  me: UserME
+  me: UserME | null
 }
 
 export default function CheckoutPage(props: Props) {
-  console.log(props.me)
-
-  if (props.me.order !== null) {
+  if (props.me) {
     return <CheckoutTemplate order={props.me.order.data} user={props.me} />
   } else {
-    return null
+    return <CheckoutTemplate />
   }
 }
 
@@ -26,24 +24,31 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const session = await protectedRoutes(context)
-
   const apolloClient = initializeApollo(null, session)
 
-  const user = await apolloClient.query<ME>({
-    query: GET_ME,
-    variables: {
-      isConfirmed: {
-        eq: true,
+  try {
+    const user = await apolloClient.query<ME>({
+      query: GET_ME,
+      variables: {
+        isConfirmed: {
+          eq: true,
+        },
+        deactivated: {
+          eq: false,
+        },
       },
-      deactivated: {
-        eq: false,
-      },
-    },
-  })
+    })
 
-  return {
-    props: {
-      me: user.data.me,
-    },
+    return {
+      props: {
+        me: user.data.me,
+      },
+    }
+  } catch {
+    return {
+      props: {
+        me: null,
+      },
+    }
   }
 }

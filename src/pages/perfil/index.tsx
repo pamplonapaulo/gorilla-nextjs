@@ -9,35 +9,48 @@ import { UserME } from 'types/api'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 type Props = {
-  me: UserME
+  me: UserME | null
 }
 
 export default function ProfilePage(props: Props) {
-  return <ProfileTemplate user={props.me} />
+  if (props.me) {
+    return <ProfileTemplate user={props.me} />
+  } else {
+    return <ProfileTemplate />
+  }
 }
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const session = await protectedRoutes(context)
-
   const apolloClient = initializeApollo(null, session)
 
-  const user = await apolloClient.query<ME>({
-    query: GET_ME,
-    variables: {
-      isConfirmed: {
-        eq: true,
+  try {
+    const user = await apolloClient.query<ME>({
+      query: GET_ME,
+      variables: {
+        isConfirmed: {
+          eq: true,
+        },
+        deactivated: {
+          eq: false,
+        },
       },
-      deactivated: {
-        eq: false,
-      },
-    },
-  })
+    })
 
-  return {
-    props: {
-      me: user.data.me,
-    },
+    console.log(user)
+
+    return {
+      props: {
+        me: user.data.me,
+      },
+    }
+  } catch {
+    return {
+      props: {
+        me: null,
+      },
+    }
   }
 }

@@ -7,6 +7,8 @@ const GET_ME = gql`
   ) {
     me {
       id
+      confirmed
+      blocked
       username
       email
       phone

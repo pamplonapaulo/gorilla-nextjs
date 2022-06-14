@@ -1,13 +1,19 @@
 import styled from 'styled-components'
 
-export const Wrap = styled.div<{ height?: string; dangerMode?: boolean }>`
+type WrapProps = {
+  height?: string
+  dangerMode?: boolean
+  noScale?: boolean
+}
+
+export const Wrap = styled.div<WrapProps>`
   width: 190px;
   display: flex;
   justify-content: center;
 
   height: unset;
-  //transform: scale(0.65);
-  transform: ${(p) => (p.dangerMode ? 'scale(1)' : 'scale(0.65)')};
+  transform: ${(p) =>
+    p.dangerMode ? 'scale(1)' : p.noScale ? 'scale(1)' : 'scale(0.65)'};
 
   @media only screen and (min-width: 1024px) {
     height: ${(p) => (p.height ? p.height : '70px')};

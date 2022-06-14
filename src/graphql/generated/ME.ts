@@ -109,6 +109,8 @@ export interface ME_me_order {
 export interface ME_me {
   __typename: "UsersPermissionsMe";
   id: string;
+  confirmed: boolean | null;
+  blocked: boolean | null;
   username: string;
   email: string | null;
   phone: string | null;

@@ -65,22 +65,24 @@ export const Item = styled.div<{ isChecked?: boolean; noOrder?: boolean }>`
   }
 `
 
-export const TextBigger = styled.h1<{ noOrder?: boolean }>`
+export const TextBigger = styled.h1<{ noOrder?: boolean; redirect?: boolean }>`
   color: #fbc822;
   font-size: 2rem;
   font-style: italic;
   font-weight: 600;
-  margin: 4rem auto;
-  margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '4rem auto')};
+  margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : p.redirect ? '0' : '4rem auto')};
   text-align: center;
   text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
+  width: 100%;
 
   &&:nth-of-type(1) {
-    margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '0 auto 4rem')};
+    margin: ${(p) =>
+      p.noOrder ? '0 0 2rem 0' : p.redirect ? '0' : '0 auto 4rem'};
 
     @media only screen and (min-width: 1024px) {
-      margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '-30px auto 4rem')};
+      margin: ${(p) =>
+        p.noOrder ? '0 0 2rem 0' : p.redirect ? '0' : '-30px auto 4rem'};
     }
   }
 
@@ -94,8 +96,9 @@ export const TextBigger = styled.h1<{ noOrder?: boolean }>`
 
   @media only screen and (min-width: 1024px) {
     font-size: 3rem;
-    margin: ${(p) => (p.noOrder ? '0 0 2rem 0' : '4rem 15px 2rem 0')};
-    text-align: unset;
+    margin: ${(p) =>
+      p.noOrder ? '0 0 2rem 0' : p.redirect ? '0' : '4rem 15px 2rem 0'};
+    text-align: ${(p) => (p.redirect ? 'center' : 'left')};
   }
 `
 
@@ -406,10 +409,11 @@ export const Column = styled.div`
   flex-direction: column;
 `
 
-export const Row = styled.div`
+export const Row = styled.div<{ redirect?: boolean }>`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: ${(p) => (p.redirect ? 'space-evenly' : 'space-between')};
+  width: ${(p) => (p.redirect ? '100%' : 'unset')};
 
   &:nth-of-type(1) {
     ${Column} {

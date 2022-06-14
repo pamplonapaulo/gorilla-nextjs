@@ -9,6 +9,7 @@ type Props = {
   text: string
   height?: string
   dangerMode?: boolean
+  noScale?: boolean
   parentCallback?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
@@ -18,6 +19,7 @@ const BtnLittle = ({
   text,
   height = '70px',
   dangerMode = false,
+  noScale,
   parentCallback,
 }: Props) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,16 +34,16 @@ const BtnLittle = ({
       <Link
         as={as}
         href={{
-          pathname: pathname,
+          pathname,
         }}
       >
-        <S.Wrap height={height} dangerMode={dangerMode}>
-          {!parentCallback && <S.Btn dangerMode={dangerMode}>{text}</S.Btn>}
-          {parentCallback && (
-            <S.Btn dangerMode={dangerMode} onClick={(e) => handleClick(e)}>
-              {text}
-            </S.Btn>
-          )}
+        <S.Wrap height={height} dangerMode={dangerMode} noScale={noScale}>
+          <S.Btn
+            {...(parentCallback && { onClick: (e) => handleClick(e) })}
+            dangerMode={dangerMode}
+          >
+            {text}
+          </S.Btn>
         </S.Wrap>
       </Link>
     </>
