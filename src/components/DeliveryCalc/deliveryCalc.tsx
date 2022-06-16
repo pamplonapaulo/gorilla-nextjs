@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from 'axios'
 import { endpoint } from 'lib/apollo/client'
 
 import { formatCurrency } from 'utils/formatCurrency'
+import { postcodeMask } from 'utils/formValidations'
 
 import { Snack } from 'types/api'
 
@@ -38,8 +39,8 @@ const DeliveryCalc = ({
   }, [forceReset])
 
   useEffect(() => {
-    if (postCodeMask(postcode).length > 8) {
-      setFullPostcode(postCodeMask(postcode).replace('-', ''))
+    if (postcodeMask(postcode).length > 8) {
+      setFullPostcode(postcodeMask(postcode).replace('-', ''))
     }
   }, [postcode])
 
@@ -97,20 +98,14 @@ const DeliveryCalc = ({
     }
   }, [pack, fullPostcode, parentCallback])
 
-  const postCodeMask = (value: string) =>
-    value
-      .replace(/\D+/g, '')
-      .replace(/(\d{5})(\d)/, '$1-$2')
-      .replace(/(-\d{3})\d+?$/, '$1')
-
   const handleChangePostCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPostcode(postCodeMask(e.target.value))
+    setPostcode(postcodeMask(e.target.value))
 
-    if (postCodeMask(e.target.value).length > 8) {
-      setFullPostcode(postCodeMask(e.target.value).replace('-', ''))
+    if (postcodeMask(e.target.value).length > 8) {
+      setFullPostcode(postcodeMask(e.target.value).replace('-', ''))
     }
 
-    if (postcode.length > 8 && postCodeMask(e.target.value).length < 9) {
+    if (postcode.length > 8 && postcodeMask(e.target.value).length < 9) {
       setFullPostcode('')
       setDeliveryFee(false)
       parentCallback(false, 0, fullPostcode)

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const TextBigger = styled.h1`
   color: #fbc822;
+  cursor: default;
   font-size: 2rem;
   font-style: italic;
   font-weight: 600;
@@ -66,6 +67,7 @@ export const Span = styled.span<{ isLowercase?: boolean }>`
 
 export const Text = styled.p`
   color: inherit;
+  cursor: default;
   display: flex;
   flex-direction: column;
   font-size: 13px;
@@ -78,6 +80,7 @@ export const Text = styled.p`
     font-weight: 500;
     font-size: 16px;
     font-style: italic;
+    text-transform: none;
   }
 `
 
@@ -127,11 +130,11 @@ export const Content = styled.div`
       width: 100%;
 
       &:nth-of-type(1) {
-        margin-right: 15px;
+        margin: 0 15px 0 0;
       }
 
       &:nth-of-type(2) {
-        margin-left: 15px;
+        margin: 0 0 0 15px;
       }
     }
   }
@@ -219,15 +222,14 @@ export const Row = styled.div`
 
     &:nth-of-type(2) {
       margin-bottom: 4rem;
-
-      @media only screen and (min-width: 1024px) {
-        margin-bottom: unset;
-      }
     }
 
     @media only screen and (min-width: 1024px) {
-      align-items: unset;
-      padding: 10px;
+      padding: 30px;
+
+      &:nth-of-type(1) {
+        margin-bottom: 4rem;
+      }
     }
   }
 

@@ -13,11 +13,11 @@ type Props = {
 }
 
 export default function CheckoutPage(props: Props) {
-  if (props.me) {
-    return <CheckoutTemplate order={props.me.order.data} user={props.me} />
-  } else {
-    return <CheckoutTemplate />
-  }
+  return (
+    <CheckoutTemplate
+      {...(props.me && { user: props.me, order: props.me.order.data })}
+    />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (

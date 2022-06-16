@@ -13,11 +13,7 @@ type Props = {
 }
 
 export default function ProfilePage(props: Props) {
-  if (props.me) {
-    return <ProfileTemplate user={props.me} />
-  } else {
-    return <ProfileTemplate />
-  }
+  return <ProfileTemplate {...(props.me && { user: props.me })} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -38,8 +34,6 @@ export const getServerSideProps: GetServerSideProps = async (
         },
       },
     })
-
-    console.log(user)
 
     return {
       props: {

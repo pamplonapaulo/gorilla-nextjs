@@ -11,10 +11,7 @@ type Props = {
 const Select = ({ parentCallback, label, options }: Props) => {
   const [dropDown, setDropDown] = useState(false)
   const [selected, setSelected] = useState(options[0])
-  const handleSelect = (e: React.MouseEvent<HTMLSelectElement>) => {
-    console.log(e.target)
-    console.log(e)
-    console.log('paulo')
+  const handleSelect = () => {
     setDropDown(!dropDown)
   }
 
@@ -27,7 +24,7 @@ const Select = ({ parentCallback, label, options }: Props) => {
   return (
     <S.Wrapper>
       <S.Label>{label}</S.Label>
-      <S.Select onClick={(e) => handleSelect(e)} value={selected}>
+      <S.Select onClick={handleSelect} value={selected}>
         {options.map((opt) => (
           <S.Option key={opt}>{opt}</S.Option>
         ))}
