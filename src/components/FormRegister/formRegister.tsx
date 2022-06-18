@@ -184,19 +184,13 @@ const FormRegister = () => {
   }
 
   const createCustomer = () => {
-    const variables = {
-      data: {
-        ...inputData,
-      },
-    }
-
     axios
       .post(process.env.NEXT_PUBLIC_API_URL + '/auth/local/register', {
-        username: variables.data.username,
-        email: variables.data.email,
-        password: variables.data.password,
-        postCode: variables.data.postCode,
-        phone: variables.data.phone,
+        username: inputData.username,
+        email: inputData.email,
+        password: inputData.password,
+        postCode: inputData.postCode,
+        phone: inputData.phone,
       })
       .then((response: AxiosResponse<unknown>) => {
         console.log(response)

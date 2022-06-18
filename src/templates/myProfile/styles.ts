@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
-export const TextBigger = styled.h1`
+export const TextBigger = styled.h1<{ redirect?: boolean }>`
   color: #fbc822;
   cursor: default;
   font-size: 2rem;
   font-style: italic;
   font-weight: 600;
-  margin: 0 0 4rem;
+  margin: ${(p) => (p.redirect ? '0' : '4rem auto')};
   text-align: center;
   text-shadow: 0px 1px 2px #000;
   text-transform: uppercase;
@@ -15,7 +15,7 @@ export const TextBigger = styled.h1`
   @media only screen and (min-width: 1024px) {
     font-size: 3rem;
     margin: 0;
-    text-align: left;
+    text-align: ${(p) => (p.redirect ? 'center' : 'left')};
   }
 `
 
@@ -173,8 +173,11 @@ export const Break = styled.br`
   }
 `
 
-export const Input = styled.input`
-  color: #fbc822;
+export const Input = styled.input<{ isValid?: boolean }>`
+  background: ${(p) =>
+    p.isValid ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 0, 0, 0.1)'};
+  border-color: ${(p) => (p.isValid ? 'rgba(255, 255, 255, 0.3)' : '#FF0000')};
+  color: ${(p) => (p.isValid ? '#fbc822' : '#FF0000')};
   height: 30px;
   margin: 0.35em 0 0.85em 0;
   outline: none;
@@ -183,8 +186,6 @@ export const Input = styled.input`
   outline-width: 1px;
   border-width: 1px;
   padding: 0;
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
   font-weight: 300;
   font-size: 16px;
   font-style: italic;
@@ -192,7 +193,7 @@ export const Input = styled.input`
   transition: 0.2s all;
 
   &::-webkit-input-placeholder {
-    color: $color-white;
+    color: ${(p) => (p.isValid ? 'rgb(117, 117, 117)' : '#FF0000')};
     letter-spacing: 1.5px;
     font-weight: 400;
     letter-spacing: 1px;
@@ -209,11 +210,24 @@ export const Input = styled.input`
   }
 `
 
-export const Row = styled.div`
+export const Column = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+`
+
+export const Row = styled.div<{ redirect?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: ${(p) => (p.redirect ? 'space-evenly' : 'space-between')};
   width: 100%;
+
+  &:nth-of-type(1) {
+    ${Column} {
+      &:nth-of-type(2) {
+        margin-left: 30px;
+      }
+    }
+  }
 
   ${Content} {
     margin-top: 2rem !important;
@@ -239,5 +253,24 @@ export const Row = styled.div`
     ${Content} {
       max-width: 255px;
     }
+  }
+`
+
+export const Items = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  margin: 0;
+  justify-content: start;
+  width: unset;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10% 10% 0;
+
+  @media only screen and (min-width: 1024px) {
+    width: unset;
+    justify-content: unset;
+    flex-wrap: unset;
+    padding: unset;
   }
 `

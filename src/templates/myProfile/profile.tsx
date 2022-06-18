@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 
+import { useSession } from 'next-auth/client'
+import { useRouter } from 'next/router'
+
 import * as S from './styles'
 
 import { UserME } from 'types/api'
@@ -7,18 +10,35 @@ import { UserME } from 'types/api'
 import BtnLittle from 'components/BtnLittle'
 
 import { postcodeMask, phoneMask } from 'utils/formValidations'
+import handleCancellationRequest from 'utils/handleCancellationRequest'
 
 type Props = {
   user?: UserME | null
 }
 
 const ProfileTemplate = ({ user }: Props) => {
+  const [session] = useSession()
+  const router = useRouter()
+  const [hideProfile, setHideProfile] = useState(false)
+  const [actionType, setActionType] = useState('')
+
   const [inputData, setInputData] = useState({
     postCode: user ? user.postCode : '',
     phone: user ? user.phone : '',
     addressNumber: user ? user.addressNumber : '',
     addressComplement: user ? user.addressComplement : '',
   })
+  const [countDown, setCountDown] = useState(5)
+
+  useEffect(() => {
+    hideProfile &&
+      countDown >= 1 &&
+      setTimeout(() => setCountDown(countDown - 1), 1500)
+
+    if (countDown === 0) {
+      router.push({ pathname: '/' }, '/')
+    }
+  }, [countDown, hideProfile, router])
 
   const [validation, setValidation] = useState({
     postCode: true,
@@ -27,128 +47,78 @@ const ProfileTemplate = ({ user }: Props) => {
     addressComplement: true,
   })
 
-  useEffect(() => {
-    console.log(inputData)
-  }, [inputData])
-
-  useEffect(() => {
-    console.log(validation)
-  }, [validation])
-
   const handleFocusIn = (e: React.FocusEvent<HTMLInputElement>) => {
     if (window.innerWidth < 1024) {
       window.scrollTo(0, e.target.offsetTop - 75)
     }
   }
 
-  const handleFocusOut = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target
+    let condition
 
-    if (target.name === 'postCode' && inputData.postCode.length === 9) {
-      setValidation({
-        ...validation,
-        [target.name]: true,
+    if (target.name === 'postCode') {
+      const postCode = postcodeMask(target.value)
+      setInputData({
+        ...inputData,
+        [target.name]: postCode,
       })
-    } else if (target.name === 'postCode' && inputData.postCode.length !== 9) {
-      setValidation({
-        ...validation,
-        [target.name]: false,
-      })
+      condition = postCode.length === 9 ? true : false
     }
 
-    if (target.name === 'phone' && inputData.phone.length === 15) {
-      setValidation({
-        ...validation,
-        [target.name]: true,
+    if (target.name === 'phone') {
+      const phone = phoneMask(target.value)
+      setInputData({
+        ...inputData,
+        [target.name]: phone,
       })
-    } else if (target.name === 'phone' && inputData.phone.length !== 15) {
-      setValidation({
-        ...validation,
-        [target.name]: false,
-      })
+      condition = phone.length === 15 ? true : false
     }
 
     if (
       target.name === 'addressNumber' &&
       target.value.length <= 15 &&
-      target.value.length >= 1
+      target.value.length >= 0
     ) {
-      setValidation({
-        ...validation,
-        [target.name]: true,
-      })
-    } else if (
-      (target.name === 'addressNumber' && target.value.length > 15) ||
-      (target.name === 'addressNumber' && target.value.length < 1)
-    ) {
-      setValidation({
-        ...validation,
-        [target.name]: false,
-      })
-    }
-
-    if (
-      target.name === 'addressComplement' &&
-      target.value.length <= 15 &&
-      target.value.length >= 1
-    ) {
-      setValidation({
-        ...validation,
-        [target.name]: true,
-      })
-    } else if (
-      target.name === 'addressComplement' &&
-      target.value.length > 15
-    ) {
-      setValidation({
-        ...validation,
-        [target.name]: false,
-      })
-    }
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target
-
-    if (target.name === 'postCode')
-      setInputData({
-        ...inputData,
-        [target.name]: postcodeMask(target.value),
-      })
-
-    if (target.name === 'phone')
-      setInputData({
-        ...inputData,
-        [target.name]: phoneMask(target.value),
-      })
-
-    if (target.name === 'addressNumber' && target.value.length <= 15)
       setInputData({
         ...inputData,
         [target.name]: target.value,
       })
+      condition =
+        target.value.length <= 15 && target.value.length >= 1 ? true : false
+    }
 
-    if (target.name === 'addressComplement' && target.value.length <= 15)
+    if (target.name === 'addressComplement' && target.value.length <= 15) {
       setInputData({
         ...inputData,
         [target.name]: target.value,
       })
+      condition = target.value.length <= 15 ? true : false
+    }
+
+    setValidation({
+      ...validation,
+      [target.name]: condition,
+    })
   }
 
-  const handleUpdateCustomer = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleUpdateCustomer = () => {
     const errors = []
-
-    console.log(e)
 
     if (
       inputData.postCode.length === 9 &&
       inputData.phone.length === 15 &&
       inputData.addressNumber.length > 0 &&
       inputData.addressComplement.length <= 15
-    )
-      console.log('updateCustomer()')
+    ) {
+      handleCancellationRequest(
+        'updateUser',
+        session?.jwt,
+        setHideProfile,
+        inputData
+      )
+      setActionType('update')
+    }
 
     if (inputData.postCode.length !== 9) {
       errors.push('postCode')
@@ -180,7 +150,7 @@ const ProfileTemplate = ({ user }: Props) => {
   return (
     <S.FlexCenter>
       {!user && <h1>Usuário inexistente</h1>}
-      {user && (
+      {!hideProfile && user && (
         <>
           <S.TextBigger>Meu perfil</S.TextBigger>
           <S.Content>
@@ -214,7 +184,8 @@ const ProfileTemplate = ({ user }: Props) => {
                     pattern="(\(\d{2}\))(\d{5})-(\d{4})"
                     onChange={handleInputChange}
                     onFocus={handleFocusIn}
-                    onBlur={handleFocusOut}
+                    // onBlur={handleFocusOut}
+                    isValid={validation.phone}
                   />
                 </S.Text>
               </S.Item>
@@ -228,7 +199,7 @@ const ProfileTemplate = ({ user }: Props) => {
                     pattern="(\d{5})-(\d{3})"
                     onChange={handleInputChange}
                     onFocus={handleFocusIn}
-                    onBlur={handleFocusOut}
+                    isValid={validation.postCode}
                   />
                 </S.Text>
               </S.Item>
@@ -241,7 +212,7 @@ const ProfileTemplate = ({ user }: Props) => {
                     name="addressNumber"
                     onChange={handleInputChange}
                     onFocus={handleFocusIn}
-                    onBlur={handleFocusOut}
+                    isValid={validation.addressNumber}
                   />
                 </S.Text>
               </S.Item>
@@ -254,7 +225,7 @@ const ProfileTemplate = ({ user }: Props) => {
                     name="addressComplement"
                     onChange={handleInputChange}
                     onFocus={handleFocusIn}
-                    onBlur={handleFocusOut}
+                    isValid={validation.addressComplement}
                   />
                 </S.Text>
               </S.Item>
@@ -267,7 +238,7 @@ const ProfileTemplate = ({ user }: Props) => {
                 height={'50px'}
                 dangerMode={false}
                 noScale={true}
-                parentCallback={(e) => handleUpdateCustomer(e)}
+                parentCallback={handleUpdateCustomer}
               />
             </S.Content>
             <S.Content>
@@ -275,11 +246,40 @@ const ProfileTemplate = ({ user }: Props) => {
                 text={'Deletar'}
                 height={'50px'}
                 dangerMode={true}
-                parentCallback={() => console.log('DELETAR PERFIL')}
+                parentCallback={() =>
+                  handleCancellationRequest(
+                    'cancelUser',
+                    session?.jwt,
+                    setHideProfile
+                  )
+                }
               />
             </S.Content>
           </S.Row>
         </>
+      )}
+      {hideProfile && (
+        <S.Content>
+          <S.Row redirect={true}>
+            <S.Column>
+              <S.Items>
+                <S.TextBigger redirect={true}>
+                  {actionType === 'update'
+                    ? 'Atualização efetuada'
+                    : 'Cancelamento efetuado'}{' '}
+                  <br /> com sucesso!
+                </S.TextBigger>
+              </S.Items>
+            </S.Column>
+            <S.Column>
+              <S.Items>
+                <S.TextBigger redirect={true}>
+                  Redirecionando <br /> para a home... {countDown}
+                </S.TextBigger>
+              </S.Items>
+            </S.Column>
+          </S.Row>
+        </S.Content>
       )}
     </S.FlexCenter>
   )

@@ -5,7 +5,13 @@ import { Dispatch, SetStateAction } from 'react'
 const handleCancellationRequest = (
   type: string,
   jwt: string | unknown,
-  callback: Dispatch<SetStateAction<boolean>>
+  callback: Dispatch<SetStateAction<boolean>>,
+  data?: {
+    postCode: string
+    phone: string
+    addressNumber: string
+    addressComplement: string
+  }
 ) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -15,7 +21,7 @@ const handleCancellationRequest = (
   axios
     .post(
       process.env.NEXT_PUBLIC_API_URL + '/cancellation',
-      { type },
+      { type, data },
       {
         headers,
       }

@@ -225,26 +225,24 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
         </>
       )}
       {hideOrder && (
-        <>
-          <S.Content>
-            <S.Row redirect={true}>
-              <S.Column>
-                <S.Items>
-                  <S.TextBigger redirect={true}>
-                    Cancelamento efetuado <br /> com sucesso!
-                  </S.TextBigger>
-                </S.Items>
-              </S.Column>
-              <S.Column>
-                <S.Items>
-                  <S.TextBigger redirect={true}>
-                    Redirecionando <br /> para a home... {countDown}
-                  </S.TextBigger>
-                </S.Items>
-              </S.Column>
-            </S.Row>
-          </S.Content>
-        </>
+        <S.Content>
+          <S.Row redirect={true}>
+            <S.Column>
+              <S.Items>
+                <S.TextBigger redirect={true}>
+                  Cancelamento efetuado <br /> com sucesso!
+                </S.TextBigger>
+              </S.Items>
+            </S.Column>
+            <S.Column>
+              <S.Items>
+                <S.TextBigger redirect={true}>
+                  Redirecionando <br /> para a home... {countDown}
+                </S.TextBigger>
+              </S.Items>
+            </S.Column>
+          </S.Row>
+        </S.Content>
       )}
     </S.FlexCenter>
   )
