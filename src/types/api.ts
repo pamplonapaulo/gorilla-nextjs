@@ -178,6 +178,7 @@ export type Period = {
 }
 
 export type Order = {
+  id: string
   attributes: {
     Title: string
     address: Address

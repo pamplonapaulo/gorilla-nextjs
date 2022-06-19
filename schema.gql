@@ -614,7 +614,7 @@ input UsersPermissionsUserFiltersInput {
   phone: StringFilterInput
   addressNumber: StringFilterInput
   addressComplement: StringFilterInput
-  order: OrderFiltersInput
+  orders: OrderFiltersInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [UsersPermissionsUserFiltersInput]
@@ -636,7 +636,7 @@ input UsersPermissionsUserInput {
   phone: String
   addressNumber: String
   addressComplement: String
-  order: ID
+  orders: [ID]
 }
 
 type UsersPermissionsUser {
@@ -650,7 +650,7 @@ type UsersPermissionsUser {
   phone: String!
   addressNumber: String
   addressComplement: String
-  order: OrderEntityResponse
+  orders(filters: OrderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): OrderRelationResponseCollection
   createdAt: DateTime
   updatedAt: DateTime
 }

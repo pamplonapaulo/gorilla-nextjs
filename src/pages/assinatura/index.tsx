@@ -13,11 +13,9 @@ type Props = {
 }
 
 export default function MySubscriptionPage(props: Props) {
-  return (
-    <MySubscriptionTemplate
-      {...(props.me && { user: props.me, order: props.me.order.data })}
-    />
-  )
+  const order = props.me?.order.data?.length === 0 ? null : props.me?.order.data
+
+  return <MySubscriptionTemplate {...(props.me && { user: props.me, order })} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (

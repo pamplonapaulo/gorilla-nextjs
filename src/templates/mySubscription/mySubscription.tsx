@@ -91,7 +91,7 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
 
   return (
     <S.FlexCenter noOrder={!order}>
-      {!user && !order && (
+      {user && !order && (
         <>
           <S.TextBigger noOrder={!order}>Assinatura inexistente</S.TextBigger>
           <S.Content noOrder={!order}>

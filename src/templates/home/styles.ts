@@ -24,13 +24,12 @@ export const T = styled.h1`
 
 export const FlexCenter = styled.div`
   display: flex;
-  overflow: visible;
+  flex-direction: column;
   justify-content: space-between;
+  overflow: visible;
   width: calc(100vw - 50px);
   margin-top: 16px;
   margin-bottom: 2rem;
-
-  flex-direction: column;
   text-align: center;
 
   @media only screen and (min-width: 320px) {

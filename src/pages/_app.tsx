@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import NextNProgress from 'nextjs-progressbar'
 import { Provider as AuthProvider } from 'next-auth/client'
+import { useRouter } from 'next/router'
 
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -20,6 +21,13 @@ import { useApollo } from 'utils/apollo'
 
 function App({ Component, pageProps }: AppProps) {
   const client = useApollo(pageProps.initialApoloState)
+  const pageWrap = useRef<HTMLDivElement>(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    pageWrap.current?.scrollTo(0, 0)
+  }, [router.asPath])
+
   return (
     <AuthProvider session={pageProps.session}>
       <ApolloProvider client={client}>
@@ -39,7 +47,7 @@ function App({ Component, pageProps }: AppProps) {
         <PacksProvider>
           <UserProvider>
             <OverlayProvider>
-              <ContainerOuter>
+              <ContainerOuter ref={pageWrap}>
                 <Header />
                 <ContainerInner>
                   <LoginOverlay />
@@ -66,6 +74,7 @@ const ContainerOuter = styled.div`
   padding-top: 70px;
   -ms-overflow-style: none;
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
