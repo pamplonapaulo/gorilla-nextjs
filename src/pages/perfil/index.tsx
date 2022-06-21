@@ -19,6 +19,11 @@ export default function ProfilePage(props: Props) {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=3, stale-while-revalidate=6'
+  )
+
   const session = await protectedRoutes(context)
   const apolloClient = initializeApollo(null, session)
 

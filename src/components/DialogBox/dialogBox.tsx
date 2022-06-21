@@ -13,6 +13,7 @@ const DialogBox = () => {
   const [display, setDisplay] = useState(true)
   const [freeDelivery, setFreeDelivery] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [disclaimer, setDisclaimer] = useState(true)
 
   const apolloClient = initializeApollo()
 
@@ -40,15 +41,47 @@ const DialogBox = () => {
 
   return (
     <>
-      <S.Overlay
-        onClick={handleTurnItOff}
-        isHidden={visibility}
-        isDisplayed={display}
-      >
+      <S.Overlay isHidden={visibility} isDisplayed={display}>
         <S.Wrap isOff={visibility}>
           {isLoading && <Loader isHidden={false} />}
 
-          {!isLoading && (
+          {disclaimer && !isLoading && (
+            <>
+              {/* <S.LogoWrapper>
+                <Brand />
+              </S.LogoWrapper> */}
+
+              <S.FlexCenter isColumn disclaimer>
+                <S.LogoWrapper disclaimer>
+                  <Brand />
+                </S.LogoWrapper>
+
+                <S.Alert>Navegação segura:</S.Alert>
+                <S.Alert>
+                  Para uma melhor experiência de navegação, quando você estiver
+                  logado conosco seu browser armazenará por alguns minutos
+                  apenas seu nome, email e chave de autenticação.
+                </S.Alert>
+                <S.Alert>
+                  As transações financeiras aqui realizadas são operadas via
+                  integração direta com plataforma independente e reconhecida
+                  globalmente, dispensando a loja Gorilla Pack de todo e
+                  qualquer armazenamento de dados sensíveis da sua forma de
+                  pagamento.
+                </S.Alert>
+                <S.Alert>
+                  Ao prosseguir você concorda com os termos apresentados acima.
+                </S.Alert>
+              </S.FlexCenter>
+              <S.FlexCenter>
+                <BtnLittle
+                  parentCallback={() => setDisclaimer(false)}
+                  text={'Concordo'}
+                />
+              </S.FlexCenter>
+            </>
+          )}
+          {!disclaimer && !isLoading && (
             <>
               <S.LogoWrapper>
                 <Brand />
@@ -62,7 +95,7 @@ const DialogBox = () => {
                 </S.Txt>
               </S.FlexCenter>
               <S.FlexCenter>
-                <BtnLittle text={'Entendi'} />
+                <BtnLittle parentCallback={handleTurnItOff} text={'Entendi'} />
               </S.FlexCenter>
             </>
           )}

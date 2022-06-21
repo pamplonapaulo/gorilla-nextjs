@@ -23,6 +23,11 @@ export default function CheckoutPage(props: Props) {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=3, stale-while-revalidate=6'
+  )
+
   const session = await protectedRoutes(context)
   const apolloClient = initializeApollo(null, session)
 
@@ -31,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (
       query: GET_ME,
       variables: {
         isConfirmed: {
-          eq: true,
+          eq: false,
         },
         deactivated: {
           eq: false,

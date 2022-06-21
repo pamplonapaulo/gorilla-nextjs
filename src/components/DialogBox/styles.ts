@@ -21,10 +21,8 @@ export const Overlay = styled.div<{ isHidden: boolean; isDisplayed: boolean }>`
 export const Wrap = styled.div<{ isOff: boolean }>`
   background: rgb(28, 19, 11);
   box-shadow: 0px 0px 1px rgb(255 255 255 / 75%);
-  /* display: block; */
   flex-direction: column;
   height: calc(90vh - 70px);
-  /* justify-content: space-around; */
   margin: 70px auto 0;
   opacity: ${(p) => (p.isOff ? '0' : '1')};
   padding: 0;
@@ -36,11 +34,24 @@ export const Wrap = styled.div<{ isOff: boolean }>`
   justify-content: space-evenly;
 
   @media only screen and (min-width: 1024px) {
-    //display: flex;
     height: 700px;
     justify-content: space-between;
     padding: 4rem;
     width: 700px;
+  }
+`
+
+export const Alert = styled.h5`
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 10px;
+  margin-left: -10px;
+  text-align: left;
+
+  @media only screen and (min-width: 1024px) {
+    text-align: justify;
   }
 `
 
@@ -75,7 +86,10 @@ export const Txt = styled.h5<{ hasMark?: boolean }>`
   }
 `
 
-export const FlexCenter = styled.div<{ isColumn?: boolean }>`
+export const FlexCenter = styled.div<{
+  isColumn?: boolean
+  disclaimer?: boolean
+}>`
   align-self: ${(p) => (p.isColumn ? 'center' : 'unset')};
   bottom: ${(p) => (p.isColumn ? 'unset' : '1rem')};
   display: flex;
@@ -87,21 +101,22 @@ export const FlexCenter = styled.div<{ isColumn?: boolean }>`
 
   @media only screen and (min-width: 1024px) {
     bottom: unset;
-    padding: ${(p) => (p.isColumn ? '6rem 5rem 0' : '0')};
+    padding: ${(p) => (p.disclaimer ? '0' : p.isColumn ? '6rem 5rem 0' : '0')};
     position: relative;
-    width: ${(p) => (p.isColumn ? '75%' : 'unset')};
+    width: ${(p) => (p.disclaimer ? '100%' : p.isColumn ? '75%' : 'unset')};
   }
 `
 
-export const LogoWrapper = styled.div`
+export const LogoWrapper = styled.div<{ disclaimer?: boolean }>`
   align-self: unset;
-  display: flex;
+  display: ${(p) => (p.disclaimer ? 'none' : 'flex')};
   flex-direction: row;
   justify-content: center;
-  /* padding-bottom: 2rem; */
   padding-top: 1rem;
 
   @media only screen and (min-width: 1024px) {
+    display: flex;
+    margin-bottom: ${(p) => (p.disclaimer ? '10rem' : '0')};
     padding: 0;
     width: unset;
   }
