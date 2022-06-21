@@ -9,5 +9,10 @@ export const Svg = styled.svg`
 
   @media only screen and (min-width: 1024px) {
     max-width: 400px;
+    transition: 0.15s transform ease-in-out;
+
+    &:hover {
+      transform: scale(0.85);
+    }
   }
 `

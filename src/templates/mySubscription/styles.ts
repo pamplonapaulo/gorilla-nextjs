@@ -230,6 +230,10 @@ export const Content = styled.div<{ noOrder?: boolean }>`
         }
       }
 
+      &:nth-of-type(4) {
+        margin-right: 0;
+      }
+
       ${Text}:nth-of-type(1) {
         margin-right: 30px;
         font-size: 13px;
@@ -246,6 +250,10 @@ export const Content = styled.div<{ noOrder?: boolean }>`
       ${Text} {
         text-transform: unset;
       }
+    }
+
+    @media only screen and (min-width: 1024px) {
+      justify-content: center;
     }
   }
 

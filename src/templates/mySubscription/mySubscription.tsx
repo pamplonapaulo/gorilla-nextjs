@@ -121,6 +121,8 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
                   Adesão: {convertTimestamp(order[0].attributes.createdAt)}
                 </S.Span>
               </S.Text>
+            </S.Item>
+            <S.Item>
               <S.Text>
                 <S.Span>Contratante: {user.username}</S.Span>
 
@@ -131,7 +133,6 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
                 </S.Span>
               </S.Text>
             </S.Item>
-
             <S.Item>
               <S.Text>
                 <S.Span>
@@ -143,7 +144,9 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
                   Complemento: {order[0].attributes.address.complemento}
                 </S.Span>
               </S.Text>
+            </S.Item>
 
+            <S.Item>
               <S.Text>
                 <S.Span>Bairro: {order[0].attributes.address.bairro}</S.Span>
                 <S.Span>

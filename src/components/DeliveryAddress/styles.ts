@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Column = styled.div`
   display: flex;
@@ -43,21 +43,37 @@ export const Row = styled.div`
   }
 `
 
-export const Label = styled.label`
-  color: #ee7416;
-  color: #fbc822;
+export const Label = styled.label<{ isInvalid?: boolean }>`
+  color: ${(p) => (p.isInvalid ? '#FF0000' : '#fbc822')};
   font-weight: 300;
   font-size: 1.35em;
-  /* font-style: italic; */
   text-transform: uppercase;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
 `
 
-export const Input = styled.input<{ width: string }>`
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  border-width: 1px;
+const readOnly = css`
+  background: transparent;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 1);
   color: #fbc822;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 1.35em;
+  margin-top: 0;
+  padding: 0;
+  text-shadow: 1px 1px 0px rgb(0 0 0 / 50%);
+`
+
+export const Input = styled.input<{
+  width: string
+  isValid?: boolean
+  readOnly?: boolean
+}>`
+  background: ${(p) =>
+    p.isValid ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 0, 0, 0.1)'};
+  border-color: ${(p) => (p.isValid ? 'rgba(255, 255, 255, 0.3)' : '#FF0000')};
+  border-width: 1px;
+  color: ${(p) => (p.isValid ? '#fbc822' : '#FF0000')};
   font-weight: 300;
   font-size: 16px;
   font-style: italic;
@@ -73,8 +89,11 @@ export const Input = styled.input<{ width: string }>`
   transition: 0.2s all;
   width: 100%;
 
+  ${(p) => p.readOnly && readOnly}
+
   &::-webkit-input-placeholder {
     color: $color-white;
+    color: ${(p) => (p.isValid ? '$color-white' : '#FF0000')};
     letter-spacing: 1.5px;
     font-weight: 400;
     letter-spacing: 1px;
@@ -112,15 +131,6 @@ export const Text = styled.h1`
   font-style: italic;
   font-weight: 600;
   text-shadow: 0px 1px 2px #000;
-  /* margin-bottom: 2rem; */
-
-  /* @media only screen and (min-width: 1024px) {
-    &&:first-child {
-      &&::after {
-        content: ':';
-      }
-    }
-  } */
 
   span {
     font-size: 15px;
@@ -129,7 +139,6 @@ export const Text = styled.h1`
   }
 
   &&:nth-of-type(2) {
-    /* color: #fff; */
     white-space: nowrap;
   }
 

@@ -115,8 +115,18 @@ const DeliveryCalc = ({
   return (
     <>
       <S.Wrap>
-        <S.Label>Digite o CEP para as entregas:</S.Label>
-        <S.Input value={postcode} onChange={handleChangePostCode} />
+        <S.Label>
+          {previouslySavedPostcode.length === 9
+            ? 'CEP previamente cadastrado:'
+            : 'Digite o CEP para as entregas:'}
+        </S.Label>
+        <S.Input
+          {...(previouslySavedPostcode.length === 9 && {
+            readOnly: true,
+          })}
+          value={postcode}
+          onChange={handleChangePostCode}
+        />
         <S.Label isHidden={typeof deliveryFee === 'boolean'}>
           Custo de cada frete:
         </S.Label>
