@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Button from 'components/Button'
 
+import axios, { AxiosResponse } from 'axios'
+import { useSession } from 'next-auth/client'
+
 import * as S from './styles'
 
 import { ExpectedPayments } from 'types/api'
@@ -11,11 +14,70 @@ type Billing = {
 }
 
 const Billing = ({ ...billing }: Billing) => {
-  const [loading] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [coupon, setCoupon] = useState({
+    name: '',
+    discountInCentavos: 0,
+  })
+  const [valueToPay, setValueToPay] = useState<number>(
+    billing.otherValues.finalValueInCentavos
+  )
+
+  const [session] = useSession()
+
+  const handleSetCoupon = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCoupon({
+      ...coupon,
+      name: e.target.value,
+    })
+  }
 
   const handleCupon = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-    console.log('handle cupon...')
+    setLoading(true)
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + session?.jwt,
+    }
+
+    interface ServerData {
+      success: {
+        id: number
+        monthsMultiplier: number
+        finalValueInCentavos: number
+        absoluteDiscountApplied: number
+        contentCostBeforeDiscount: number
+        finalValueInCentavosWithCoupon: number
+        absoluteCouponDiscountAppliedInCentavos: number
+      }
+    }
+
+    axios
+      .post<ServerData>(
+        process.env.NEXT_PUBLIC_API_URL + '/coupon-handler',
+        {
+          name: coupon.name,
+        },
+        {
+          headers,
+        }
+      )
+      .then((res: AxiosResponse<ServerData>) => {
+        setValueToPay(res.data.success.finalValueInCentavosWithCoupon)
+        setCoupon({
+          ...coupon,
+          discountInCentavos:
+            res.data.success.absoluteCouponDiscountAppliedInCentavos,
+        })
+        setLoading(false)
+        // melhorar a UX do carregamento, está rápido demais.
+      })
+      .catch((err) => {
+        console.log(err)
+        // preparar alerta de cupom rejeitado
+        setLoading(false)
+      })
   }
 
   return (
@@ -25,7 +87,11 @@ const Billing = ({ ...billing }: Billing) => {
           <S.Text>Cupom</S.Text>
           <div>
             <S.Wrap>
-              <S.Input width="140px" />
+              <S.Input
+                value={coupon.name}
+                onChange={handleSetCoupon}
+                width="140px"
+              />
             </S.Wrap>
             <Button
               disabled={loading}
@@ -57,7 +123,7 @@ const Billing = ({ ...billing }: Billing) => {
           </S.LittleText>
           <S.LittleText>
             <span>Cupom:</span>
-            <span>R$ 0,00</span>
+            <span>- R$ {coupon.discountInCentavos / 100}</span>
           </S.LittleText>
           <S.LittleText>
             <span>Frete:</span>
@@ -65,7 +131,7 @@ const Billing = ({ ...billing }: Billing) => {
           </S.LittleText>
           <S.LittleText>
             <span>Total por mês:</span>
-            <span>R$ {billing.otherValues.finalValueInCentavos / 100}</span>
+            <span>R$ {valueToPay / 100}</span>
           </S.LittleText>
         </S.Column>
       </S.Prices>

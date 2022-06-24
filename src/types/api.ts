@@ -154,6 +154,8 @@ export type ExpectedPayments = {
   monthsMultiplier: number
   finalValueInCentavos: number
   absoluteDiscountApplied: number
+  finalValueInCentavosWithCoupon: number | null
+  absoluteCouponDiscountAppliedInCentavos: number | null
 }
 
 export type Address = {

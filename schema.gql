@@ -372,6 +372,8 @@ input ComponentOrderExpectedPaymentsInput {
   payments: [ID]
   absoluteDiscountApplied: Float
   contentCostBeforeDiscount: Float
+  finalValueInCentavosWithCoupon: Int
+  absoluteCouponDiscountAppliedInCentavos: Int
 }
 
 type ComponentOrderExpectedPayments {
@@ -381,6 +383,8 @@ type ComponentOrderExpectedPayments {
   payments(filters: PaymentFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): PaymentRelationResponseCollection
   absoluteDiscountApplied: Float!
   contentCostBeforeDiscount: Float
+  finalValueInCentavosWithCoupon: Int
+  absoluteCouponDiscountAppliedInCentavos: Int
 }
 
 input ComponentPackBenefitsFiltersInput {
@@ -720,10 +724,12 @@ input CouponFiltersInput {
   id: IDFilterInput
   isActive: BooleanFilterInput
   expiration: DateFilterInput
-  quantity: IntFilterInput
+  notTaken: IntFilterInput
   type: StringFilterInput
   name: StringFilterInput
   discount: FloatFilterInput
+  takenBeforePayment: IntFilterInput
+  takenAfterPayment: IntFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [CouponFiltersInput]
@@ -734,19 +740,23 @@ input CouponFiltersInput {
 input CouponInput {
   isActive: Boolean
   expiration: Date
-  quantity: Int
+  notTaken: Int
   type: ENUM_COUPON_TYPE
   name: String
   discount: Float
+  takenBeforePayment: Int
+  takenAfterPayment: Int
 }
 
 type Coupon {
   isActive: Boolean
   expiration: Date
-  quantity: Int
+  notTaken: Int
   type: ENUM_COUPON_TYPE!
   name: String!
   discount: Float!
+  takenBeforePayment: Int
+  takenAfterPayment: Int
   createdAt: DateTime
   updatedAt: DateTime
 }

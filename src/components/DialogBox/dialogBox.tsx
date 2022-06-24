@@ -47,10 +47,6 @@ const DialogBox = () => {
 
           {disclaimer && !isLoading && (
             <>
-              {/* <S.LogoWrapper>
-                <Brand />
-              </S.LogoWrapper> */}
-
               <S.FlexCenter isColumn disclaimer>
                 <S.LogoWrapper disclaimer>
                   <Brand />
