@@ -8,7 +8,7 @@ type Props = {
   pathname?: string
   text: string
   height?: string
-  dangerMode?: boolean
+  dangerMode?: boolean | null
   noScale?: boolean
   parentCallback?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }

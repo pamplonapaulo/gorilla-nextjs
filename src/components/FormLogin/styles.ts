@@ -5,10 +5,6 @@ const show = keyframes`
  100% { opacity: 1; }
 `
 
-// type Props = {
-//   isValid: boolean
-// }
-
 export const Container = styled.div`
   padding: 0;
   z-index: 9;

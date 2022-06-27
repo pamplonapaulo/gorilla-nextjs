@@ -206,4 +206,5 @@ export type UserME = {
   order: {
     data: Order[] | null
   }
+  updatedAt: string
 }

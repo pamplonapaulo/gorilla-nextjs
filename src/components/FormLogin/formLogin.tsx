@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
 import { signIn } from 'next-auth/client'
+import { useRouter } from 'next/router'
+import { useOverlay } from 'contexts'
 
 import Button from 'components/Button'
 import ErrorMessage from 'components/ErrorMessage'
@@ -19,10 +20,18 @@ const FormLogin = () => {
     email: '',
     password: '',
   })
+  const router = useRouter()
+  const { setOverlay } = useOverlay()
 
   const [message, setMessage] = useState('')
 
   const [loading, setLoading] = useState(false)
+
+  const handleForgot = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    setOverlay(false)
+    router.push({ pathname: '/forgot-password' }, '/forgot-password')
+  }
 
   const handleFocusOut = (e: React.FocusEvent<HTMLInputElement>) => {
     const target = e.target
@@ -133,7 +142,9 @@ const FormLogin = () => {
             onBlur={handleFocusOut}
             isValid={validation.password}
           />
-          <S.Forgot href="#">Esqueceu a senha?</S.Forgot>
+          <S.Forgot href="forgot-password" onClick={(e) => handleForgot(e)}>
+            Esqueceu a senha?
+          </S.Forgot>
         </S.Field>
       </S.Form>
       <div>

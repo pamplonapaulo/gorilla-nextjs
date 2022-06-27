@@ -89,11 +89,6 @@ const DeliveryCalc = ({
         .then((response: AxiosResponse<ServerData>) => {
           setDeliveryFee(response.data.quotation.fee)
           parentCallback(true, response.data.quotation.fee, fullPostcode)
-
-          // if (response?.data?.quotation) {
-          //   setDeliveryFee(response.data.quotation.fee)
-          //   parentCallback(true, response.data.quotation.fee, fullPostcode)
-          // }
         })
         .catch((err: { response: unknown }) => {
           if (err instanceof Error) throw new Error(err.message, { cause: err })

@@ -1161,6 +1161,7 @@ type UsersPermissionsMe {
   addressNumber: String
   phone: String
   postCode: String
+  updatedAt: String
   order(filters: OrderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): OrderRelationResponseCollection
 }
 
