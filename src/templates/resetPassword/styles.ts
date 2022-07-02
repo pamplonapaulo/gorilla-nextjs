@@ -73,26 +73,6 @@ export const Input = styled.input<{ isValid: boolean }>`
   }
 `
 
-// export const TextBigger = styled.h1`
-//   color: #fbc822;
-//   font-size: 2rem;
-//   font-style: italic;
-//   font-weight: 600;
-//   text-align: center;
-//   text-shadow: 0px 1px 2px #000;
-//   text-transform: uppercase;
-//   width: 100%;
-
-//   margin-bottom: 2rem;
-//   line-height: 1.5;
-
-//   @media only screen and (min-width: 1024px) {
-//     font-size: 3rem;
-//     line-height: 1;
-//     margin-bottom: 4rem;
-//   }
-// `
-
 export const TextBigger = styled.p`
   cursor: default;
   display: flex;
@@ -174,19 +154,32 @@ export const Content = styled.div<{ noOrder?: boolean }>`
   }
 
   &::-webkit-scrollbar {
-    display: none;
+    width: 1px;
+    height: 7px !important;
+    border: 1px solid transparent;
+    margin-bottom: 3px !important;
   }
 
   &::-webkit-slider-thumb {
-    display: none;
+    -webkit-appearance: none !important;
+    border: 1px solid transparent;
+    height: 2px !important;
+    width: 2px !important;
   }
 
   &::-webkit-scrollbar-thumb {
-    display: none;
+    background: #fbc822;
+    outline: none !important;
+    width: 1px !important;
+    height: 2px !important;
+    width: 2px !important;
+    margin: 1px;
   }
 
   &::-webkit-scrollbar-track {
-    display: none;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.01);
+    height: 2px !important;
+    width: 2px !important;
   }
 `
 
