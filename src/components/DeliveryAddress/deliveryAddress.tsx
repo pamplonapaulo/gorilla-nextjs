@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import * as S from './styles'
 
@@ -28,24 +28,8 @@ const DeliveryAddress = ({ ...delivery }: Delivery) => {
   })
   const [recordSuccess, setRecordSuccess] = useState(false)
 
-  useEffect(() => {
-    console.log('recordSuccess: ', recordSuccess)
-
-    // display little saved alert
-
-    // if (recordSuccess) {
-    //   handleCancellationRequest(
-    //     'updateOrder',
-    //     session?.jwt,
-    //     setRecordSuccess,
-    //     inputData
-    //   )
-    // }
-  }, [recordSuccess])
-
   const saveChanges = () => {
-    return null
-
+    console.log('recordSuccess:', recordSuccess)
     handleCancellationRequest(
       'updateUserAndOrder',
       session?.jwt,

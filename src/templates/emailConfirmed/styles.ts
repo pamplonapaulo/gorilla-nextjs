@@ -1,25 +1,5 @@
 import styled from 'styled-components'
 
-// export const TextBigger = styled.h1`
-//   color: #fbc822;
-//   font-size: 2rem;
-//   font-style: italic;
-//   font-weight: 600;
-//   text-align: center;
-//   text-shadow: 0px 1px 2px #000;
-//   text-transform: uppercase;
-//   width: 100%;
-
-//   margin-bottom: 2rem;
-//   line-height: 1.5;
-
-//   @media only screen and (min-width: 1024px) {
-//     font-size: 3rem;
-//     line-height: 1;
-//     margin-bottom: 4rem;
-//   }
-// `
-
 export const TextBigger = styled.p`
   cursor: default;
   display: flex;

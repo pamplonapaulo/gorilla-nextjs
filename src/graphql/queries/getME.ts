@@ -68,6 +68,7 @@ const GET_ME = gql`
                 }
               }
             }
+            paymentIntent
           }
         }
       }

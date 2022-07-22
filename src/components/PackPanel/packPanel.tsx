@@ -58,7 +58,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
   const router = useRouter()
   const [session] = useSession()
 
-  console.log(session)
+  // console.log(session)
 
   const mountedRef = useRef(true)
 

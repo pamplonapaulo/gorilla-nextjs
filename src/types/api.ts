@@ -192,6 +192,7 @@ export type Order = {
     isConfirmed?: boolean
     deactivated?: boolean
     deactivationAuthor: string | null
+    paymentIntent?: string
   }
 }
 

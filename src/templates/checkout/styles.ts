@@ -88,9 +88,9 @@ export const FlexCenter = styled.div`
     border-image: linear-gradient(
       to bottom,
       #fbc822 20%,
-      #fbc822 90%,
-      rgba(0, 0, 0, 0) 90%,
-      rgba(0, 0, 0, 0) 90%
+      #fbc822 73%,
+      rgba(0, 0, 0, 0) 73%,
+      rgba(0, 0, 0, 0) 73%
     );
     border-image-slice: 1;
 
