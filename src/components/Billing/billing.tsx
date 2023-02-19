@@ -20,7 +20,7 @@ const Billing = ({ ...billing }: Billing) => {
     discountInCentavos: 0,
   })
   const [valueToPay, setValueToPay] = useState<number>(
-    billing.otherValues.finalValueInCentavos
+    billing.otherValues.finalValue
   )
 
   const [session] = useSession()
@@ -45,10 +45,10 @@ const Billing = ({ ...billing }: Billing) => {
       success: {
         id: number
         monthsMultiplier: number
-        finalValueInCentavos: number
+        finalValue: number
         absoluteDiscountApplied: number
         contentCostBeforeDiscount: number
-        finalValueInCentavosWithCoupon: number
+        finalValueWithCoupon: number
         absoluteCouponDiscountAppliedInCentavos: number
       }
     }
@@ -64,7 +64,7 @@ const Billing = ({ ...billing }: Billing) => {
         }
       )
       .then((res: AxiosResponse<ServerData>) => {
-        setValueToPay(res.data.success.finalValueInCentavosWithCoupon)
+        setValueToPay(res.data.success.finalValueWithCoupon)
         setCoupon({
           ...coupon,
           discountInCentavos:

@@ -86,12 +86,9 @@ const CheckoutTemplate = ({ order, user }: Props) => {
               <Elements options={options} stripe={stripePromise}>
                 <Payment
                   months={order[0].attributes.period.data.attributes.Multiplier}
-                  value={
-                    order[0].attributes.expectedPayments.finalValueInCentavos
-                  }
+                  value={order[0].attributes.expectedPayments.finalValue}
                   valueWithCoupon={
-                    order[0].attributes.expectedPayments
-                      .finalValueInCentavosWithCoupon
+                    order[0].attributes.expectedPayments.finalValueWithCoupon
                   }
                 />
               </Elements>

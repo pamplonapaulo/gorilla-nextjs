@@ -200,8 +200,7 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
                 <S.Text>
                   R${' '}
                   {formatCurrency(
-                    order[0].attributes.expectedPayments.finalValueInCentavos /
-                      100
+                    order[0].attributes.expectedPayments.finalValue / 100
                   )}
                 </S.Text>
                 <Bills isOn={isPast(d.stamp)} />

@@ -36,8 +36,8 @@ const OrderSummary = ({ ...summary }: Summary) => (
         <S.LittleText>
           <span>
             R${' '}
-            {summary.toPay?.finalValueInCentavos
-              ? summary.toPay?.finalValueInCentavos / 100
+            {summary.toPay?.finalValue
+              ? summary.toPay?.finalValue / 100
               : 'erro'}
           </span>
 
