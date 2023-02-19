@@ -93,9 +93,11 @@ export const getStaticProps = async ({ params }: Params) => {
     const snack = {
       id: parseInt(p.product.data.id),
       Quantity: p.Quantity,
-      photo:
-        p.product.data.attributes.Image.data.attributes['hash'] +
-        p.product.data.attributes.Image.data.attributes['ext'],
+      photo: p.product.data.attributes.Name + '.png',
+
+      // photo:
+      //   p.product.data.attributes.Image.data.attributes['hash'] +
+      //   p.product.data.attributes.Image.data.attributes['ext'],
     }
     currentPack.push(snack)
   })
