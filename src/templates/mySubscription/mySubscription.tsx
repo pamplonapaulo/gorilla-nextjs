@@ -113,7 +113,7 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
           <S.Content>
             <S.Item>
               <S.Text>
-                <S.Span>Pack: {order[0].attributes.Title}</S.Span>
+                <S.Span>Pack: {order[0].attributes.title}</S.Span>
                 <S.Span>
                   Contrato: {order[0].attributes.period.data.attributes.Type}
                 </S.Span>

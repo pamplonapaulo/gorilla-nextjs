@@ -56,7 +56,7 @@ const CheckoutTemplate = ({ order, user }: Props) => {
           <S.Text step="1">Resumo da assinatura</S.Text>
           <S.Content>
             <OrderSummary
-              title={order[0].attributes.Title}
+              title={order[0].attributes.title}
               snacks={order[0].attributes.snack}
               plans={order[0].attributes.period.data}
               toPay={order[0].attributes.expectedPayments}
