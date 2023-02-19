@@ -18,6 +18,7 @@ export interface BooleanFilterInput {
   or?: (boolean | null)[] | null;
   not?: BooleanFilterInput | null;
   eq?: boolean | null;
+  eqi?: boolean | null;
   ne?: boolean | null;
   startsWith?: boolean | null;
   endsWith?: boolean | null;

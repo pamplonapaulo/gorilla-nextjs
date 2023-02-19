@@ -20,9 +20,13 @@ const PackTemplate = ({ ...packData }: PackData) => (
             key={p.id}
             Quantity={p.Quantity}
             Name={p.product.data.attributes.Name}
+            // ImageFile={
+            //   '/uploads/small_' +
+            //   p.product.data.attributes.Image.data.attributes['hash'] +
+            //   p.product.data.attributes.Image.data.attributes['ext']
+            // }
             ImageFile={
-              '/uploads/small_' +
-              p.product.data.attributes.Image.data.attributes['hash'] +
+              p.product.data.attributes.Name +
               p.product.data.attributes.Image.data.attributes['ext']
             }
             NutritionFacts={p.product.data.attributes.NutritionFacts}

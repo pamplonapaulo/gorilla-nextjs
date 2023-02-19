@@ -6,7 +6,7 @@ const GET_BENEFITS = gql`
       data {
         id
         attributes {
-          Benefit
+          benefit
         }
       }
     }

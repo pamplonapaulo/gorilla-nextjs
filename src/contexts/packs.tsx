@@ -32,10 +32,12 @@ type Props = {
 const PacksProvider = ({ children }: Props) => {
   const [packs, setPacks] = useState<Pack[] | []>([])
 
-  // React.useEffect(() => {
-  //   const currentUser = false
-  //   setPacks(currentUser)
-  // }, [])
+  /*
+  React.useEffect(() => {
+    const currentPack: Pack[] | [] = []
+    setPacks(currentPack)
+  }, [])
+  */
 
   return <CtxProvider value={{ packs, setPacks }}>{children}</CtxProvider>
 }

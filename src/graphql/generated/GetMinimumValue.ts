@@ -9,7 +9,7 @@
 
 export interface GetMinimumValue_minimumPackValue_data_attributes {
   __typename: "MinimumPackValue";
-  MinimumValue: number;
+  MinimumValue: any;
 }
 
 export interface GetMinimumValue_minimumPackValue_data {

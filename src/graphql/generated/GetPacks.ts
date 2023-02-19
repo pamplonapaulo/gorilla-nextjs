@@ -9,7 +9,7 @@
 
 export interface GetPacks_packs_data_attributes_Benefits_benefits_data_attributes {
   __typename: "Benefit";
-  Benefit: string;
+  benefit: string;
 }
 
 export interface GetPacks_packs_data_attributes_Benefits_benefits_data {
@@ -29,10 +29,42 @@ export interface GetPacks_packs_data_attributes_Benefits {
   benefits: GetPacks_packs_data_attributes_Benefits_benefits | null;
 }
 
+export interface GetPacks_packs_data_attributes_Item_product_data_attributes_prices_mensal {
+  __typename: "ComponentPricesMensal";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetPacks_packs_data_attributes_Item_product_data_attributes_prices_trimestral {
+  __typename: "ComponentPricesTrimestral";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetPacks_packs_data_attributes_Item_product_data_attributes_prices_semestral {
+  __typename: "ComponentPricesSemestral";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetPacks_packs_data_attributes_Item_product_data_attributes_prices_anual {
+  __typename: "ComponentPricesAnual";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetPacks_packs_data_attributes_Item_product_data_attributes_prices {
+  __typename: "ComponentPricePrices";
+  mensal: GetPacks_packs_data_attributes_Item_product_data_attributes_prices_mensal;
+  trimestral: GetPacks_packs_data_attributes_Item_product_data_attributes_prices_trimestral;
+  semestral: GetPacks_packs_data_attributes_Item_product_data_attributes_prices_semestral;
+  anual: GetPacks_packs_data_attributes_Item_product_data_attributes_prices_anual;
+}
+
 export interface GetPacks_packs_data_attributes_Item_product_data_attributes {
   __typename: "Product";
   Name: string;
-  BaseValue: number;
+  prices: GetPacks_packs_data_attributes_Item_product_data_attributes_prices;
 }
 
 export interface GetPacks_packs_data_attributes_Item_product_data {
@@ -56,8 +88,8 @@ export interface GetPacks_packs_data_attributes_Item {
 export interface GetPacks_packs_data_attributes {
   __typename: "Pack";
   Name: string;
-  Description: string;
-  ExtraDiscount: number;
+  Description: string | null;
+  ExtraDiscount: number | null;
   Benefits: GetPacks_packs_data_attributes_Benefits[];
   Item: (GetPacks_packs_data_attributes_Item | null)[];
 }

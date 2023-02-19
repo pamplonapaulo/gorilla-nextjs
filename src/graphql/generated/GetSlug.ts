@@ -9,7 +9,7 @@
 
 export interface GetSlug_pack_data_attributes_Benefits_benefits_data_attributes {
   __typename: "Benefit";
-  Benefit: string;
+  benefit: string;
 }
 
 export interface GetSlug_pack_data_attributes_Benefits_benefits_data {
@@ -86,8 +86,8 @@ export interface GetSlug_pack_data_attributes_Item {
 export interface GetSlug_pack_data_attributes {
   __typename: "Pack";
   Name: string;
-  Description: string;
-  ExtraDiscount: number;
+  Description: string | null;
+  ExtraDiscount: number | null;
   Benefits: GetSlug_pack_data_attributes_Benefits[];
   Item: (GetSlug_pack_data_attributes_Item | null)[];
 }

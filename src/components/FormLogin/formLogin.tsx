@@ -107,6 +107,7 @@ const FormLogin = () => {
 
     if (result?.error) {
       setLoading(false)
+      console.log(result)
       console.error(result?.error)
       setMessage(result?.error)
     }

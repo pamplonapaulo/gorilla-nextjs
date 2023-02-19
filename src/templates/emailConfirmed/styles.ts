@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const TextBigger = styled.p`
+  text-align: center;
   cursor: default;
   display: flex;
   flex-direction: column;
@@ -114,9 +115,9 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media only screen and (min-width: 1024px) {
+  /* @media only screen and (min-width: 1024px) {
     ${Content} {
       width: 50%;
     }
-  }
+  } */
 `

@@ -1,6 +1,15 @@
 import { createGlobalStyle } from 'styled-components'
+//import NeutraTextBold from '../../public/'
+//import RobotoWoff2 from './fonts/roboto-condensed-v19-latin-regular.woff2'
 
 const GlobalStyles = createGlobalStyle`
+
+  /* @font-face {
+    font-family: 'NeutraBold';
+    src: url(${NeutraTextBold}) format('otf'),
+        url(${RobotoWoff}) format('woff');
+  } */
+
   * {
     margin: 0;
     padding: 0;

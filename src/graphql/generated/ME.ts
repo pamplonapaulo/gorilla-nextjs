@@ -29,16 +29,16 @@ export interface ME_me_order_data_attributes_address {
   numero: string | null;
   complemento: string | null;
   bairro: string | null;
-  municipio: string | null;
-  uf: string | null;
-  cep: string | null;
+  municipio: string;
+  uf: string;
+  cep: string;
 }
 
 export interface ME_me_order_data_attributes_expectedPayments {
   __typename: "ComponentOrderExpectedPayments";
-  absoluteDiscountApplied: number;
-  contentCostBeforeDiscount: number | null;
-  finalValueInCentavos: any;
+  absoluteDiscountApplied: any;
+  contentCostBeforeDiscount: any;
+  finalValue: any;
   monthsMultiplier: number | null;
 }
 
@@ -83,16 +83,17 @@ export interface ME_me_order_data_attributes_snack {
 
 export interface ME_me_order_data_attributes {
   __typename: "Order";
-  Title: string;
+  title: string;
   isConfirmed: boolean | null;
   deactivated: boolean | null;
   deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR | null;
   createdAt: any | null;
-  deliveries: ME_me_order_data_attributes_deliveries;
-  address: ME_me_order_data_attributes_address | null;
-  expectedPayments: ME_me_order_data_attributes_expectedPayments | null;
+  deliveries: (ME_me_order_data_attributes_deliveries | null)[];
+  address: ME_me_order_data_attributes_address;
+  expectedPayments: (ME_me_order_data_attributes_expectedPayments | null)[];
   period: ME_me_order_data_attributes_period | null;
   snack: (ME_me_order_data_attributes_snack | null)[];
+  paymentIntent: string;
 }
 
 export interface ME_me_order_data {
@@ -115,6 +116,7 @@ export interface ME_me {
   email: string | null;
   phone: string | null;
   postCode: string | null;
+  stripe_customer: string | null;
   addressNumber: string | null;
   addressComplement: string | null;
   order: ME_me_order | null;

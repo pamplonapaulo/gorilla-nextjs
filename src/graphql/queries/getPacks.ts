@@ -15,7 +15,7 @@ const GET_PACKS = gql`
               data {
                 id
                 attributes {
-                  Benefit
+                  benefit
                 }
               }
             }
@@ -28,7 +28,24 @@ const GET_PACKS = gql`
                 id
                 attributes {
                   Name
-                  BaseValue
+                  prices {
+                    mensal {
+                      priceId
+                      centavos
+                    }
+                    trimestral {
+                      priceId
+                      centavos
+                    }
+                    semestral {
+                      priceId
+                      centavos
+                    }
+                    anual {
+                      priceId
+                      centavos
+                    }
+                  }
                 }
               }
             }

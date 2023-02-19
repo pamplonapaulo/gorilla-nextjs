@@ -15,7 +15,7 @@ const GET_SLUG = gql`
               data {
                 id
                 attributes {
-                  Benefit
+                  benefit
                 }
               }
             }

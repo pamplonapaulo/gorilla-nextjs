@@ -8,7 +8,8 @@ import * as S from './styles'
 import { initializeApollo } from 'utils/apollo'
 import { GET_PRODUCT, GET_MINIMUM_VALUE } from 'graphql/queries'
 
-import { formatCurrency } from 'utils/formatCurrency'
+// import { formatCurrency } from 'utils/formatCurrency'
+import { formatCents } from 'utils/formatCents'
 
 import { Snack, Plans, ProductFull } from 'types/api'
 
@@ -109,7 +110,8 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         product: {
           photo: s.photo,
           quantity: s.Quantity,
-          TotalValue: s.Quantity * data.product.data.attributes.BaseValue,
+          TotalValue:
+            s.Quantity * data.product.data.attributes.prices.mensal.centavos,
         },
       }
 
@@ -377,7 +379,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
       >
         <S.Text shouldPulse={false}>Total</S.Text>
         <S.Text shouldPulse={false}>
-          R$ {formatCurrency(finalPrice)}/<span> mês</span>
+          R$ {formatCents(finalPrice)}/<span> mês</span>
         </S.Text>
 
         <Btn

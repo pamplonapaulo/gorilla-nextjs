@@ -9,7 +9,7 @@
 
 export interface GetBenefits_benefits_data_attributes {
   __typename: "Benefit";
-  Benefit: string;
+  benefit: string;
 }
 
 export interface GetBenefits_benefits_data {

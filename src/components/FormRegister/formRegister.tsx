@@ -33,6 +33,8 @@ const FormRegister = () => {
     phone: '',
   })
 
+  const [loading, setLoading] = useState(false)
+
   const handleFocusIn = (e: React.FocusEvent<HTMLInputElement>) => {
     if (window.innerWidth < 1024) {
       window.scrollTo(0, e.target.offsetTop - 75)
@@ -103,6 +105,24 @@ const FormRegister = () => {
     }
   }
 
+  const createStripeCustomer = async () => {
+    axios
+      .post<string>(process.env.NEXT_PUBLIC_API_URL + '/stripe', {
+        name: inputData.username,
+        email: inputData.email,
+        phone: inputData.phone,
+      })
+      .then((response: AxiosResponse<string>) => {
+        console.log(response)
+        saveCustomer(response.data)
+      })
+      .catch((error: { response: any }) => {
+        console.error(error)
+        setMessage('Erro no Stripe.')
+        setLoading(false)
+      })
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target
 
@@ -141,6 +161,8 @@ const FormRegister = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
+    setLoading(true)
+
     const errors = []
 
     if (
@@ -150,7 +172,7 @@ const FormRegister = () => {
       inputData.email !== '' &&
       inputData.password.length >= 8
     )
-      createCustomer()
+      createStripeCustomer()
 
     if (inputData.username === '') {
       errors.push('username')
@@ -180,10 +202,11 @@ const FormRegister = () => {
         ...alert,
       })
       setMessage('Preencha os campos corretamente')
+      setLoading(false)
     }
   }
 
-  const createCustomer = () => {
+  const saveCustomer = (stripe_customer: string) => {
     axios
       .post(process.env.NEXT_PUBLIC_API_URL + '/auth/local/register', {
         username: inputData.username,
@@ -191,15 +214,18 @@ const FormRegister = () => {
         password: inputData.password,
         postCode: inputData.postCode,
         phone: inputData.phone,
+        stripe_customer,
       })
       .then((response: AxiosResponse<unknown>) => {
         console.log(response)
+        setLoading(false)
         setForm(!form)
         setTimeout(() => {
           setOverlay(!overlay)
         }, 6000)
       })
       .catch((error: { response: any }) => {
+        setLoading(false)
         console.error(error)
         setMessage('Erro ao registrar novo usuário.')
       })
@@ -281,7 +307,7 @@ const FormRegister = () => {
                 colorOne={'#facb37'}
                 colorTwo={'#000'}
               >
-                Gravar
+                {loading ? <S.Loading /> : 'Gravar'}
               </Button>
             </S.BtnWrap>
           </>

@@ -7,7 +7,6 @@ const GET_PRODUCTS = gql`
         id
         attributes {
           Name
-          BaseValue
           Image {
             data {
               attributes {
@@ -26,6 +25,24 @@ const GET_PRODUCTS = gql`
             Carbohydrates
             Sodium
             Proteins
+          }
+          prices {
+            mensal {
+              priceId
+              centavos
+            }
+            trimestral {
+              priceId
+              centavos
+            }
+            semestral {
+              priceId
+              centavos
+            }
+            anual {
+              priceId
+              centavos
+            }
           }
         }
       }

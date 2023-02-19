@@ -4,7 +4,7 @@ import * as S from './styles'
 
 import { NutritionFacts } from 'types/api'
 
-// import { getImageUrl } from 'utils/getImageUrl'
+import { getImageUrl } from 'utils/getImageUrl'
 
 type Data = {
   Quantity: number
@@ -23,8 +23,8 @@ const SlugSnack = ({ ...Data }: Data) => (
       <S.Span>x</S.Span> <S.Span>{Data.Name}</S.Span>
     </S.H>
     <S.ImgComp
-      src={'https://via.placeholder.com/363x500.png/'}
-      // src={getImageUrl(Data.ImageFile)}
+      // src={'https://via.placeholder.com/363x500.png/'}
+      src={getImageUrl(Data.ImageFile)}
       alt={Data.Name}
     />
     <S.NutritionFacts>

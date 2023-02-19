@@ -9,7 +9,7 @@
 
 export interface GetFreeDeliveryValue_freeDelivery_data_attributes {
   __typename: "FreeDelivery";
-  MinimumTicket: number | null;
+  MinimumTicket: number;
 }
 
 export interface GetFreeDeliveryValue_freeDelivery_data {

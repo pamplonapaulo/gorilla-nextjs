@@ -237,3 +237,10 @@ export const BtnWrap = styled.div`
     display: flex;
   }
 `
+
+export const Loading = styled.img.attrs(() => ({
+  src: '/img/dots.svg',
+  alt: 'Carrregando...',
+}))`
+  width: 4rem;
+`

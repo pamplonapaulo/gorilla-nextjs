@@ -36,12 +36,44 @@ export interface GetProducts_products_data_attributes_NutritionFacts {
   Proteins: number;
 }
 
+export interface GetProducts_products_data_attributes_prices_mensal {
+  __typename: "ComponentPricesMensal";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetProducts_products_data_attributes_prices_trimestral {
+  __typename: "ComponentPricesTrimestral";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetProducts_products_data_attributes_prices_semestral {
+  __typename: "ComponentPricesSemestral";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetProducts_products_data_attributes_prices_anual {
+  __typename: "ComponentPricesAnual";
+  priceId: string;
+  centavos: any;
+}
+
+export interface GetProducts_products_data_attributes_prices {
+  __typename: "ComponentPricePrices";
+  mensal: GetProducts_products_data_attributes_prices_mensal;
+  trimestral: GetProducts_products_data_attributes_prices_trimestral;
+  semestral: GetProducts_products_data_attributes_prices_semestral;
+  anual: GetProducts_products_data_attributes_prices_anual;
+}
+
 export interface GetProducts_products_data_attributes {
   __typename: "Product";
   Name: string;
-  BaseValue: number;
   Image: GetProducts_products_data_attributes_Image;
   NutritionFacts: GetProducts_products_data_attributes_NutritionFacts;
+  prices: GetProducts_products_data_attributes_prices;
 }
 
 export interface GetProducts_products_data {

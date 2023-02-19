@@ -23,7 +23,7 @@ const Benefits = ({ ...Data }: Data) => {
             isChecked={hasMatch(b.id, Data.packBenefits)}
             isHome={Data.isHome}
           >
-            {b.attributes.Benefit}
+            {b.attributes.benefit}
           </S.Attribute>
         ))}
       </S.Benefits>

@@ -6,6 +6,8 @@ import Input from 'components/Input'
 import PackPanel from 'components/PackPanel'
 import SlugSnack from 'components/SlugSnack'
 
+import { formatCents } from 'utils/formatCents'
+
 import * as S from './styles'
 
 type Props = {
@@ -68,7 +70,7 @@ const CustomTemplate = ({ ...customProps }: Props) => {
     const items = getItem(id)
 
     if (items.length > 0) {
-      return 'R$' + items[0].Quantity * baseValue
+      return 'R$' + formatCents(items[0].Quantity * baseValue)
     } else {
       return ''
     }
@@ -86,15 +88,20 @@ const CustomTemplate = ({ ...customProps }: Props) => {
               <SlugSnack
                 Quantity={getQuantity(p.id)}
                 Name={p.attributes.Name}
+                // ImageFile={
+                //   '/uploads/small_' +
+                //   p.attributes.Image.data.attributes['hash'] +
+                //   p.attributes.Image.data.attributes['ext']
+                // }
                 ImageFile={
-                  '/uploads/small_' +
-                  p.attributes.Image.data.attributes['hash'] +
-                  p.attributes.Image.data.attributes['ext']
+                  p.attributes.Name + p.attributes.Image.data.attributes['ext']
                 }
-                BaseValue={p.attributes.BaseValue}
+                BaseValue={p.attributes.prices.mensal.centavos}
                 NutritionFacts={p.attributes.NutritionFacts}
               />
-              <S.H>{'R$' + p.attributes.BaseValue}</S.H>
+              <S.H>
+                {'R$' + formatCents(p.attributes.prices.mensal.centavos)}
+              </S.H>
               <S.BtnsWrapper>
                 <Input
                   idOfSnack={Number(p.id)}
@@ -113,7 +120,7 @@ const CustomTemplate = ({ ...customProps }: Props) => {
               <S.Sum
                 isVisible={customPack.some((snk) => snk.id === Number(p.id))}
               >
-                <h1>{getPartial(p.id, p.attributes.BaseValue)}</h1>
+                <h1>{getPartial(p.id, p.attributes.prices.mensal.centavos)}</h1>
               </S.Sum>
             </S.Item>
           )

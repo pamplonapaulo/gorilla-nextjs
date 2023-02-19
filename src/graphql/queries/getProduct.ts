@@ -7,11 +7,28 @@ const GET_PRODUCT = gql`
         id
         attributes {
           Name
-          BaseValue
           Weight
           Height
           Width
           Length
+          prices {
+            mensal {
+              priceId
+              centavos
+            }
+            trimestral {
+              priceId
+              centavos
+            }
+            semestral {
+              priceId
+              centavos
+            }
+            anual {
+              priceId
+              centavos
+            }
+          }
         }
       }
     }

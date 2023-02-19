@@ -1,14 +1,24 @@
+type Price = {
+  priceId: string
+  centavos: number
+}
+
 export type ProductFull = {
   Name: string
   id: string
   quantity: number
   photo: string
-  BaseValue: number
   TotalValue: number
   Weight: number
   Height: number
   Width: number
   Length: number
+  prices: {
+    mensal: Price
+    trimestral: Price
+    semestral: Price
+    anual: Price
+  }
 }
 
 export type Plans = {
@@ -54,7 +64,7 @@ export type BenefitArray = {
 export type Benefit = {
   id: string
   attributes: {
-    Benefit: string
+    benefit: string
   }
 }
 
@@ -74,12 +84,17 @@ export type Product = {
   id: string
   attributes: {
     Name: string
-    BaseValue: number
     Weight: number
     Height: number
     Length: number
     Image: Image
     NutritionFacts: NutritionFacts
+    prices: {
+      mensal: Price
+      trimestral: Price
+      semestral: Price
+      anual: Price
+    }
   }
 }
 
@@ -152,9 +167,9 @@ export type ExpectedDay = {
 export type ExpectedPayments = {
   contentCostBeforeDiscount: number
   monthsMultiplier: number
-  finalValueInCentavos: number
+  finalValue: number
   absoluteDiscountApplied: number
-  finalValueInCentavosWithCoupon: number | null
+  finalValueWithCoupon: number | null
   absoluteCouponDiscountAppliedInCentavos: number | null
 }
 
@@ -182,7 +197,7 @@ export type Period = {
 export type Order = {
   id: string
   attributes: {
-    Title: string
+    title: string
     address: Address
     createdAt: string
     deliveries: Deliveries
@@ -200,6 +215,7 @@ export type UserME = {
   id: string
   username: string
   email: string
+  stripe_customer: string
   phone: string
   postCode: string
   addressNumber: string

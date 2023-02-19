@@ -36,7 +36,7 @@ scalar DateTime
 """A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."""
 scalar Date
 
-"""The `Long` scalar type represents 52-bit integers"""
+"""The `BigInt` scalar type represents non-fractional signed whole numeric values."""
 scalar Long
 
 """The `Upload` scalar type represents a file upload."""
@@ -63,6 +63,7 @@ input IDFilterInput {
   or: [ID]
   not: IDFilterInput
   eq: ID
+  eqi: ID
   ne: ID
   startsWith: ID
   endsWith: ID
@@ -86,6 +87,7 @@ input BooleanFilterInput {
   or: [Boolean]
   not: BooleanFilterInput
   eq: Boolean
+  eqi: Boolean
   ne: Boolean
   startsWith: Boolean
   endsWith: Boolean
@@ -109,6 +111,7 @@ input StringFilterInput {
   or: [String]
   not: StringFilterInput
   eq: String
+  eqi: String
   ne: String
   startsWith: String
   endsWith: String
@@ -132,6 +135,7 @@ input IntFilterInput {
   or: [Int]
   not: IntFilterInput
   eq: Int
+  eqi: Int
   ne: Int
   startsWith: Int
   endsWith: Int
@@ -150,11 +154,36 @@ input IntFilterInput {
   between: [Int]
 }
 
+input LongFilterInput {
+  and: [Long]
+  or: [Long]
+  not: LongFilterInput
+  eq: Long
+  eqi: Long
+  ne: Long
+  startsWith: Long
+  endsWith: Long
+  contains: Long
+  notContains: Long
+  containsi: Long
+  notContainsi: Long
+  gt: Long
+  gte: Long
+  lt: Long
+  lte: Long
+  null: Boolean
+  notNull: Boolean
+  in: [Long]
+  notIn: [Long]
+  between: [Long]
+}
+
 input FloatFilterInput {
   and: [Float]
   or: [Float]
   not: FloatFilterInput
   eq: Float
+  eqi: Float
   ne: Float
   startsWith: Float
   endsWith: Float
@@ -178,6 +207,7 @@ input DateFilterInput {
   or: [Date]
   not: DateFilterInput
   eq: Date
+  eqi: Date
   ne: Date
   startsWith: Date
   endsWith: Date
@@ -201,6 +231,7 @@ input DateTimeFilterInput {
   or: [DateTime]
   not: DateTimeFilterInput
   eq: DateTime
+  eqi: DateTime
   ne: DateTime
   startsWith: DateTime
   endsWith: DateTime
@@ -224,6 +255,7 @@ input JSONFilterInput {
   or: [JSON]
   not: JSONFilterInput
   eq: JSON
+  eqi: JSON
   ne: JSON
   startsWith: JSON
   endsWith: JSON
@@ -240,6 +272,21 @@ input JSONFilterInput {
   in: [JSON]
   notIn: [JSON]
   between: [JSON]
+}
+
+input ComponentNutritionFactsNutritionFactsFiltersInput {
+  Carbohydrates: IntFilterInput
+  DietaryFiber: IntFilterInput
+  EnergeticValue: IntFilterInput
+  Portion: IntFilterInput
+  Proteins: IntFilterInput
+  SaturatedFat: IntFilterInput
+  Sodium: IntFilterInput
+  TotalFat: IntFilterInput
+  TransFat: IntFilterInput
+  and: [ComponentNutritionFactsNutritionFactsFiltersInput]
+  or: [ComponentNutritionFactsNutritionFactsFiltersInput]
+  not: ComponentNutritionFactsNutritionFactsFiltersInput
 }
 
 input ComponentNutritionFactsNutritionFactsInput {
@@ -268,6 +315,20 @@ type ComponentNutritionFactsNutritionFacts {
   TransFat: Int!
 }
 
+input ComponentOrderAddressFiltersInput {
+  logradouro: StringFilterInput
+  numero: StringFilterInput
+  complemento: StringFilterInput
+  bairro: StringFilterInput
+  municipio: StringFilterInput
+  uf: StringFilterInput
+  cep: StringFilterInput
+  nome: StringFilterInput
+  and: [ComponentOrderAddressFiltersInput]
+  or: [ComponentOrderAddressFiltersInput]
+  not: ComponentOrderAddressFiltersInput
+}
+
 input ComponentOrderAddressInput {
   id: ID
   logradouro: String
@@ -286,17 +347,29 @@ type ComponentOrderAddress {
   numero: String
   complemento: String
   bairro: String
-  municipio: String
-  uf: String
-  cep: String
+  municipio: String!
+  uf: String!
+  cep: String!
   nome: String!
 }
 
-type ComponentOrderCancellations {
+type ComponentOrderDeactivations {
   id: ID!
   byCustomer: Boolean
   byGorilla: Boolean
   byTimeOut: Boolean
+}
+
+input ComponentOrderDeliveryFiltersInput {
+  fee: StringFilterInput
+  company: StringFilterInput
+  packingDetails: JSONFilterInput
+  expectedTravelingDays: IntFilterInput
+  expectedDispatchDays: ComponentOrderExpectedDispatchDaysFiltersInput
+  expectedArrivalDays: ComponentOrderExpectedArrivalDaysFiltersInput
+  and: [ComponentOrderDeliveryFiltersInput]
+  or: [ComponentOrderDeliveryFiltersInput]
+  not: ComponentOrderDeliveryFiltersInput
 }
 
 input ComponentOrderDeliveryInput {
@@ -326,8 +399,8 @@ type ComponentOrderDispatches {
 }
 
 input ComponentOrderExpectedArrivalDaysFiltersInput {
-  date: DateFilterInput
   hasArrived: BooleanFilterInput
+  date: DateFilterInput
   and: [ComponentOrderExpectedArrivalDaysFiltersInput]
   or: [ComponentOrderExpectedArrivalDaysFiltersInput]
   not: ComponentOrderExpectedArrivalDaysFiltersInput
@@ -335,14 +408,14 @@ input ComponentOrderExpectedArrivalDaysFiltersInput {
 
 input ComponentOrderExpectedArrivalDaysInput {
   id: ID
-  date: Date
   hasArrived: Boolean
+  date: Date
 }
 
 type ComponentOrderExpectedArrivalDays {
   id: ID!
-  date: Date
   hasArrived: Boolean
+  date: Date
 }
 
 input ComponentOrderExpectedDispatchDaysFiltersInput {
@@ -365,26 +438,39 @@ type ComponentOrderExpectedDispatchDays {
   date: Date
 }
 
+input ComponentOrderExpectedPaymentsFiltersInput {
+  monthsMultiplier: IntFilterInput
+  finalValue: LongFilterInput
+  absoluteDiscountApplied: LongFilterInput
+  contentCostBeforeDiscount: LongFilterInput
+  finalValueWithCoupon: LongFilterInput
+  absoluteCouponDiscountApplied: LongFilterInput
+  payments: PaymentFiltersInput
+  and: [ComponentOrderExpectedPaymentsFiltersInput]
+  or: [ComponentOrderExpectedPaymentsFiltersInput]
+  not: ComponentOrderExpectedPaymentsFiltersInput
+}
+
 input ComponentOrderExpectedPaymentsInput {
   id: ID
   monthsMultiplier: Int
-  finalValueInCentavos: Long
+  finalValue: Long
+  absoluteDiscountApplied: Long
+  contentCostBeforeDiscount: Long
+  finalValueWithCoupon: Long
+  absoluteCouponDiscountApplied: Long
   payments: [ID]
-  absoluteDiscountApplied: Float
-  contentCostBeforeDiscount: Float
-  finalValueInCentavosWithCoupon: Int
-  absoluteCouponDiscountAppliedInCentavos: Int
 }
 
 type ComponentOrderExpectedPayments {
   id: ID!
   monthsMultiplier: Int
-  finalValueInCentavos: Long!
+  finalValue: Long!
+  absoluteDiscountApplied: Long!
+  contentCostBeforeDiscount: Long!
+  finalValueWithCoupon: Long
+  absoluteCouponDiscountApplied: Long
   payments(filters: PaymentFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): PaymentRelationResponseCollection
-  absoluteDiscountApplied: Float!
-  contentCostBeforeDiscount: Float
-  finalValueInCentavosWithCoupon: Int
-  absoluteCouponDiscountAppliedInCentavos: Int
 }
 
 input ComponentPackBenefitsFiltersInput {
@@ -401,7 +487,7 @@ input ComponentPackBenefitsInput {
 
 type ComponentPackBenefits {
   id: ID!
-  benefits(filters: BenefitFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BenefitRelationResponseCollection
+  benefits(filters: BenefitFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE): BenefitRelationResponseCollection
 }
 
 input ComponentPackItemFiltersInput {
@@ -424,6 +510,112 @@ type ComponentPackItem {
   product: ProductEntityResponse
 }
 
+input ComponentPricePricesFiltersInput {
+  mensal: ComponentPricesMensalFiltersInput
+  trimestral: ComponentPricesTrimestralFiltersInput
+  semestral: ComponentPricesSemestralFiltersInput
+  anual: ComponentPricesAnualFiltersInput
+  and: [ComponentPricePricesFiltersInput]
+  or: [ComponentPricePricesFiltersInput]
+  not: ComponentPricePricesFiltersInput
+}
+
+input ComponentPricePricesInput {
+  id: ID
+  mensal: ComponentPricesMensalInput
+  trimestral: ComponentPricesTrimestralInput
+  semestral: ComponentPricesSemestralInput
+  anual: ComponentPricesAnualInput
+}
+
+type ComponentPricePrices {
+  id: ID!
+  mensal: ComponentPricesMensal!
+  trimestral: ComponentPricesTrimestral!
+  semestral: ComponentPricesSemestral!
+  anual: ComponentPricesAnual!
+}
+
+input ComponentPricesAnualFiltersInput {
+  centavos: LongFilterInput
+  priceId: StringFilterInput
+  and: [ComponentPricesAnualFiltersInput]
+  or: [ComponentPricesAnualFiltersInput]
+  not: ComponentPricesAnualFiltersInput
+}
+
+input ComponentPricesAnualInput {
+  id: ID
+  centavos: Long
+  priceId: String
+}
+
+type ComponentPricesAnual {
+  id: ID!
+  centavos: Long!
+  priceId: String!
+}
+
+input ComponentPricesMensalFiltersInput {
+  centavos: LongFilterInput
+  priceId: StringFilterInput
+  and: [ComponentPricesMensalFiltersInput]
+  or: [ComponentPricesMensalFiltersInput]
+  not: ComponentPricesMensalFiltersInput
+}
+
+input ComponentPricesMensalInput {
+  id: ID
+  centavos: Long
+  priceId: String
+}
+
+type ComponentPricesMensal {
+  id: ID!
+  centavos: Long!
+  priceId: String!
+}
+
+input ComponentPricesSemestralFiltersInput {
+  centavos: LongFilterInput
+  priceId: StringFilterInput
+  and: [ComponentPricesSemestralFiltersInput]
+  or: [ComponentPricesSemestralFiltersInput]
+  not: ComponentPricesSemestralFiltersInput
+}
+
+input ComponentPricesSemestralInput {
+  id: ID
+  centavos: Long
+  priceId: String
+}
+
+type ComponentPricesSemestral {
+  id: ID!
+  centavos: Long!
+  priceId: String!
+}
+
+input ComponentPricesTrimestralFiltersInput {
+  centavos: LongFilterInput
+  priceId: StringFilterInput
+  and: [ComponentPricesTrimestralFiltersInput]
+  or: [ComponentPricesTrimestralFiltersInput]
+  not: ComponentPricesTrimestralFiltersInput
+}
+
+input ComponentPricesTrimestralInput {
+  id: ID
+  centavos: Long
+  priceId: String
+}
+
+type ComponentPricesTrimestral {
+  id: ID!
+  centavos: Long!
+  priceId: String!
+}
+
 input UploadFileFiltersInput {
   id: IDFilterInput
   name: StringFilterInput
@@ -440,6 +632,8 @@ input UploadFileFiltersInput {
   previewUrl: StringFilterInput
   provider: StringFilterInput
   provider_metadata: JSONFilterInput
+  folder: UploadFolderFiltersInput
+  folderPath: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [UploadFileFiltersInput]
@@ -462,6 +656,8 @@ input UploadFileInput {
   previewUrl: String
   provider: String
   provider_metadata: JSON
+  folder: ID
+  folderPath: String
 }
 
 type UploadFile {
@@ -496,6 +692,63 @@ type UploadFileEntityResponse {
 type UploadFileEntityResponseCollection {
   data: [UploadFileEntity!]!
   meta: ResponseCollectionMeta!
+}
+
+type UploadFileRelationResponseCollection {
+  data: [UploadFileEntity!]!
+}
+
+input UploadFolderFiltersInput {
+  id: IDFilterInput
+  name: StringFilterInput
+  pathId: IntFilterInput
+  parent: UploadFolderFiltersInput
+  children: UploadFolderFiltersInput
+  files: UploadFileFiltersInput
+  path: StringFilterInput
+  createdAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+  and: [UploadFolderFiltersInput]
+  or: [UploadFolderFiltersInput]
+  not: UploadFolderFiltersInput
+}
+
+input UploadFolderInput {
+  name: String
+  pathId: Int
+  parent: ID
+  children: [ID]
+  files: [ID]
+  path: String
+}
+
+type UploadFolder {
+  name: String!
+  pathId: Int!
+  parent: UploadFolderEntityResponse
+  children(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderRelationResponseCollection
+  files(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  path: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type UploadFolderEntity {
+  id: ID
+  attributes: UploadFolder
+}
+
+type UploadFolderEntityResponse {
+  data: UploadFolderEntity
+}
+
+type UploadFolderEntityResponseCollection {
+  data: [UploadFolderEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+type UploadFolderRelationResponseCollection {
+  data: [UploadFolderEntity!]!
 }
 
 input I18NLocaleFiltersInput {
@@ -614,11 +867,12 @@ input UsersPermissionsUserFiltersInput {
   confirmed: BooleanFilterInput
   blocked: BooleanFilterInput
   role: UsersPermissionsRoleFiltersInput
+  orders: OrderFiltersInput
   postCode: StringFilterInput
   phone: StringFilterInput
   addressNumber: StringFilterInput
   addressComplement: StringFilterInput
-  orders: OrderFiltersInput
+  stripe_customer: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [UsersPermissionsUserFiltersInput]
@@ -636,11 +890,12 @@ input UsersPermissionsUserInput {
   confirmed: Boolean
   blocked: Boolean
   role: ID
+  orders: [ID]
   postCode: String
   phone: String
   addressNumber: String
   addressComplement: String
-  orders: [ID]
+  stripe_customer: String
 }
 
 type UsersPermissionsUser {
@@ -650,11 +905,11 @@ type UsersPermissionsUser {
   confirmed: Boolean
   blocked: Boolean
   role: UsersPermissionsRoleEntityResponse
-  postCode: String!
+  orders(filters: OrderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): OrderRelationResponseCollection
   phone: String!
   addressNumber: String
   addressComplement: String
-  orders(filters: OrderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): OrderRelationResponseCollection
+  stripe_customer: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -679,22 +934,25 @@ type UsersPermissionsUserRelationResponseCollection {
 
 input BenefitFiltersInput {
   id: IDFilterInput
-  Benefit: StringFilterInput
+  benefit: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
+  publishedAt: DateTimeFilterInput
   and: [BenefitFiltersInput]
   or: [BenefitFiltersInput]
   not: BenefitFiltersInput
 }
 
 input BenefitInput {
-  Benefit: String
+  benefit: String
+  publishedAt: DateTime
 }
 
 type Benefit {
-  Benefit: String!
+  benefit: String!
   createdAt: DateTime
   updatedAt: DateTime
+  publishedAt: DateTime
 }
 
 type BenefitEntity {
@@ -775,13 +1033,13 @@ type CouponEntityResponseCollection {
   meta: ResponseCollectionMeta!
 }
 
-input DispatchDayInput {
+input DispatchInput {
   Day1: String
   Day2: String
   SafetyTimeSpan: Int
 }
 
-type DispatchDay {
+type Dispatch {
   Day1: String
   Day2: String
   SafetyTimeSpan: Int
@@ -789,13 +1047,13 @@ type DispatchDay {
   updatedAt: DateTime
 }
 
-type DispatchDayEntity {
+type DispatchEntity {
   id: ID
-  attributes: DispatchDay
+  attributes: Dispatch
 }
 
-type DispatchDayEntityResponse {
-  data: DispatchDayEntity
+type DispatchEntityResponse {
+  data: DispatchEntity
 }
 
 input FreeDeliveryInput {
@@ -803,7 +1061,7 @@ input FreeDeliveryInput {
 }
 
 type FreeDelivery {
-  MinimumTicket: Int
+  MinimumTicket: Int!
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -847,11 +1105,11 @@ type MelhorEnvioEntityResponse {
 }
 
 input MinimumPackValueInput {
-  MinimumValue: Int
+  MinimumValue: Long
 }
 
 type MinimumPackValue {
-  MinimumValue: Int!
+  MinimumValue: Long!
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -874,13 +1132,20 @@ enum ENUM_ORDER_DEACTIVATIONAUTHOR {
 input OrderFiltersInput {
   id: IDFilterInput
   period: PeriodFiltersInput
+  snack: ComponentPackItemFiltersInput
   pack: PackFiltersInput
+  deliveries: ComponentOrderDeliveryFiltersInput
+  address: ComponentOrderAddressFiltersInput
   coupon: CouponFiltersInput
+  expectedPayments: ComponentOrderExpectedPaymentsFiltersInput
   isConfirmed: BooleanFilterInput
-  Title: StringFilterInput
+  title: StringFilterInput
   deactivated: BooleanFilterInput
   deactivationAuthor: StringFilterInput
   user: UsersPermissionsUserFiltersInput
+  paymentIntent: StringFilterInput
+  cardBrand: StringFilterInput
+  cardLast4digits: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [OrderFiltersInput]
@@ -892,30 +1157,36 @@ input OrderInput {
   period: ID
   snack: [ComponentPackItemInput]
   pack: ID
-  deliveries: ComponentOrderDeliveryInput
+  deliveries: [ComponentOrderDeliveryInput]
   address: ComponentOrderAddressInput
   coupon: ID
-  expectedPayments: ComponentOrderExpectedPaymentsInput
+  expectedPayments: [ComponentOrderExpectedPaymentsInput]
   isConfirmed: Boolean
-  Title: String
+  title: String
   deactivated: Boolean
   deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR
   user: ID
+  paymentIntent: String
+  cardBrand: String
+  cardLast4digits: String
 }
 
 type Order {
   period: PeriodEntityResponse
   snack(filters: ComponentPackItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPackItem]!
   pack: PackEntityResponse
-  deliveries: ComponentOrderDelivery!
-  address: ComponentOrderAddress
+  deliveries(filters: ComponentOrderDeliveryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderDelivery]!
+  address: ComponentOrderAddress!
   coupon: CouponEntityResponse
-  expectedPayments: ComponentOrderExpectedPayments
+  expectedPayments(filters: ComponentOrderExpectedPaymentsFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderExpectedPayments]!
   isConfirmed: Boolean
-  Title: String!
+  title: String!
   deactivated: Boolean
   deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR
   user: UsersPermissionsUserEntityResponse
+  paymentIntent: String!
+  cardBrand: String
+  cardLast4digits: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -943,6 +1214,8 @@ input PackFiltersInput {
   Name: StringFilterInput
   Description: StringFilterInput
   ExtraDiscount: FloatFilterInput
+  Benefits: ComponentPackBenefitsFiltersInput
+  Item: ComponentPackItemFiltersInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   publishedAt: DateTimeFilterInput
@@ -962,8 +1235,8 @@ input PackInput {
 
 type Pack {
   Name: String!
-  Description: String!
-  ExtraDiscount: Float!
+  Description: String
+  ExtraDiscount: Float
   Benefits(filters: ComponentPackBenefitsFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPackBenefits!]!
   Item(filters: ComponentPackItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPackItem]!
   createdAt: DateTime
@@ -990,7 +1263,7 @@ input PaymentFiltersInput {
   users_permissions_user: UsersPermissionsUserFiltersInput
   order: OrderFiltersInput
   date: DateFilterInput
-  value: FloatFilterInput
+  value: LongFilterInput
   stripe: JSONFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
@@ -1003,7 +1276,7 @@ input PaymentInput {
   users_permissions_user: ID
   order: ID
   date: Date
-  value: Float
+  value: Long
   stripe: JSON
 }
 
@@ -1011,8 +1284,8 @@ type Payment {
   users_permissions_user: UsersPermissionsUserEntityResponse
   order: OrderEntityResponse
   date: Date!
-  value: Float!
-  stripe: JSON
+  value: Long!
+  stripe: JSON!
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1078,11 +1351,12 @@ type PeriodEntityResponseCollection {
 input ProductFiltersInput {
   id: IDFilterInput
   Name: StringFilterInput
-  BaseValue: IntFilterInput
   Weight: IntFilterInput
   Height: IntFilterInput
   Width: IntFilterInput
   Length: IntFilterInput
+  NutritionFacts: ComponentNutritionFactsNutritionFactsFiltersInput
+  prices: ComponentPricePricesFiltersInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   publishedAt: DateTimeFilterInput
@@ -1096,24 +1370,24 @@ input ProductFiltersInput {
 input ProductInput {
   Name: String
   Image: ID
-  BaseValue: Int
   Weight: Int
   Height: Int
   Width: Int
   Length: Int
   NutritionFacts: ComponentNutritionFactsNutritionFactsInput
+  prices: ComponentPricePricesInput
   publishedAt: DateTime
 }
 
 type Product {
   Name: String!
   Image: UploadFileEntityResponse!
-  BaseValue: Int!
-  Weight: Int!
-  Height: Int!
-  Width: Int!
-  Length: Int!
+  Weight: Int
+  Height: Int
+  Width: Int
+  Length: Int
   NutritionFacts: ComponentNutritionFactsNutritionFacts!
+  prices: ComponentPricePrices!
   createdAt: DateTime
   updatedAt: DateTime
   publishedAt: DateTime
@@ -1139,7 +1413,7 @@ type ProductRelationResponseCollection {
   data: [ProductEntity!]!
 }
 
-union GenericMorph = ComponentNutritionFactsNutritionFacts | ComponentOrderAddress | ComponentOrderCancellations | ComponentOrderDelivery | ComponentOrderDispatches | ComponentOrderExpectedArrivalDays | ComponentOrderExpectedDispatchDays | ComponentOrderExpectedPayments | ComponentPackBenefits | ComponentPackItem | UploadFile | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Benefit | Coupon | DispatchDay | FreeDelivery | MelhorEnvio | MinimumPackValue | Order | Pack | Payment | Period | Product
+union GenericMorph = ComponentNutritionFactsNutritionFacts | ComponentOrderAddress | ComponentOrderDeactivations | ComponentOrderDelivery | ComponentOrderDispatches | ComponentOrderExpectedArrivalDays | ComponentOrderExpectedDispatchDays | ComponentOrderExpectedPayments | ComponentPackBenefits | ComponentPackItem | ComponentPricePrices | ComponentPricesAnual | ComponentPricesMensal | ComponentPricesSemestral | ComponentPricesTrimestral | UploadFile | UploadFolder | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Benefit | Coupon | Dispatch | FreeDelivery | MelhorEnvio | MinimumPackValue | Order | Pack | Payment | Period | Product
 
 input FileInfoInput {
   name: String
@@ -1161,6 +1435,7 @@ type UsersPermissionsMe {
   addressNumber: String
   phone: String
   postCode: String
+  stripe_customer: String
   updatedAt: String
   order(filters: OrderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): OrderRelationResponseCollection
 }
@@ -1215,6 +1490,8 @@ input PaginationArg {
 type Query {
   uploadFile(id: ID): UploadFileEntityResponse
   uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileEntityResponseCollection
+  uploadFolder(id: ID): UploadFolderEntityResponse
+  uploadFolders(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderEntityResponseCollection
   i18NLocale(id: ID): I18NLocaleEntityResponse
   i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): I18NLocaleEntityResponseCollection
   usersPermissionsRole(id: ID): UsersPermissionsRoleEntityResponse
@@ -1222,10 +1499,10 @@ type Query {
   usersPermissionsUser(id: ID): UsersPermissionsUserEntityResponse
   usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
   benefit(id: ID): BenefitEntityResponse
-  benefits(filters: BenefitFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): BenefitEntityResponseCollection
+  benefits(filters: BenefitFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE): BenefitEntityResponseCollection
   coupon(id: ID): CouponEntityResponse
   coupons(filters: CouponFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CouponEntityResponseCollection
-  dispatchDay: DispatchDayEntityResponse
+  dispatch: DispatchEntityResponse
   freeDelivery: FreeDeliveryEntityResponse
   melhorEnvio: MelhorEnvioEntityResponse
   minimumPackValue: MinimumPackValueEntityResponse
@@ -1246,14 +1523,17 @@ type Mutation {
   createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
   updateUploadFile(id: ID!, data: UploadFileInput!): UploadFileEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
+  createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
+  updateUploadFolder(id: ID!, data: UploadFolderInput!): UploadFolderEntityResponse
+  deleteUploadFolder(id: ID!): UploadFolderEntityResponse
   createBenefit(data: BenefitInput!): BenefitEntityResponse
   updateBenefit(id: ID!, data: BenefitInput!): BenefitEntityResponse
   deleteBenefit(id: ID!): BenefitEntityResponse
   createCoupon(data: CouponInput!): CouponEntityResponse
   updateCoupon(id: ID!, data: CouponInput!): CouponEntityResponse
   deleteCoupon(id: ID!): CouponEntityResponse
-  updateDispatchDay(data: DispatchDayInput!): DispatchDayEntityResponse
-  deleteDispatchDay: DispatchDayEntityResponse
+  updateDispatch(data: DispatchInput!): DispatchEntityResponse
+  deleteDispatch: DispatchEntityResponse
   updateFreeDelivery(data: FreeDeliveryInput!): FreeDeliveryEntityResponse
   deleteFreeDelivery: FreeDeliveryEntityResponse
   updateMelhorEnvio(data: MelhorEnvioInput!): MelhorEnvioEntityResponse
@@ -1290,7 +1570,7 @@ type Mutation {
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
   """Update an existing user"""
   updateUsersPermissionsUser(id: ID!, data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
-  """Update an existing user"""
+  """Delete an existing user"""
   deleteUsersPermissionsUser(id: ID!): UsersPermissionsUserEntityResponse!
   login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
   """Register a user"""
@@ -1299,6 +1579,8 @@ type Mutation {
   forgotPassword(email: String!): UsersPermissionsPasswordPayload
   """Reset user password. Confirm with a code (resetToken from forgotPassword)"""
   resetPassword(password: String!, passwordConfirmation: String!, code: String!): UsersPermissionsLoginPayload
+  """Change user password. Confirm with the current password."""
+  changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   """Confirm an email users email address"""
   emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
 }

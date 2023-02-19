@@ -13,13 +13,14 @@ const GET_ME = gql`
       email
       phone
       postCode
+      stripe_customer
       addressNumber
       addressComplement
       order(filters: { isConfirmed: $isConfirmed, deactivated: $deactivated }) {
         data {
           id
           attributes {
-            Title
+            title
             isConfirmed
             deactivated
             deactivationAuthor
@@ -45,7 +46,7 @@ const GET_ME = gql`
             expectedPayments {
               absoluteDiscountApplied
               contentCostBeforeDiscount
-              finalValueInCentavos
+              finalValue
               monthsMultiplier
             }
             period {
