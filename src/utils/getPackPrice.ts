@@ -3,6 +3,7 @@ import { formatCents } from './formatCents'
 
 export const getPackPrice = (pack: Pack) => {
   let total = 0
+  console.log(pack)
 
   for (let i = 0; i < pack.attributes.Item.length; i++) {
     const thisItem =
