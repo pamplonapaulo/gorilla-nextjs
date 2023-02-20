@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "7.15.0",
+    "@next/eslint-plugin-next": "^13.1.6",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.1.2",
     "@types/jest": "27.4.1",
