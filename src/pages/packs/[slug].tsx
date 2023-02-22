@@ -104,9 +104,9 @@ export const getStaticProps = async ({ params }: Params) => {
   console.log(pack)
 
   const currentPack: Snack[] = []
-  pack.pack.data.attributes.Item.map((p: PackItem) => {
+  pack.pack.data?.attributes.Item.map((p: PackItem) => {
     const snack = {
-      id: parseInt(p.product.data.id),
+      id: parseInt(p.product.data?.id),
       Quantity: p.Quantity,
       // photo: p.product.data.attributes.Name + '.png',
       photo: 'Banana.png',
