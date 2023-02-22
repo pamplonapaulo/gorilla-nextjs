@@ -9,10 +9,16 @@ export const getPackPrice = (pack: Pack) => {
   for (let i = 0; i < pack.attributes.Item.length; i++) {
     console.log('pack.attributes.Item[i]')
     console.log(pack.attributes.Item[i])
+    console.log('pack.attributes.Item[i].product.data')
+    console.log(pack.attributes.Item[i].product.data)
+
+    console.log(
+      pack.attributes.Item[i].product.data?.attributes.prices.mensal.centavos
+    )
 
     const thisItem =
       pack.attributes.Item[i].Quantity *
-      pack.attributes.Item[i].product.data.attributes.prices.mensal.centavos
+      pack.attributes.Item[i].product.data?.attributes.prices.mensal.centavos
     total = total + thisItem
   }
   return formatCents(total)
