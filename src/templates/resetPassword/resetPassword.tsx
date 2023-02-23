@@ -30,7 +30,6 @@ const ResetPasswordTemplate = () => {
   }, [values])
 
   const handleSubmit = async () => {
-    console.log(values)
     axios
       .post(process.env.NEXT_PUBLIC_API_URL + '/auth/reset-password', values)
       .then((res: AxiosResponse) => {
@@ -45,7 +44,6 @@ const ResetPasswordTemplate = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target
-    console.log(values)
 
     setValues({
       ...values,

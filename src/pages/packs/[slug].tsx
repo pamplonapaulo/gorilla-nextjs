@@ -76,32 +76,18 @@ export const getStaticProps = async ({ params }: Params) => {
   const regex = /(\d+)/g
   const id = slug.match(regex)
 
-  console.log('debugging....')
-  console.log(slug)
-  console.log(id)
-  console.log('id?.length')
-  console.log(id?.length)
-  console.log('id?.[0]')
-  console.log(id?.[0])
-
   const { data: periods } = await apolloClient.query({
     query: GET_PLANS,
   })
-  console.log('periods')
-  console.log(periods)
 
   const { data: benefits } = await apolloClient.query({
     query: GET_BENEFITS,
   })
-  console.log('benefits')
-  console.log(benefits)
 
   const { data: pack } = await apolloClient.query({
     query: GET_SLUG,
     variables: { id: `${id?.[0]}` },
   })
-  console.log('pack')
-  console.log(pack)
 
   const currentPack: Snack[] = []
   pack.pack.data?.attributes.Item.map((p: PackItem) => {
@@ -115,13 +101,8 @@ export const getStaticProps = async ({ params }: Params) => {
       //   p.product.data.attributes.Image.data.attributes['hash'] +
       //   p.product.data.attributes.Image.data.attributes['ext'],
     }
-    console.log('snack')
-    console.log(snack)
-
     currentPack.push(snack)
   })
-  console.log('currentPack')
-  console.log(currentPack)
 
   const slugProps = {
     pack: { ...pack.pack.data },

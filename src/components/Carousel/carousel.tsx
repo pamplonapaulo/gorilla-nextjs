@@ -34,9 +34,6 @@ const Carousel = ({ packs }: Props) => {
 
   const { loading, error, data } = useQuery(GET_BENEFITS)
 
-  console.log('packs')
-  console.log(packs)
-
   useEffect(() => {
     // setAvailHeight(screen.availHeight + 'px')
     setAvailHeight(window.innerHeight + 'px')
