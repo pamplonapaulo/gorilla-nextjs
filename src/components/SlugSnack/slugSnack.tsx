@@ -30,31 +30,31 @@ const SlugSnack = ({ ...Data }: Data) => (
     <S.NutritionFacts>
       <S.T>Nutrition Facts</S.T>
       <S.P>
-        Porção:<S.S>{Data.NutritionFacts.Portion}g</S.S>
+        Porção:<S.S>{Data.NutritionFacts?.Portion}g</S.S>
       </S.P>
       <S.P>
-        Valor Energético:<S.S>{Data.NutritionFacts.EnergeticValue} kcal</S.S>
+        Valor Energético:<S.S>{Data.NutritionFacts?.EnergeticValue} kcal</S.S>
       </S.P>
       <S.P>
-        Carboidratos:<S.S>{Data.NutritionFacts.Carbohydrates}g</S.S>
+        Carboidratos:<S.S>{Data.NutritionFacts?.Carbohydrates}g</S.S>
       </S.P>
       <S.P>
-        Proteínas:<S.S>{Data.NutritionFacts.Proteins}g</S.S>
+        Proteínas:<S.S>{Data.NutritionFacts?.Proteins}g</S.S>
       </S.P>
       <S.P>
-        Gordura Total:<S.S>{Data.NutritionFacts.TotalFat}g</S.S>
+        Gordura Total:<S.S>{Data.NutritionFacts?.TotalFat}g</S.S>
       </S.P>
       <S.P>
-        Gordura Saturada:<S.S>{Data.NutritionFacts.SaturatedFat}g</S.S>
+        Gordura Saturada:<S.S>{Data.NutritionFacts?.SaturatedFat}g</S.S>
       </S.P>
       <S.P>
-        Gordura Trans:<S.S>{Data.NutritionFacts.TransFat}g</S.S>
+        Gordura Trans:<S.S>{Data.NutritionFacts?.TransFat}g</S.S>
       </S.P>
       <S.P>
-        Sódio:<S.S>{Data.NutritionFacts.Sodium}g</S.S>
+        Sódio:<S.S>{Data.NutritionFacts?.Sodium}g</S.S>
       </S.P>
       <S.P>
-        Fibras:<S.S>{Data.NutritionFacts.DietaryFiber}g</S.S>
+        Fibras:<S.S>{Data.NutritionFacts?.DietaryFiber}g</S.S>
       </S.P>
     </S.NutritionFacts>
   </S.Item>
