@@ -10,6 +10,7 @@ import { GET_PRODUCT, GET_MINIMUM_VALUE } from 'graphql/queries'
 
 // import { formatCurrency } from 'utils/formatCurrency'
 import { formatCents } from 'utils/formatCents'
+import { getImageUrl } from 'utils/getImageUrl'
 
 import { Snack, Plans, ProductFull } from 'types/api'
 
@@ -322,9 +323,10 @@ const PackPanel = ({ ...panelData }: PanelData) => {
           {panelData.pack.map((s: Snack) => (
             <S.Snack key={s.id}>
               <S.Icon
-                src={'https://via.placeholder.com/113x156.png/'}
+                // src={'https://via.placeholder.com/113x156.png/'}
                 // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
-                alt={'teste'}
+                src={getImageUrl(`thumbnail_${s.photo}`)}
+                alt={s.name}
               />
               <S.Quantity>
                 <span>{'x'}</span>
