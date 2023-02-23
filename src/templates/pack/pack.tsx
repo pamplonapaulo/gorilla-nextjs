@@ -19,17 +19,17 @@ const PackTemplate = ({ ...packData }: PackData) => (
           <SlugSnack
             key={p.id}
             Quantity={p.Quantity}
-            Name={p.product.data.attributes.Name}
+            Name={p.product.data?.attributes.Name}
             // ImageFile={
             //   '/uploads/small_' +
-            //   p.product.data.attributes.Image.data.attributes['hash'] +
-            //   p.product.data.attributes.Image.data.attributes['ext']
+            //   p.product.data?.attributes.Image.data?.attributes['hash'] +
+            //   p.product.data?.attributes.Image.data?.attributes['ext']
             // }
             ImageFile={
-              p.product.data.attributes.Name +
-              p.product.data.attributes.Image.data.attributes['ext']
+              p.product.data?.attributes.Name +
+              p.product.data?.attributes.Image.data?.attributes['ext']
             }
-            NutritionFacts={p.product.data.attributes.NutritionFacts}
+            NutritionFacts={p.product.data?.attributes.NutritionFacts}
           />
         )
       })}
