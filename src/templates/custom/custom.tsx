@@ -94,7 +94,7 @@ const CustomTemplate = ({ ...customProps }: Props) => {
                 //   p.attributes.Image.data.attributes['ext']
                 // }
                 ImageFile={
-                  p.attributes.Name + p.attributes.Image.data.attributes['ext']
+                  p.attributes.Name + p.attributes.Image.data?.attributes['ext']
                 }
                 BaseValue={p.attributes.prices.mensal.centavos}
                 NutritionFacts={p.attributes.NutritionFacts}
@@ -109,8 +109,8 @@ const CustomTemplate = ({ ...customProps }: Props) => {
                   //   p.attributes.Image['hash'] + p.attributes.Image['ext']
                   // }
                   photoOfSnack={
-                    p.attributes.Image.data.attributes['hash'] +
-                    p.attributes.Image.data.attributes['ext']
+                    p.attributes.Name +
+                    p.attributes.Image.data?.attributes['ext']
                   }
                   parentCallback={handleSnackOnPack}
                   scale={'1'}
