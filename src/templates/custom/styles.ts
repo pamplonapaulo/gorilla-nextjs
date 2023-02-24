@@ -55,7 +55,7 @@ export const H = styled.h1`
   transform-origin: bottom;
 
   @media only screen and (min-width: 1024px) {
-    font-size: 2rem;
+    font-size: 1.7rem;
     transform-origin: unset;
     transform: translateX(-20px);
   }
@@ -117,7 +117,7 @@ export const Sum = styled.div<{ isVisible: boolean }>`
     height: 60px;
 
     @media only screen and (min-width: 1024px) {
-      font-size: 3rem;
+      font-size: 2.25rem;
       width: 125px;
       height: 125px;
     }
