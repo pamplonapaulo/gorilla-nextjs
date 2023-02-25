@@ -207,6 +207,8 @@ const FormRegister = () => {
   }
 
   const saveCustomer = (stripe_customer: string) => {
+    console.log('stripe_customer')
+    console.log(stripe_customer)
     axios
       .post(process.env.NEXT_PUBLIC_API_URL + '/auth/local/register', {
         username: inputData.username,

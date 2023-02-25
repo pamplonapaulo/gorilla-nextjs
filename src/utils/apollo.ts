@@ -8,7 +8,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
 function createApolloClient(session?: Session | null) {
   const httpLink = new HttpLink({
-    uri: `${process.env.NEXT_PUBLIC_GRAPHQL}`,
+    uri: `${process.env.NEXT_PUBLIC_BACKEND}graphql`,
   })
 
   const authLink = setContext((_, { headers, session: clientSession }) => {
