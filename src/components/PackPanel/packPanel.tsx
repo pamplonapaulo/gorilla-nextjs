@@ -177,6 +177,7 @@ const PackPanel = ({ ...panelData }: PanelData) => {
         if (!mountedRef.current) return null
       })
       .catch((error) => {
+        console.log(error)
         if (error.response.data.error.message === 'Duplication Conflit') {
           setCheckoutBtn('Erro: você já é assinante')
           setOverlay(null)
