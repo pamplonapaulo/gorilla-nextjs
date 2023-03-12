@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
-import { Elements } from '@stripe/react-stripe-js'
+// import { loadStripe } from '@stripe/stripe-js'
+// import { Elements } from '@stripe/react-stripe-js'
 
 import * as S from './styles'
 
 import OrderSummary from 'components/OrderSummary'
 import DeliveryAddress from 'components/DeliveryAddress'
 import Billing from 'components/Billing'
-import Payment from 'components/Payment'
+// import Payment from 'components/Payment'
 
 import { Order, UserME } from 'types/api'
 
@@ -16,13 +16,16 @@ type Props = {
   user?: UserME
 }
 
+/*
 const stripePromise = loadStripe(
   `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
 )
+*/
 
 const CheckoutTemplate = ({ order, user }: Props) => {
   const [clientSecret, setClientSecret] = useState('')
 
+  /*
   const appearance = {
     variables: {
       colorPrimary: '#2da650',
@@ -37,11 +40,12 @@ const CheckoutTemplate = ({ order, user }: Props) => {
       },
     },
   }
+  */
 
-  const options = {
-    clientSecret,
-    appearance,
-  }
+  // const options = {
+  //   clientSecret,
+  //   appearance,
+  // }
 
   useEffect(() => {
     if (order && typeof order[0].attributes.paymentIntent === 'string')
@@ -83,6 +87,7 @@ const CheckoutTemplate = ({ order, user }: Props) => {
           <S.Text step="4">Pagamento</S.Text>
           <S.Content>
             {clientSecret && (
+              /*
               <Elements options={options} stripe={stripePromise}>
                 <Payment
                   months={order[0].attributes.period.data.attributes.Multiplier}
@@ -92,6 +97,8 @@ const CheckoutTemplate = ({ order, user }: Props) => {
                   }
                 />
               </Elements>
+              */
+              <h1>Stripe API will be here</h1>
             )}
           </S.Content>
         </>

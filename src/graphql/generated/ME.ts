@@ -19,7 +19,7 @@ export interface ME_me_order_data_attributes_deliveries {
   __typename: "ComponentOrderDelivery";
   fee: string;
   company: string;
-  expectedArrivalDays: (ME_me_order_data_attributes_deliveries_expectedArrivalDays | null)[];
+  expectedArrivalDays: ME_me_order_data_attributes_deliveries_expectedArrivalDays[];
 }
 
 export interface ME_me_order_data_attributes_address {
@@ -88,11 +88,11 @@ export interface ME_me_order_data_attributes {
   deactivated: boolean | null;
   deactivationAuthor: ENUM_ORDER_DEACTIVATIONAUTHOR | null;
   createdAt: any | null;
-  deliveries: (ME_me_order_data_attributes_deliveries | null)[];
+  deliveries: ME_me_order_data_attributes_deliveries | null;
   address: ME_me_order_data_attributes_address;
-  expectedPayments: (ME_me_order_data_attributes_expectedPayments | null)[];
+  expectedPayments: ME_me_order_data_attributes_expectedPayments;
   period: ME_me_order_data_attributes_period | null;
-  snack: (ME_me_order_data_attributes_snack | null)[];
+  snack: ME_me_order_data_attributes_snack[];
   paymentIntent: string;
 }
 

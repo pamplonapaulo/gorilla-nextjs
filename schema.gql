@@ -360,6 +360,26 @@ type ComponentOrderDeactivations {
   byTimeOut: Boolean
 }
 
+input ComponentOrderDeliveryRangeFiltersInput {
+  min: IntFilterInput
+  max: IntFilterInput
+  and: [ComponentOrderDeliveryRangeFiltersInput]
+  or: [ComponentOrderDeliveryRangeFiltersInput]
+  not: ComponentOrderDeliveryRangeFiltersInput
+}
+
+input ComponentOrderDeliveryRangeInput {
+  id: ID
+  min: Int
+  max: Int
+}
+
+type ComponentOrderDeliveryRange {
+  id: ID!
+  min: Int!
+  max: Int
+}
+
 input ComponentOrderDeliveryFiltersInput {
   fee: StringFilterInput
   company: StringFilterInput
@@ -367,6 +387,7 @@ input ComponentOrderDeliveryFiltersInput {
   expectedTravelingDays: IntFilterInput
   expectedDispatchDays: ComponentOrderExpectedDispatchDaysFiltersInput
   expectedArrivalDays: ComponentOrderExpectedArrivalDaysFiltersInput
+  delivery_range: ComponentOrderDeliveryRangeFiltersInput
   and: [ComponentOrderDeliveryFiltersInput]
   or: [ComponentOrderDeliveryFiltersInput]
   not: ComponentOrderDeliveryFiltersInput
@@ -380,6 +401,7 @@ input ComponentOrderDeliveryInput {
   expectedTravelingDays: Int
   expectedDispatchDays: [ComponentOrderExpectedDispatchDaysInput]
   expectedArrivalDays: [ComponentOrderExpectedArrivalDaysInput]
+  delivery_range: ComponentOrderDeliveryRangeInput
 }
 
 type ComponentOrderDelivery {
@@ -388,8 +410,9 @@ type ComponentOrderDelivery {
   company: String!
   packingDetails: JSON
   expectedTravelingDays: Int
-  expectedDispatchDays(filters: ComponentOrderExpectedDispatchDaysFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderExpectedDispatchDays]!
-  expectedArrivalDays(filters: ComponentOrderExpectedArrivalDaysFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderExpectedArrivalDays]!
+  expectedDispatchDays(filters: ComponentOrderExpectedDispatchDaysFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderExpectedDispatchDays!]!
+  expectedArrivalDays(filters: ComponentOrderExpectedArrivalDaysFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderExpectedArrivalDays!]!
+  delivery_range: ComponentOrderDeliveryRange
 }
 
 type ComponentOrderDispatches {
@@ -906,6 +929,7 @@ type UsersPermissionsUser {
   blocked: Boolean
   role: UsersPermissionsRoleEntityResponse
   orders(filters: OrderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): OrderRelationResponseCollection
+  postCode: String!
   phone: String!
   addressNumber: String
   addressComplement: String
@@ -1157,10 +1181,10 @@ input OrderInput {
   period: ID
   snack: [ComponentPackItemInput]
   pack: ID
-  deliveries: [ComponentOrderDeliveryInput]
+  deliveries: ComponentOrderDeliveryInput
   address: ComponentOrderAddressInput
   coupon: ID
-  expectedPayments: [ComponentOrderExpectedPaymentsInput]
+  expectedPayments: ComponentOrderExpectedPaymentsInput
   isConfirmed: Boolean
   title: String
   deactivated: Boolean
@@ -1173,12 +1197,12 @@ input OrderInput {
 
 type Order {
   period: PeriodEntityResponse
-  snack(filters: ComponentPackItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPackItem]!
+  snack(filters: ComponentPackItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPackItem!]!
   pack: PackEntityResponse
-  deliveries(filters: ComponentOrderDeliveryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderDelivery]!
+  deliveries: ComponentOrderDelivery
   address: ComponentOrderAddress!
   coupon: CouponEntityResponse
-  expectedPayments(filters: ComponentOrderExpectedPaymentsFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentOrderExpectedPayments]!
+  expectedPayments: ComponentOrderExpectedPayments!
   isConfirmed: Boolean
   title: String!
   deactivated: Boolean
@@ -1413,7 +1437,7 @@ type ProductRelationResponseCollection {
   data: [ProductEntity!]!
 }
 
-union GenericMorph = ComponentNutritionFactsNutritionFacts | ComponentOrderAddress | ComponentOrderDeactivations | ComponentOrderDelivery | ComponentOrderDispatches | ComponentOrderExpectedArrivalDays | ComponentOrderExpectedDispatchDays | ComponentOrderExpectedPayments | ComponentPackBenefits | ComponentPackItem | ComponentPricePrices | ComponentPricesAnual | ComponentPricesMensal | ComponentPricesSemestral | ComponentPricesTrimestral | UploadFile | UploadFolder | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Benefit | Coupon | Dispatch | FreeDelivery | MelhorEnvio | MinimumPackValue | Order | Pack | Payment | Period | Product
+union GenericMorph = ComponentNutritionFactsNutritionFacts | ComponentOrderAddress | ComponentOrderDeactivations | ComponentOrderDeliveryRange | ComponentOrderDelivery | ComponentOrderDispatches | ComponentOrderExpectedArrivalDays | ComponentOrderExpectedDispatchDays | ComponentOrderExpectedPayments | ComponentPackBenefits | ComponentPackItem | ComponentPricePrices | ComponentPricesAnual | ComponentPricesMensal | ComponentPricesSemestral | ComponentPricesTrimestral | UploadFile | UploadFolder | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Benefit | Coupon | Dispatch | FreeDelivery | MelhorEnvio | MinimumPackValue | Order | Pack | Payment | Period | Product
 
 input FileInfoInput {
   name: String

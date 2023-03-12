@@ -13,6 +13,9 @@ type Props = {
 }
 
 export default function CheckoutPage(props: Props) {
+  console.log('props.me')
+  console.log(props.me)
+
   return (
     <CheckoutTemplate
       {...(props.me && { user: props.me, order: props.me.order.data })}
@@ -43,6 +46,9 @@ export const getServerSideProps: GetServerSideProps = async (
         },
       },
     })
+
+    console.log('user.data.me')
+    console.log(user.data.me)
 
     return {
       props: {
