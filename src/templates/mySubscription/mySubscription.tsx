@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import * as S from './styles'
 
+import { getImageUrl } from 'utils/getImageUrl'
+
 import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 
@@ -167,7 +169,9 @@ const MySubscriptionTemplate = ({ order, user }: Props) => {
                   {order[0].attributes.snack.map((s: OrderSnack) => (
                     <S.Snack key={s.product.data.id} quantity={s.Quantity}>
                       <S.Icon
-                        src={`https://via.placeholder.com/113x156/CCC/00000?text=${s.product.data.attributes.Name}`}
+                        src={getImageUrl(
+                          `thumbnail_${s.product.data.attributes.Name}.png`
+                        )}
                         // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
                         alt={s.product.data.attributes.Name}
                       />

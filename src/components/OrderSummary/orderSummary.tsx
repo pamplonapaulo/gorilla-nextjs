@@ -2,6 +2,8 @@ import React from 'react'
 
 import * as S from './styles'
 
+import { getImageUrl } from 'utils/getImageUrl'
+
 import { OrderSnack, Plans, ExpectedPayments } from 'types/api'
 
 type Summary = {
@@ -20,7 +22,9 @@ const OrderSummary = ({ ...summary }: Summary) => (
           {summary.snacks?.map((s: OrderSnack) => (
             <S.Snack key={s.product.data.id}>
               <S.Icon
-                src={`https://via.placeholder.com/113x156/CCC/00000?text=${s.product.data.attributes.Name}`}
+                src={getImageUrl(
+                  `thumbnail_${s.product.data.attributes.Name}.png`
+                )}
                 // src={getImageUrl(`/uploads/thumbnail_${s.photo}`)}
                 alt={s.product.data.attributes.Name}
               />
